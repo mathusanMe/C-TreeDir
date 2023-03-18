@@ -7,7 +7,7 @@ void print_node(noeud *node)
 
 void print_node_tab(noeud *node, size_t tab)
 {
-    printf("%s%s\n", multiply(" ", tab), handleFileTypePrinting(node));
+    printf("%s%s\n", " ", handleFileTypePrinting(node));
 
     // TO DO : Call again function for all sub-directories and files and add 2 spaces in tabulation
     liste_noeud *current = node->fils;
@@ -17,24 +17,6 @@ void print_node_tab(noeud *node, size_t tab)
         print_node_tab(current->no, tab + 3);
         current = current->succ;
     }
-}
-
-char *multiply(char *str, size_t tab)
-{
-    if (tab == 0)
-    {
-        return "";
-    }
-
-    size_t fileNameSize = strlen(str);
-    char *tabulation = malloc((fileNameSize * tab + 1) * sizeof(char));
-    for (size_t index = 0; index < tab; ++index)
-    {
-        memmove(tabulation + fileNameSize * index, str, fileNameSize);
-    }
-    tabulation[fileNameSize * tab] = '\0';
-
-    return tabulation;
 }
 
 char *handleFileTypePrinting(noeud *node)
