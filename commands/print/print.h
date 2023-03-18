@@ -6,9 +6,9 @@
 #include <string.h>
 #include "../../utils/nodes.h"
 
-void print_node(noeud node);
-void print_node_tab(noeud node, size_t tab);
+void print_node(noeud *node);
+void print_node_tab(noeud *node, size_t tab);
 char *multiply(char *str, size_t tab);
-char *handleFileTypePrinting(noeud node);
+char *handleFileTypePrinting(noeud *node);
 
 #endif
