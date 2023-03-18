@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 struct noeud;
 struct liste_noeud;
 
