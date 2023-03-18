@@ -1,7 +1,7 @@
 #include "print.h"
 
-#define MIDDLE_FILE "├─ "
-#define END_FILE "`─ "
+#define MIDDLE_FILE " ├─ "
+#define END_FILE " ⌎─ "
 
 void print_node(noeud *node)
 {
