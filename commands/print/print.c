@@ -23,47 +23,6 @@ void print_node_tab(noeud *node, char *pretab, char *tabulation)
     }
 }
 
-char *handleFileDepth(liste_noeud *current, char *tabulation)
-{
-    char *interlude;
-    if (current->succ == NULL)
-    {
-        interlude = NO_SPACE;
-    }
-    else
-    {
-        interlude = MID_FILE;
-    }
-
-    return addToString(tabulation, interlude);
-}
-
-char *handleFilePosition(liste_noeud *current, char *tabulation)
-{
-
-    char *interlude;
-    if (current->succ == NULL)
-    {
-        interlude = END_FILE;
-    }
-    else
-    {
-        interlude = TOP_FILE;
-    }
-
-    return addToString(tabulation, interlude);
-}
-
-char *addToString(char *string, char *toAdd)
-{
-    char *newTab = malloc((strlen(string) + strlen(toAdd) + 1) * sizeof(char));
-    memmove(newTab, string, strlen(string) * sizeof(char));
-    memmove(newTab + strlen(string), toAdd, strlen(toAdd) * sizeof(char));
-    newTab[strlen(string) + strlen(toAdd)] = '\0';
-
-    return newTab;
-}
-
 char *handleFileTypePrinting(noeud *node)
 {
     size_t fileNameSize = strlen(node->nom);
@@ -84,4 +43,45 @@ char *handleFileTypePrinting(noeud *node)
     }
 
     return fileName;
+}
+
+char *handleFilePosition(liste_noeud *current, char *tabulation)
+{
+
+    char *interlude;
+    if (current->succ == NULL)
+    {
+        interlude = END_FILE;
+    }
+    else
+    {
+        interlude = TOP_FILE;
+    }
+
+    return addToString(tabulation, interlude);
+}
+
+char *handleFileDepth(liste_noeud *current, char *tabulation)
+{
+    char *interlude;
+    if (current->succ == NULL)
+    {
+        interlude = NO_SPACE;
+    }
+    else
+    {
+        interlude = MID_FILE;
+    }
+
+    return addToString(tabulation, interlude);
+}
+
+char *addToString(char *string, char *toAdd)
+{
+    char *newTab = malloc((strlen(string) + strlen(toAdd) + 1) * sizeof(char));
+    memmove(newTab, string, strlen(string) * sizeof(char));
+    memmove(newTab + strlen(string), toAdd, strlen(toAdd) * sizeof(char));
+    newTab[strlen(string) + strlen(toAdd)] = '\0';
+
+    return newTab;
 }
