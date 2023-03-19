@@ -16,13 +16,11 @@ void print_node_tab(noeud *node, char *pretab, char *tabulation)
 
     liste_noeud *current = node->fils;
 
-    printf("%s\n", tabulation);
     while (current != NULL)
     {
         print_node_tab(current->no, handleFilePosition(current, tabulation), handleFileDepth(current, tabulation));
         current = current->succ;
     }
-    printf("%s\n", tabulation);
 }
 
 char *handleFileDepth(liste_noeud *current, char *tabulation)
