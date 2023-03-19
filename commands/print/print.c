@@ -1,29 +1,48 @@
 #include "print.h"
 
-#define MIDDLE_FILE " ├─ "
+#define TOP_FILE " ├─ "
+#define MID_FILE " |  "
 #define END_FILE " ⌎─ "
+#define NO_SPACE "    "
 
 void print_node(noeud *node)
 {
-    print_node_tab(node, "");
+    print_node_tab(node, "", "");
 }
 
-void print_node_tab(noeud *node, char *tabulation)
+void print_node_tab(noeud *node, char *pretab, char *tabulation)
 {
-    printf("%s%s\n", tabulation, handleFileTypePrinting(node));
+    printf("%s%s\n", pretab, handleFileTypePrinting(node));
 
-    // TO DO : Call again function for all sub-directories and files and add 2 spaces in tabulation
     liste_noeud *current = node->fils;
 
+    printf("%s\n", tabulation);
     while (current != NULL)
     {
-        print_node_tab(current->no, addTabulation(current, tabulation));
+        print_node_tab(current->no, handleFilePosition(current, tabulation), handleFileDepth(current, tabulation));
         current = current->succ;
     }
+    printf("%s\n", tabulation);
 }
 
-char *addTabulation(liste_noeud *current, char *tabulation)
+char *handleFileDepth(liste_noeud *current, char *tabulation)
 {
+    char *interlude;
+    if (current->succ == NULL)
+    {
+        interlude = NO_SPACE;
+    }
+    else
+    {
+        interlude = MID_FILE;
+    }
+
+    return addToString(tabulation, interlude);
+}
+
+char *handleFilePosition(liste_noeud *current, char *tabulation)
+{
+
     char *interlude;
     if (current->succ == NULL)
     {
@@ -31,13 +50,18 @@ char *addTabulation(liste_noeud *current, char *tabulation)
     }
     else
     {
-        interlude = MIDDLE_FILE;
+        interlude = TOP_FILE;
     }
 
-    char *newTab = malloc((strlen(tabulation) + strlen(interlude) + 1) * sizeof(char));
-    memmove(newTab, tabulation, strlen(tabulation) * sizeof(char));
-    memmove(newTab + strlen(tabulation), interlude, strlen(interlude) * sizeof(char));
-    newTab[strlen(tabulation) + strlen(interlude)] = '\0';
+    return addToString(tabulation, interlude);
+}
+
+char *addToString(char *string, char *toAdd)
+{
+    char *newTab = malloc((strlen(string) + strlen(toAdd) + 1) * sizeof(char));
+    memmove(newTab, string, strlen(string) * sizeof(char));
+    memmove(newTab + strlen(string), toAdd, strlen(toAdd) * sizeof(char));
+    newTab[strlen(string) + strlen(toAdd)] = '\0';
 
     return newTab;
 }
