@@ -67,17 +67,17 @@ char *handleFileTypePrinting(noeud *node)
  */
 char *handleFilePosition(liste_noeud *current, char *indent)
 {
-    char *interlude;
+    char *prefix;
     if (current->succ == NULL)
     {
-        interlude = END_FILE;
+        prefix = END_FILE;
     }
     else
     {
-        interlude = TOP_FILE;
+        prefix = TOP_FILE;
     }
 
-    return addToString(indent, interlude);
+    return addToString(indent, prefix);
 }
 
 /**
@@ -88,17 +88,17 @@ char *handleFilePosition(liste_noeud *current, char *indent)
  */
 char *handleFileDepth(liste_noeud *current, char *indent)
 {
-    char *interlude;
+    char *prefix;
     if (current->succ == NULL)
     {
-        interlude = NO_SPACE;
+        prefix = NO_SPACE;
     }
     else
     {
-        interlude = MID_FILE;
+        prefix = MID_FILE;
     }
 
-    return addToString(indent, interlude);
+    return addToString(indent, prefix);
 }
 
 /**
