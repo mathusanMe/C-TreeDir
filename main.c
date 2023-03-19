@@ -5,6 +5,6 @@
 int main()
 {
     noeud root_node = {true, "root", NULL, NULL, NULL};
-    print_node(root_node);
+    print_node(&root_node);
     return EXIT_SUCCESS;
 }
