@@ -78,10 +78,15 @@ char *handleFileDepth(liste_noeud *current, char *tabulation)
 
 char *addToString(char *string, char *toAdd)
 {
-    char *newTab = malloc((strlen(string) + strlen(toAdd) + 1) * sizeof(char));
-    memmove(newTab, string, strlen(string) * sizeof(char));
-    memmove(newTab + strlen(string), toAdd, strlen(toAdd) * sizeof(char));
-    newTab[strlen(string) + strlen(toAdd)] = '\0';
+    size_t string_size = strlen(string);
+    size_t toAdd_size = strlen(toAdd);
+
+    char *newTab = malloc((string_size + toAdd_size + 1) * sizeof(char));
+
+    memmove(newTab, string, string_size * sizeof(char));
+    memmove(newTab + string_size, toAdd, toAdd_size * sizeof(char));
+
+    newTab[string_size + toAdd_size] = '\0';
 
     return newTab;
 }
