@@ -5,24 +5,38 @@
 #define END_FILE " ⌎─ "
 #define NO_SPACE "    "
 
+/**
+ * Used to print the root node of the tree
+ * @param node the root of the tree
+ */
 void print_node(noeud *node)
 {
     print_node_tab(node, "", "");
 }
 
-void print_node_tab(noeud *node, char *pretab, char *tabulation)
+/**
+ * Used to print the entire tree and retain passed indentation
+ * @param node the current node you are printing.
+ * @param indent_for_file indentation you print before the name of the node (end with TOP_FILE OR END_FILE)
+ * @param indent indentation of subdirectories
+ */
+void print_node_tab(noeud *node, char *indent_for_file, char *indent)
 {
-    printf("%s%s\n", pretab, handleFileTypePrinting(node));
+    printf("%s%s\n", indent_for_file, handleFileTypePrinting(node));
 
     liste_noeud *current = node->fils;
 
     while (current != NULL)
     {
-        print_node_tab(current->no, handleFilePosition(current, tabulation), handleFileDepth(current, tabulation));
+        print_node_tab(current->no, handleFilePosition(current, indent), handleFileDepth(current, indent));
         current = current->succ;
     }
 }
 
+/**
+ * Return the name of the node passed in arguments depending on whether it is a folder or not.
+ * @example "[name]" if the node is a directory, "name" otherwise.
+ */
 char *handleFileTypePrinting(noeud *node)
 {
     size_t fileNameSize = strlen(node->nom);
@@ -45,9 +59,14 @@ char *handleFileTypePrinting(noeud *node)
     return fileName;
 }
 
-char *handleFilePosition(liste_noeud *current, char *tabulation)
+/**
+ * Add to indent an suffix depending whether or not
+ * the current `liste_noeud` is the last or has successor.
+ * The indentation returned is supposed to fit the printed node.
+ * @param current the `liste_noeud` containing the node going to be printed
+ */
+char *handleFilePosition(liste_noeud *current, char *indent)
 {
-
     char *interlude;
     if (current->succ == NULL)
     {
@@ -58,10 +77,16 @@ char *handleFilePosition(liste_noeud *current, char *tabulation)
         interlude = TOP_FILE;
     }
 
-    return addToString(tabulation, interlude);
+    return addToString(indent, interlude);
 }
 
-char *handleFileDepth(liste_noeud *current, char *tabulation)
+/**
+ * Add to indent an suffix depending whether or not
+ * the current `liste_noeud` is the last or has successor.
+ * The indentation returned is supposed to fit subdirectories of the printed node.
+ * @param current the `liste_noeud` containing the node going to be printed
+ */
+char *handleFileDepth(liste_noeud *current, char *indent)
 {
     char *interlude;
     if (current->succ == NULL)
@@ -73,9 +98,12 @@ char *handleFileDepth(liste_noeud *current, char *tabulation)
         interlude = MID_FILE;
     }
 
-    return addToString(tabulation, interlude);
+    return addToString(indent, interlude);
 }
 
+/**
+ * Add `toAdd` at the end of `string`
+ */
 char *addToString(char *string, char *toAdd)
 {
     size_t string_size = strlen(string);
