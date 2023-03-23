@@ -3,14 +3,17 @@
 compile() {
     echo "Compiling..."
 
-    # Check if 'main.c' exists
-    if [ ! -f "main.c" ]; then
-        echo "Error: main.c not found."
+    # Check if 'Makefile' exists
+    if [ ! -f "Makefile" ]; then
+        echo "Error: Makefile not found."
         exit 1
     fi
 
+    # Remove all the object files
+    make clean
+
     # Compile the main program
-    gcc -Wall -o main.out main.c
+    make all 1>logs 2> logs_error.err
 
     echo "Done compiling."
     exit 0
@@ -19,20 +22,19 @@ compile() {
 run() {
     echo "Running..."
 
-    # Check if 'main.out' exists
-    if [ ! -f "main.out" ]; then
-        echo "Error: main.out not found."
+    # Check if 'main' exists
+    if [ ! -f "main" ]; then
+        echo "Error: main not found."
         exit 1
     fi
 
     # Check if 'input.txt' exists
-    if [ ! -f "input.txt" ]; then
-        echo "Error: input.txt not found."
-        exit 1
+    # And run the main program
+    if [ -f "input.txt" ]; then
+        ./main input.txt
+    else 
+        ./main
     fi
-
-    # Run the main program
-    ./main.out input.txt
 
     echo "Done running."
     exit 0
@@ -41,9 +43,9 @@ run() {
 runTests() {
     echo "Running tests..."
 
-    # Check if 'main.out' exists
-    if [ ! -f "main.out" ]; then
-        echo "Error: main.out not found."
+    # Check if 'main' exists
+    if [ ! -f "main" ]; then
+        echo "Error: main not found."
         exit 1
     fi
 
@@ -53,11 +55,13 @@ runTests() {
         exit 1
     fi
 
-    totalTests=$(ls tests/ | grep -E "^input[0-9]+.txt" | wc -l)
+    tests=$(ls tests/ | grep -E "^input[0-9]+.txt")
+    totalTests=$(echo $tests | wc -l)
 
-    for test in $(ls tests/ | grep -E "^input[0-9]+.txt"); do
-        echo "Running test: $test"
-        ./main.out $test
+    for test in $tests; do
+        echo "\n/======= $test ======/"
+        ./main tests/$test
+        echo "/===== END $test ====/\n"
     done
 
     echo "Done running tests."
@@ -67,8 +71,10 @@ case "$1" in
     "compile")
         compile
     ;;
-    "runTests" | "test")
-        compileTests
+    "run")
+        run
+    ;;
+    "runTests" | "test" | "tests")
         runTests
     ;;
     *)
