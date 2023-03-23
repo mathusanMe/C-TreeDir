@@ -55,7 +55,7 @@ runTests() {
         exit 1
     fi
 
-    tests=$(ls tests/ | grep -E "^input[0-9]+.txt")
+    tests=$(ls tests/ | grep -E "^input-([a-z]|[A-Z])-[0-9][0-9]+.txt")
     totalTests=$(echo $tests | wc -l)
 
     for test in $tests; do
