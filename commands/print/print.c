@@ -22,14 +22,22 @@ void print_node(noeud *node)
  */
 void print_node_tab(noeud *node, char *indent_for_file, char *indent)
 {
-    printf("%s%s\n", indent_for_file, handleFileTypePrinting(node));
+    char *fileName = handleFileTypePrinting(node);
+    printf("%s%s\n", indent_for_file, fileName);
+    free(fileName);
 
     liste_noeud *current = node->fils;
 
     while (current != NULL)
     {
-        print_node_tab(current->no, handleFilePosition(current, indent), handleFileDepth(current, indent));
+        char *new_indent_for_file = handleFilePosition(current, indent);
+        char *new_indent = handleFileDepth(current, indent);
+
+        print_node_tab(current->no, new_indent_for_file, new_indent);
         current = current->succ;
+
+        free(new_indent_for_file);
+        free(new_indent);
     }
 }
 
