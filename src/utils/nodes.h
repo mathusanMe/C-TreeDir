@@ -5,7 +5,6 @@
 
 struct noeud;
 struct liste_noeud;
-
 struct noeud
 {
     bool est_dossier;
@@ -14,7 +13,6 @@ struct noeud
     struct noeud *racine;
     struct liste_noeud *fils;
 };
-
 struct liste_noeud
 {
     struct noeud *no;
