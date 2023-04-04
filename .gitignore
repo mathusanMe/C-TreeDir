@@ -53,3 +53,6 @@ dkms.conf
 
 # PDF Files
 *.pdf
+
+#Visual Studio Code
+.vscode/*
