@@ -1,0 +1,16 @@
+name: "C-Project Workflow"
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "GCC VERSION"
+        run: gcc --version
+      - name: "Compile Project"
+        run: make all
+      - name: "Test"
+        run: ./main test
