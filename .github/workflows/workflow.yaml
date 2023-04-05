@@ -16,10 +16,6 @@ jobs:
         run: gcc --version
       - name: "Check out repository"
         uses: actions/checkout@v3
-      - name: "Path"
-        run: pwd
-      - name: "All files"
-        run: ls -aR
       - name: "Compile Project"
         run: make --file=Makefile all
       - name: "Test"
