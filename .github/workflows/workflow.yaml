@@ -14,8 +14,10 @@ jobs:
     steps:
       - name: "GCC VERSION"
         run: gcc --version
-      - name: Path
+      - name: "Path"
         run: pwd
+      - name: "All files"
+        run: ls -aR
       - name: "Compile Project"
         run: make --file=Makefile all
       - name: "Test"
