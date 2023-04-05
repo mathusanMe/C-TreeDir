@@ -2,4 +2,5 @@
 
 void run_tests()
 {
+    run_test_tests();
 }
