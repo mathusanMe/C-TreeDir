@@ -23,4 +23,4 @@ jobs:
       - name: "Compile Project"
         run: make --file=Makefile all
       - name: "Test"
-        run: ./main test
+        run: ./program test
