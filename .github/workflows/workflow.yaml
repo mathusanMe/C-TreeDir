@@ -9,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash -ileo pipefail {0}
+        shell: bash
         working-directory: ./
     steps:
       - name: "GCC VERSION"
         run: gcc --version
       - name: "Compile Project"
-        run: make all
+        run: make
       - name: "Test"
         run: ./main test
