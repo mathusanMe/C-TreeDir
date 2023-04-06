@@ -2,9 +2,9 @@ CC=gcc
 SHELL=/bin/bash
 CFLAGS=-Wall -std=c99
 EXEC=main
-SRC= $(shell find src/ -maxdepth 3 -type f -regex ".*\.c")
+SRC= $(shell find src/ tests/ -maxdepth 3 -type f -regex ".*\.c")
 OBJ= $(patsubst src/%, bin/%, $(SRC:.c=.o))
-DIR = $(patsubst src/%, bin/%, $(shell find src/ -maxdepth 2 -type d))
+DIR= $(patsubst src/%, bin/%, $(shell find src/ -maxdepth 2 -type d))
 
 all: $(EXEC)
 
@@ -15,7 +15,7 @@ bin/%.o: src/%.c | directories
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 directories: 
-	mkdir -p $(DIR) 1>/dev/null
+	mkdir -p $(DIR)
 
 .PHONY: clean mrproper
 
