@@ -37,6 +37,8 @@
 *.hex
 
 # Debug files
+*.log*
+*.err*
 *.dSYM/
 *.su
 *.idb
@@ -53,3 +55,9 @@ dkms.conf
 
 # PDF Files
 *.pdf
+
+# Visual Studio Code
+.vscode/*
+
+# Mac OS
+.DS_Store
