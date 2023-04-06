@@ -1,10 +1,10 @@
 #ifndef TEST_H
 #define TEST_H
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include "../../utils/display_test.h"
 
 int test_always_pass();
 int test_always_fail();
