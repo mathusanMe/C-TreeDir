@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include "commands/test/test.h"
 #include "commands/another_command/another_command.h"
+#include "../src/utils/some_math.h"
 
-void run_tests();
+int run_tests();
 
 #endif
