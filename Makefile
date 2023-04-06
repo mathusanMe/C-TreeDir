@@ -23,5 +23,5 @@ clean:
 	rm -rf $(OBJ)
 
 mrproper: clean
-	rm -rf $(EXEC)%.o : %.c
+	rm -rf $(EXEC)
 	rm -R bin
