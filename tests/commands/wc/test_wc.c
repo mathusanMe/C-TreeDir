@@ -4,52 +4,41 @@
 #define ONE_LINE_FILE "./tests/commands/wc/inputs/one_line_file"
 #define MULTIPLE_LINES_FILE "./tests/commands/wc/inputs/multiple_lines_file"
 
-int test_not_existing_file()
-{
-    // TODO : Print error in a log file
-    return 1;
-}
-
-int test_empty_file()
+bool test_empty_file()
 {
     int output = wc(EMPTY_FILE);
-    return output == 0 ? true : false;
+    bool condition_to_pass_test = (output == 0);
+
+    display_test(condition_to_pass_test, "test_empty_file");
+    return condition_to_pass_test;
 }
 
-int test_one_line_file()
+bool test_one_line_file()
 {
     int output = wc(ONE_LINE_FILE);
-    return output == 4 ? true : false;
+    bool condition_to_pass_test = (output == 4);
+
+    display_test(condition_to_pass_test, "test_one_line_file");
+    return condition_to_pass_test;
 }
 
-int test_multiple_lines_file()
+bool test_multiple_lines_file()
 {
     int output = wc(MULTIPLE_LINES_FILE);
-    return output == 19 ? true : false;
+    bool condition_to_pass_test = (output == 19);
+
+    display_test(condition_to_pass_test, "test_multiple_lines_file");
+    return condition_to_pass_test;
 }
 
-int run_wc_tests()
+bool run_wc_tests()
 {
-    int passed;
-    int all_tests_passed = 1;
-
     display_test(-1, "test_wc");
 
-    // passed = test_not_existing_file();
-    // all_tests_passed *= passed;
-    // display_test(passed, "test_not_existing_file");
+    bool all_tests_passed =
+        test_empty_file() &&
+        test_one_line_file() &&
+        test_multiple_lines_file();
 
-    passed = test_empty_file();
-    all_tests_passed *= passed;
-    display_test(passed, "test_empty_file");
-
-    passed = test_one_line_file();
-    all_tests_passed *= passed;
-    display_test(passed, "test_one_line_file");
-
-    passed = test_multiple_lines_file();
-    all_tests_passed *= passed;
-    display_test(passed, "test_multiple_lines_file");
-
-    return all_tests_passed ? EXIT_SUCCESS : EXIT_FAILURE;
+    return all_tests_passed;
 }

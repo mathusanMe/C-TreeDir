@@ -3,11 +3,12 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include "../../utils/display_test.h"
 
-int test_always_pass();
-int test_always_fail();
-int run_test_tests();
+bool test_always_pass();
+bool test_always_fail();
+bool run_test_tests();
 
 #endif

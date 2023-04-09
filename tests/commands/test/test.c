@@ -1,29 +1,24 @@
 #include "test.h"
 
-int test_always_pass()
+bool test_always_pass()
 {
-    return 1;
+    display_test(true, "test_always_pass");
+    return true;
 }
 
-int test_always_fail()
+bool test_always_fail()
 {
-    return 0;
+    display_test(false, "test_always_fail");
+    return false;
 }
 
-int run_test_tests()
+bool run_test_tests()
 {
-    int passed;
-    int all_tests_passed = 1;
-
     display_test(-1, "test_tests");
 
-    passed = test_always_pass();
-    all_tests_passed *= passed;
-    display_test(passed, "test_always_pass");
+    int all_tests_passed =
+        test_always_pass() &&
+        test_always_fail();
 
-    // passed = test_always_fail();
-    // all_tests_passed *= passed;
-    // display_test(passed, "test_always_fail");
-
-    return all_tests_passed ? EXIT_SUCCESS : EXIT_FAILURE;
+    return all_tests_passed;
 }
