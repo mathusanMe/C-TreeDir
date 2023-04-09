@@ -1,4 +1,4 @@
-#include "some_math.h"
+#include "math.h"
 
 int min(int a, int b)
 {
