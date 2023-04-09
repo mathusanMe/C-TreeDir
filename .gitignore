@@ -56,8 +56,9 @@ dkms.conf
 # PDF Files
 *.pdf
 
-# Visual Studio Code
+# Visual Studio Code and its extensions
 .vscode/*
+.prettierignore
 
 # Mac OS
 .DS_Store
