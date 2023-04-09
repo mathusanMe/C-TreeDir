@@ -1,30 +1,35 @@
 #!/bin/bash
 set +x
 
+function format_color() {
+    echo -e "\x1B[${1}m ${@:2} \x1B[0m"
+}
+
 function black() {
-    echo -e "\x1B[30m $@ \x1B[0m"
+    format_color 30 $@
 }
 
 function red() {
-    echo -e "\x1B[31m $@ \x1B[0m"
+    format_color 31 $@
 }
 
 function green() {
-    echo -e "\x1B[32m $@ \x1B[0m"
+    format_color 32 $@
 }
 
 function yellow() {
-    echo -e "\x1B[33m $@ \x1B[0m"
+    format_color 33 $@
 }
 
 function blue() {
-    echo -e "\x1B[34m $@ \x1B[0m"
+    format_color 34 $@
 }
 
 function cyan() {
-    echo -e "\x1B[36m $@ \x1B[0m"
+    format_color 36 $@
 }
 
+# If the first argument is a color, call the epynomous function with all arguments
 case $1 in
     black) "$@"; exit  ;;
     red) "$@"; exit  ;;
