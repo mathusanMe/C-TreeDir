@@ -30,5 +30,10 @@ int wc(char *filename)
 
     fclose(file);
 
-    return words + reading_word;
+    if (reading_word)
+    {
+        ++words;
+    }
+
+    return words;
 }
