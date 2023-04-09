@@ -7,6 +7,6 @@
 #include "commands/wc/test_wc.h"
 #include "../src/utils/some_math.h"
 
-int run_tests();
+bool run_tests();
 
 #endif
