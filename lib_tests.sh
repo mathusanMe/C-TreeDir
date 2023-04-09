@@ -13,7 +13,7 @@ function testFail() {
 }
 
 case $1 in
-    none) testName $2; exit  ;;
-    true) testPass $2; exit  ;;
-    false) testFail $2; exit  ;;
+    name) testName $2; exit  ;;
+    passed) testPass $2; exit  ;;
+    failed) testFail $2; exit  ;;
 esac
