@@ -9,8 +9,5 @@ bool run_tests()
 
     bool all_tests_passed = true;
 
-    char *segmentation_fault = malloc(3 * sizeof(char));
-    memmove(segmentation_fault, "ezrg", 3 * sizeof(char));
-
     return all_tests_passed;
 }
