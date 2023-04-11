@@ -1,6 +1,5 @@
 name: "C-Project Workflow"
-on:
-  [push, pull_request]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -19,5 +18,12 @@ jobs:
         run: make --file=Makefile all
       - name: "Test"
         run: ./program test
-        name: "Search for memory leaks"
-        run: valgrind -e --leak-check=full --show-error-list=yes --show-leak-kinds=all --error-exitcode=1 --verbose --log-file=valgrind.out.txt ./program test
+      - name: "Search for memory leaks"
+        run: valgrind -e \
+          --leak-check=full \
+          --show-error-list=yes \
+          --show-leak-kinds=all \
+          --error-exitcode=1 \
+          --verbose \
+          --log-file=valgrind.out.txt \
+          ./program test
