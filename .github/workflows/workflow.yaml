@@ -19,4 +19,4 @@ jobs:
       - name: "Test"
         run: ./program test
       - name: "Search for memory leaks"
-        run: valgrind -e --leak-check=full --show-error-list=yes --show-leak-kinds=all --error-exitcode=1 --verbose --log-file=valgrind.out.txt ./program test
+        run: valgrind --leak-check=full --show-error-list=yes --show-leak-kinds=all --error-exitcode=1 --verbose --log-file=valgrind.out.txt ./program test
