@@ -6,7 +6,6 @@
 #include <string.h>
 #include "../../utils/nodes.h"
 
-noeud *cd_relatif(noeud *courant, char* chem);
-noeud *cd_absolue(char* chem);
+noeud *cd(noeud *courant, char* chem);
 
 #endif
