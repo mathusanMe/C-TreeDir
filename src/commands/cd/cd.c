@@ -43,6 +43,8 @@ noeud *cd(noeud *courant, char* chem) {
         }
 
         // Si le token n'existe pas ou existe mais n'est pas un dossier, on retourne NULL
+        // et affichage d'un message d'erreur
+        printf("cd: %s: No such directory\n", next);
         return NULL;
     }
 
