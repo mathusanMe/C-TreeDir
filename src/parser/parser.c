@@ -2,12 +2,13 @@
 
 void parse_file(char *file_path)
 {
-    char line[MAX_LINE_LENGTH] FILE *file = fopen(file_path, "r");
+    char line[MAX_LINE_LENGTH];
+    FILE *file = fopen(file_path, "r");
 
     if (file == NULL)
     {
         perror("Opening file caused an error.");
-        printf("'%s' could not be opened.");
+        printf("'%s' could not be opened.", file_path);
 
         exit(EXIT_FAILURE);
     }
@@ -21,7 +22,7 @@ void parse_file(char *file_path)
     if (closed != 0)
     {
         perror("Closing file caused an error.");
-        printf("'%s' could not be closed.");
+        printf("'%s' could not be closed.", file_path);
 
         exit(EXIT_FAILURE);
     }
@@ -35,7 +36,7 @@ void parse_line(char *line)
 
     if (strcmp(strToken, "ls") == 0)
     {
-        // TODO: Check that next token is null
+        parse_arguments("ls", NB_LS_ARGUMENTS);
         // TODO: Send toward ls command with no arguments
     }
 
@@ -47,43 +48,72 @@ void parse_line(char *line)
 
     if (strcmp(strToken, "pwd") == 0)
     {
-        // TODO: Check that next token is null
+        parse_arguments("pwd", NB_PWD_ARGUMENTS);
         // TODO: Send toward pwd command with no arguments
     }
 
     if (strcmp(strToken, "mkdir") == 0)
     {
-        // TODO: Check that next token is not null and the next is null
+        char **arguments = parse_arguments("mkdir", NB_MKDIR_ARGUMENTS);
         // TODO: Send toward mkdir command with one arguments
     }
 
     if (strcmp(strToken, "touch") == 0)
     {
-        // TODO: Check that next token is not null and the next is null
+        char **arguments = parse_arguments("touch", NB_TOUCH_ARGUMENTS);
         // TODO: Send toward touch command with one arguments
     }
 
     if (strcmp(strToken, "rm") == 0)
     {
-        // TODO: Check that next token is not null and the next is null
+        char **arguments = parse_arguments("rm", NB_RM_ARGUMENTS);
         // TODO: Send toward rm command with one arguments
     }
 
     if (strcmp(strToken, "cp") == 0)
     {
-        // TODO: Check that next two tokens are not null and that the third one is
+        char **arguments = parse_arguments("cp", NB_CP_ARGUMENTS);
         // TODO: Send toward cp command with two arguments
     }
 
     if (strcmp(strToken, "mv") == 0)
     {
-        // TODO: Check that next two tokens are not null and that the third one is
+        char **arguments = parse_arguments("mv", NB_MV_ARGUMENTS);
         // TODO: Send toward mv command with two arguments
     }
 
     if (strcmp(strToken, "print") == 0)
     {
-        // TODO: Check that next token is null
+        parse_arguments("print", NB_PRINT_ARGUMENTS);
         // TODO: Send toward print command with no arguments
     }
+}
+
+char **parse_arguments(char *command, int total_arguments)
+{
+    char *strToken = NULL;
+    char **arguments = malloc(MAX_ARGUMENTS * sizeof(char *));
+    int increment = 0;
+
+    while (increment < total_arguments)
+    {
+        strToken = strtok(NULL, SEPARATORS);
+        if (!strToken)
+        {
+            printf("Error: %s: not enough arguments", command);
+            exit(EXIT_FAILURE);
+        }
+
+        *(arguments + increment) = strToken;
+        ++increment;
+    }
+
+    strToken = strtok(NULL, SEPARATORS);
+    if (strToken)
+    {
+        printf("Error: %s: too much arguments", command);
+        exit(EXIT_FAILURE);
+    }
+
+    return arguments;
 }
