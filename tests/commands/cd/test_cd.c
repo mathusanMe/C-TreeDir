@@ -23,14 +23,12 @@ bool test_path_is_incorrect() {
     node *root = malloc(sizeof(node));
     root->is_folder = true;
     root->children = NULL;
-    root->parent = NULL;
+    root->parent = root;
     root->root = root;
 
-    node *current = root;
+    node *current = cd(root, "test");
 
     bool is_valid = current == NULL;
-
-    free_node(root);
 
     display_test(is_valid, "test_path_is_incorrect");
 
