@@ -6,6 +6,6 @@
 #include <string.h>
 #include "../../utils/nodes.h"
 
-noeud *cd(noeud *courant, char* chem);
+node *cd(node *current, char* path);
 
 #endif

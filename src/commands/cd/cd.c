@@ -1,52 +1,51 @@
 #include "cd.h"
 
-noeud *cd(noeud *courant, char* chem) {
-    
-    // Si le chemin est vide, on retourne la racine
-    if (chem[0] == '\0') {
-        return courant->racine;
+node *cd(node *current, char *path)
+{
+
+    // If the path is empty, return the current node
+    if (path[0] == '\0')
+    {
+        return current->root;
     }
 
-    // Si le chemin est absolu, on démarre à la racine
-    if (chem[0] == '/') {
-        return cd(courant->racine, chem + 1);
+    // If the path is absolute, start from the root
+    if (path[0] == '/')
+    {
+        return cd(current->root, path + 1);
     }
 
-    // Si le chemin est relatif, on démarre à la position courante
-    char *next = strtok(chem, '/');
-    while (next != NULL) {
-        // Si le token est ., on ne fait rien
-        if (strcmp(next, ".") == 0) {
+    // If the path is relative, start from the current node
+    for (char *next = strtok(path, '/'); next != NULL; next = strtok(NULL, '/'))
+    {
+        if (strcmp(next, ".") == 0) // If the next token is ".", do nothing
+        {
             next = strtok(NULL, '/');
-            continue;
         }
-
-        // Si le token est .., on remonte d'un niveau
-        if (strcmp(next, "..") == 0) {    
-            courant = courant->pere;
+        else if (strcmp(next, "..") == 0) // If the next token is "..", go to the parent
+        {
+            current = current->parent;
             next = strtok(NULL, '/');
-            continue;
         }
+        else if (current->is_folder)
+        {
+            list_node *children = current->children;
 
-        // Si le token est un nom de dossier, on descend d'un niveau
-        if (courant->est_dossier) {
-            liste_noeud *fils = courant->fils;
-            while (fils != NULL) {
-                if (strcmp(fils->no->nom, next) == 0) {
-                    courant = fils->no;
+            for (; children != NULL; children = children->succ)
+            {
+                if (strcmp(children->no->name, next) == 0)
+                {
+                    current = children->no;
                     break;
                 }
-                fils = fils->succ;
             }
-            next = strtok(NULL, '/');
-            continue;
         }
-
-        // Si le token n'existe pas ou existe mais n'est pas un dossier, on retourne NULL
-        // et affichage d'un message d'erreur
-        printf("cd: %s: No such directory\n", next);
-        return NULL;
+        else
+        {
+            printf("cd: %s: No such directory\n", next);
+            return NULL;
+        }
     }
 
-    return courant;
+    return current;
 }
