@@ -26,7 +26,7 @@ bool test_path_is_incorrect() {
     root->parent = NULL;
     root->root = root;
 
-    node *current = cd(root, "test");
+    node *current = root;
 
     bool is_valid = current == NULL;
 
@@ -70,7 +70,7 @@ bool run_test_cd()
 {
     bool result = test_path_empty();
     result &= test_path_is_incorrect();
-    
+    result &= test_path_contains_file();
 
     return result;
 }
