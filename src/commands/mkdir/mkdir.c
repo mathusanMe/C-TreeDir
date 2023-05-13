@@ -1,43 +1,69 @@
 #include "mkdir.h"
 
-void mkdir(noeud *courant, char *name)
+void mkdir(node *current, char *name)
 {
-
-    if (is_empty(name))
+    if (current == NULL)
     {
-        printf("mkdir: le nom est vide.\n");
         return;
     }
 
-    if (!is_alpnum(name))
+    if (!(is_name_valid(name)))
     {
-        printf("mkdir: le nom contient des caractères non alpha-numériques.\n");
+        printf("mkdir: %s is not valid name.\n", name);
         return;
     }
 
-    if (!is_length_valid(name, 1, 99))
+    if (!(current->is_folder))
     {
-        printf("mkdir: le nom est trop long.\n");
+        printf("mkdir: %s is not a folder.\n", current->name);
         return;
     }
 
-    if (courant->est_dossier)
+    list_node *children = current->children;
+
+    for (; children != NULL && children->succ != NULL; children = children->succ)
     {
-        liste_noeud *fils = courant->fils;
-        for (; fils != NULL; fils = fils->succ)
+        if (strcmp(children->no->name, name) == 0)
         {
-            if (strcmp(fils->no->nom, name) == 0)
-            {
-                printf("mkdir: le dossier existe déjà.\n");
-                return;
-            }
+            printf("mkdir: the folder already exists.\n");
+            return;
         }
     }
 
-    noeud *nouveau = malloc(sizeof(noeud));
-    memcpy(nouveau->nom, name, strlen(name) + 1);
-    nouveau->est_dossier = true;
-    nouveau->pere = courant;
-    nouveau->fils = NULL;
-    nouveau->racine = courant->racine;
+    node *new = malloc(sizeof(node));
+    memcpy(new->name, name, strlen(name) + 1);
+    new->is_folder = true;
+    new->children = NULL;
+    new->parent = current;
+    new->root = current->root;
+    children->succ = new;
+}
+
+bool is_name_valid(char *name)
+{
+    if (name == NULL)
+    {
+        printf("the name is null.\n");
+        return false;
+    }
+
+    if (isblank(name))
+    {
+        printf("the name is blank.\n");
+        return false;
+    }
+
+    if (!(isalnum(name)))
+    {
+        printf("the name is not alphanumeric.\n");
+        return false;
+    }
+
+    if (!(is_length_valid(name, 1, 99)))
+    {
+        printf("the name is longer than 99 characters.\n");
+        return false;
+    }
+
+    return true;
 }

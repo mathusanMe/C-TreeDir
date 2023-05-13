@@ -1,22 +1,22 @@
 #include <stdbool.h>
 
-struct noeud;
-struct liste_noeud;
+struct node;
+struct list_node;
 
-struct noeud
+struct node
 {
-    bool est_dossier;
-    char nom[100];
-    struct noeud *pere;
-    struct noeud *racine;
-    struct liste_noeud *fils;
+    bool is_folder;
+    char name[100];
+    struct node *parent;
+    struct node *root;
+    struct list_node *children;
 };
 
-struct liste_noeud
+struct list_node
 {
-    struct noeud *no;
-    struct liste_noeud *succ;
+    struct node *no;
+    struct list_node *succ;
 };
 
-typedef struct noeud noeud;
-typedef struct liste_noeud liste_noeud;
+typedef struct node node;
+typedef struct list_node list_node;
