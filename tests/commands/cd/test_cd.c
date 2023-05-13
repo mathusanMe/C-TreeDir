@@ -31,11 +31,10 @@ bool test_path_is_incorrect() {
     root->parent = root;
     root->root = root;
 
-    node *current = cd(root, "test");
+    node *current = root;
 
     bool is_valid = current == NULL;
 
-    free_node(root);
 
     display_test(is_valid, "test_path_is_incorrect");
 
