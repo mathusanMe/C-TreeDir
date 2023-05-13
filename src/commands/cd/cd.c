@@ -40,6 +40,12 @@ node *cd(node *current, char *path)
         {
             list_node *children = current->children;
 
+            if (children == NULL)
+            {
+                printf("cd: %s: No such directory\n", next_token);
+                return NULL;
+            }
+
             for (; children != NULL; children = children->succ)
             {
                 if (strcmp(children->no->name, next_token) == 0)

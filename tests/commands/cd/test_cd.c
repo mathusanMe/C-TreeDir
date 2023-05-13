@@ -21,6 +21,11 @@ bool test_path_empty()
 
 bool test_path_is_incorrect() {
     node *root = malloc(sizeof(node));
+    if (root == NULL)
+    {
+        printf("test_path_is_incorrect: failed to allocate memory.\n");
+        return false;
+    }
     root->is_folder = true;
     root->children = NULL;
     root->parent = root;
@@ -29,6 +34,8 @@ bool test_path_is_incorrect() {
     node *current = cd(root, "test");
 
     bool is_valid = current == NULL;
+
+    free_node(root);
 
     display_test(is_valid, "test_path_is_incorrect");
 
