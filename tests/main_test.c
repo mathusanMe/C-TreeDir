@@ -11,5 +11,5 @@ bool run_tests()
     
     all_tests_passed &= run_test_mkdir();
     
-    return all_tests_passed;
+    return !all_tests_passed;
 }
