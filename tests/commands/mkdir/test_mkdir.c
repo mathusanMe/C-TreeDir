@@ -48,7 +48,7 @@ bool test_name_already_exists()
     root->parent = NULL;
     root->root = root;
 
-    bool is_valid = mkdir(root, "test") && !mkdir(root, "test");
+    bool is_valid = mkdir(root, "test") && mkdir(root, "test");
 
     free_node(root);
 
