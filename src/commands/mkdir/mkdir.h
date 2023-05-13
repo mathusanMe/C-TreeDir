@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include "../../utils/nodes.h"
 
-void mkdir(node *current, char *name);
+bool mkdir(node *current, char *name);
+bool is_name_valid(char *name);
+bool is_length_valid(char *name, int min, int max);
 
 #endif

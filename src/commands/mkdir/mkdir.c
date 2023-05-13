@@ -3,23 +3,23 @@
 bool is_name_valid(char *name);
 bool is_length_valid(char *name, int min, int max);
 
-void mkdir(node *current, char *name)
+bool mkdir(node *current, char *name)
 {
     if (current == NULL)
     {
-        return;
+        return false;
     }
 
     if (!(is_name_valid(name)))
     {
         printf("mkdir: %s is not valid name.\n", name);
-        return;
+        return false;
     }
 
     if (!(current->is_folder))
     {
         printf("mkdir: %s is not a folder.\n", current->name);
-        return;
+        return false;
     }
 
     list_node *children = current->children;
@@ -29,7 +29,7 @@ void mkdir(node *current, char *name)
         if (strcmp(children->no->name, name) == 0)
         {
             printf("mkdir: the folder already exists.\n");
-            return;
+            return false;
         }
     }
 
@@ -38,7 +38,7 @@ void mkdir(node *current, char *name)
     if (new == NULL)
     {
         printf("mkdir: failed to allocate memory.\n");
-        return;
+        return false;
     }
 
     memcpy(new->name, name, strlen(name) + 1);
@@ -51,9 +51,10 @@ void mkdir(node *current, char *name)
     {
         printf("mkdir: failed to allocate memory.\n");
         free(new);
-        return;
+        return false;
     }
     children->succ->no = new;
+    return true;
 }
 
 bool is_name_valid(char *name)
