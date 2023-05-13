@@ -66,7 +66,7 @@ bool test_path_contains_file() {
     return is_valid;
 }
 
-bool run_tests_cd()
+bool run_test_cd()
 {
     bool result = test_path_empty();
     result &= test_path_is_incorrect();
