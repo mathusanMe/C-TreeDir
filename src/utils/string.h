@@ -8,5 +8,6 @@
 
 bool is_string_blank(char* str);
 bool is_string_alnum(char* str);
+char *strdup(const char *s);
 
 #endif

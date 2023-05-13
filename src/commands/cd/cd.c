@@ -66,6 +66,12 @@ node *cd(node *current, char *path)
             {
                 if (strcmp(children->no->name, next_token) == 0)
                 {
+                    if (!children->no->is_folder)
+                    {
+                        printf("cd: %s: Not a directory\n", next_token);
+                        free(modifiable_path);
+                        return NULL;
+                    }
                     current = children->no;
                     break;
                 }

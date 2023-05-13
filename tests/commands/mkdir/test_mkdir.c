@@ -2,7 +2,7 @@
 
 bool test_name_empty()
 {
-    bool is_valid = is_name_valid("");
+    bool is_valid = !is_name_valid("");
 
     display_test(is_valid, "test_name_empty");
 
@@ -11,7 +11,7 @@ bool test_name_empty()
 
 bool test_name_contains_non_alnum_char()
 {
-    bool is_valid = is_name_valid("test!");
+    bool is_valid = !is_name_valid("test!");
 
     display_test(is_valid, "test_name_contains_non_alnum_char");
 
@@ -31,7 +31,7 @@ bool test_name_too_long()
     memset(name, 'a', 255);
     name[255] = '\0';
 
-    bool is_valid = is_name_valid(name);
+    bool is_valid = !is_name_valid(name);
 
     free(name);
 
@@ -48,7 +48,7 @@ bool test_name_already_exists()
     root->parent = root;
     root->root = root;
 
-    bool is_valid = mkdir(root, "test") && mkdir(root, "test");
+    bool is_valid = mkdir(root, "test") && !mkdir(root, "test");
 
     free_node(root);
 
