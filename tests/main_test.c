@@ -9,7 +9,8 @@ bool run_tests()
 
     bool all_tests_passed = true;
     
-    all_tests_passed &= run_test_mkdir();
+    all_tests_passed = run_test_mkdir()
+    && run_tests_cd();
     
     return !all_tests_passed;
 }

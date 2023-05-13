@@ -1,3 +1,6 @@
+#ifndef NODES_H
+#define NODES_H
+
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -24,3 +27,5 @@ typedef struct list_node list_node;
 
 void free_node(node *node);
 void free_node_list(list_node *list);
+
+#endif

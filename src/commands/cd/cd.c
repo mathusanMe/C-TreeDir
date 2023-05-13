@@ -2,6 +2,15 @@
 
 node *cd(node *current, char *path)
 {
+    if (current == NULL)
+    {
+        return NULL;
+    }
+
+    if (path == NULL)
+    {
+        return current;
+    }
 
     // If the path is empty, return the current node
     if (path[0] == '\0')

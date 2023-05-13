@@ -61,10 +61,10 @@ bool run_test_mkdir()
 {
     bool result = true;
 
-    result &= test_name_empty();
-    result &= test_name_contains_non_alnum_char();
-    result &= test_name_too_long();
-    result &= test_name_already_exists();
+    result &= test_name_empty()
+    && test_name_contains_non_alnum_char()
+    && test_name_too_long()
+    && test_name_already_exists();
 
     return result;
 }
