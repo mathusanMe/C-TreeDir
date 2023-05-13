@@ -12,29 +12,44 @@ node *cd(node *current, char *path)
         return current;
     }
 
-    // If the path is empty, return the current node
-    if (path[0] == '\0')
+    // Copy path to a modifiable buffer
+    char *modifiable_path = strdup(path);
+    if (modifiable_path == NULL)
     {
+        return NULL;
+    }
+
+    // If the path is empty, return the current node
+    if (modifiable_path[0] == '\0')
+    {
+        free(modifiable_path);
         return current->root;
     }
 
     // If the path is absolute, start from the root
-    if (path[0] == '/')
+    if (modifiable_path[0] == '/')
     {
-        return cd(current->root, path + 1);
+        node *result = cd(current->root, modifiable_path + 1);
+        free(modifiable_path);
+        return result;
     }
 
     // If the path is relative, start from the current node
-    for (char *next_token = strtok(path, "/"); next_token != NULL; next_token = strtok(NULL, "/"))
+    for (char *next_token = strtok(modifiable_path, "/"); next_token != NULL; next_token = strtok(NULL, "/"))
     {
         if (strcmp(next_token, ".") == 0) // If the next token is ".", do nothing
         {
-            next_token = strtok(NULL, "/");
+            continue;
         }
         else if (strcmp(next_token, "..") == 0) // If the next token is "..", go to the parent
         {
+            if (current->parent == NULL)
+            {
+                free(modifiable_path);
+                return NULL; // Or however you want to handle this case
+            }
+
             current = current->parent;
-            next_token = strtok(NULL, "/");
         }
         else if (current->is_folder)
         {
@@ -43,6 +58,7 @@ node *cd(node *current, char *path)
             if (children == NULL)
             {
                 printf("cd: %s: No such directory\n", next_token);
+                free(modifiable_path);
                 return NULL;
             }
 
@@ -58,9 +74,11 @@ node *cd(node *current, char *path)
         else
         {
             printf("cd: %s: No such directory\n", next_token);
+            free(modifiable_path);
             return NULL;
         }
     }
 
+    free(modifiable_path);
     return current;
 }

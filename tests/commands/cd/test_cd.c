@@ -31,7 +31,7 @@ bool test_path_is_incorrect() {
     root->parent = root;
     root->root = root;
 
-    node *current = root;
+    node *current = cd(root, "test");
 
     bool is_valid = current == NULL;
 
