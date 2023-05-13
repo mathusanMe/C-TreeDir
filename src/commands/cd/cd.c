@@ -16,16 +16,16 @@ node *cd(node *current, char *path)
     }
 
     // If the path is relative, start from the current node
-    for (char *next = strtok(path, '/'); next != NULL; next = strtok(NULL, '/'))
+    for (char *next = strtok(path, "/"); next != NULL; next = strtok(NULL, "/"))
     {
         if (strcmp(next, ".") == 0) // If the next token is ".", do nothing
         {
-            next = strtok(NULL, '/');
+            next = strtok(NULL, "/");
         }
         else if (strcmp(next, "..") == 0) // If the next token is "..", go to the parent
         {
             current = current->parent;
-            next = strtok(NULL, '/');
+            next = strtok(NULL, "/");
         }
         else if (current->is_folder)
         {

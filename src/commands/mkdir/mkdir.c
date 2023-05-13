@@ -1,5 +1,8 @@
 #include "mkdir.h"
 
+bool is_name_valid(char *name);
+bool is_length_valid(char *name, int min, int max);
+
 void mkdir(node *current, char *name)
 {
     if (current == NULL)
@@ -36,7 +39,8 @@ void mkdir(node *current, char *name)
     new->children = NULL;
     new->parent = current;
     new->root = current->root;
-    children->succ = new;
+    children->succ = malloc(sizeof(list_node));
+    children->succ->no = new;
 }
 
 bool is_name_valid(char *name)
@@ -62,6 +66,18 @@ bool is_name_valid(char *name)
     if (!(is_length_valid(name, 1, 99)))
     {
         printf("the name is longer than 99 characters.\n");
+        return false;
+    }
+
+    return true;
+}
+
+bool is_length_valid(char *name, int min, int max)
+{
+    int length = strlen(name);
+
+    if (length < min || length > max)
+    {
         return false;
     }
 
