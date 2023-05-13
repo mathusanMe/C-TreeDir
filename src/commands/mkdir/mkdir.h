@@ -3,9 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 #include "../../utils/nodes.h"
+#include "../../utils/string.h"
 
 bool mkdir(node *current, char *name);
 bool is_name_valid(char *name);

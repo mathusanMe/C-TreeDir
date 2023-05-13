@@ -21,7 +21,15 @@ bool test_name_contains_non_alnum_char()
 bool test_name_too_long()
 {
     char *name = malloc(sizeof(char) * 256);
+
+    if (name == NULL)
+    {
+        printf("test_name_too_long: failed to allocate memory.\n");
+        return false;
+    }
+    
     memset(name, 'a', 255);
+    name[255] = '\0';
 
     bool is_valid = is_name_valid(name);
 

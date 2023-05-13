@@ -24,6 +24,28 @@ bool mkdir(node *current, char *name)
 
     list_node *children = current->children;
 
+    if (children == NULL) {
+        current->children = malloc(sizeof(list_node));
+        if (current->children == NULL)
+        {
+            printf("mkdir: failed to allocate memory.\n");
+            return false;
+        }
+        current->children->no = malloc(sizeof(node));
+        if (current->children->no == NULL)
+        {
+            printf("mkdir: failed to allocate memory.\n");
+            return false;
+        }
+        memcpy(current->children->no->name, name, strlen(name) + 1);
+        current->children->no->is_folder = true;
+        current->children->no->children = NULL;
+        current->children->no->parent = current;
+        current->children->no->root = current->root;
+        current->children->succ = NULL;
+        return true;
+    }
+
     for (; children != NULL && children->succ != NULL; children = children->succ)
     {
         if (strcmp(children->no->name, name) == 0)
@@ -65,13 +87,13 @@ bool is_name_valid(char *name)
         return false;
     }
 
-    if (isblank(name))
+    if (is_string_blank(name))
     {
         printf("the name is blank.\n");
         return false;
     }
 
-    if (!(isalnum(name)))
+    if (!(is_string_alnum(name)))
     {
         printf("the name is not alphanumeric.\n");
         return false;
