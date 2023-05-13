@@ -24,7 +24,8 @@ bool mkdir(node *current, char *name)
 
     list_node *children = current->children;
 
-    if (children == NULL) {
+    if (children == NULL)
+    {
         current->children = malloc(sizeof(list_node));
         if (current->children == NULL)
         {
@@ -46,7 +47,7 @@ bool mkdir(node *current, char *name)
         return true;
     }
 
-    for (; children != NULL && children->succ != NULL; children = children->succ)
+    for (; children != NULL; children = children->succ)
     {
         if (strcmp(children->no->name, name) == 0)
         {
@@ -55,28 +56,34 @@ bool mkdir(node *current, char *name)
         }
     }
 
-    node *new = malloc(sizeof(node));
+    node *new_node = malloc(sizeof(node));
 
-    if (new == NULL)
+    if (new_node == NULL)
     {
         printf("mkdir: failed to allocate memory.\n");
         return false;
     }
 
-    memcpy(new->name, name, strlen(name) + 1);
-    new->is_folder = true;
-    new->children = NULL;
-    new->parent = current;
-    new->root = current->root;
+    memcpy(new_node->name, name, strlen(name) + 1);
+    new_node->is_folder = true;
+    new_node->children = NULL;
+    new_node->parent = current;
+    new_node->root = current->root;
+
     children->succ = malloc(sizeof(list_node));
     if (children->succ == NULL)
     {
         printf("mkdir: failed to allocate memory.\n");
-        free(new);
+        free(new_node);
         return false;
     }
-    children->succ->no = new;
+
+    children->succ->no = new_node;
     children->succ->succ = NULL;
+
+    // Update the parent's children pointer to the new node
+    current->children = children->succ;
+
     return true;
 }
 
