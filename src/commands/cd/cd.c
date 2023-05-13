@@ -16,16 +16,16 @@ node *cd(node *current, char *path)
     }
 
     // If the path is relative, start from the current node
-    for (char *next = strtok(path, "/"); next != NULL; next = strtok(NULL, "/"))
+    for (char *next_token = strtok(path, "/"); next_token != NULL; next_token = strtok(NULL, "/"))
     {
-        if (strcmp(next, ".") == 0) // If the next token is ".", do nothing
+        if (strcmp(next_token, ".") == 0) // If the next token is ".", do nothing
         {
-            next = strtok(NULL, "/");
+            next_token = strtok(NULL, "/");
         }
-        else if (strcmp(next, "..") == 0) // If the next token is "..", go to the parent
+        else if (strcmp(next_token, "..") == 0) // If the next token is "..", go to the parent
         {
             current = current->parent;
-            next = strtok(NULL, "/");
+            next_token = strtok(NULL, "/");
         }
         else if (current->is_folder)
         {
@@ -33,7 +33,7 @@ node *cd(node *current, char *path)
 
             for (; children != NULL; children = children->succ)
             {
-                if (strcmp(children->no->name, next) == 0)
+                if (strcmp(children->no->name, next_token) == 0)
                 {
                     current = children->no;
                     break;
@@ -42,7 +42,7 @@ node *cd(node *current, char *path)
         }
         else
         {
-            printf("cd: %s: No such directory\n", next);
+            printf("cd: %s: No such directory\n", next_token);
             return NULL;
         }
     }
