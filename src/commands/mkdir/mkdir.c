@@ -34,12 +34,25 @@ void mkdir(node *current, char *name)
     }
 
     node *new = malloc(sizeof(node));
+
+    if (new == NULL)
+    {
+        printf("mkdir: failed to allocate memory.\n");
+        return;
+    }
+
     memcpy(new->name, name, strlen(name) + 1);
     new->is_folder = true;
     new->children = NULL;
     new->parent = current;
     new->root = current->root;
     children->succ = malloc(sizeof(list_node));
+    if (children->succ == NULL)
+    {
+        printf("mkdir: failed to allocate memory.\n");
+        free(new);
+        return;
+    }
     children->succ->no = new;
 }
 
