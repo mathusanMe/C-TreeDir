@@ -76,6 +76,7 @@ bool mkdir(node *current, char *name)
         return false;
     }
     children->succ->no = new;
+    children->succ->succ = NULL;
     return true;
 }
 
