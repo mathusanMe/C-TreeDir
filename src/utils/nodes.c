@@ -12,17 +12,11 @@ void free_node(node *node)
 
 void free_node_list(list_node *list)
 {
-    list_node *current = list;
-    list_node *next = current->succ;
-
-    while (next != NULL)
+    if (list->succ != NULL)
     {
-        free_node(current->no);
-        free(current);
-        current = next;
-        next = current->succ;
+        free_node_list(list->succ);
     }
 
-    free_node(current->no);
-    free(current);
+    free_node(list->no);
+    free(list);
 }
