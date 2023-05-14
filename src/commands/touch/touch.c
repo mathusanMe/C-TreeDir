@@ -40,4 +40,9 @@ bool touch(noeud *current, char *name)
     }
 
     noeud *new_node = create_node(name, false, current, current->racine);
+    if (new_node == NULL)
+    {
+        printf("touch: failed to create node.\n");
+        return false;
+    }
 }
