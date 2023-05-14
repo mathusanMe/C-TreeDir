@@ -3,7 +3,7 @@
 bool is_name_valid(char *name);
 bool is_length_valid(char *name, int min, int max);
 
-bool mkdir(node *current, char *name)
+bool mkdir(noeud *current, char *name)
 {
     if (current == NULL)
     {
@@ -12,44 +12,43 @@ bool mkdir(node *current, char *name)
 
     if (!is_name_valid(name))
     {
-        printf("mkdir: %s is not valid name.\n", name);
         return false;
     }
 
-    if (!current->is_folder)
+    if (!current->est_dossier)
     {
-        printf("mkdir: %s is not a folder.\n", current->name);
+        printf("mkdir: %s is not a folder.\n", current->nom);
         return false;
     }
 
-    list_node *children = current->children;
+    liste_noeud *children = current->fils;
 
     if (children == NULL)
     {
-        current->children = malloc(sizeof(list_node));
-        if (current->children == NULL)
+        current->fils = malloc(sizeof(liste_noeud));
+        if (current->fils == NULL)
         {
             printf("mkdir: failed to allocate memory.\n");
             return false;
         }
-        current->children->no = malloc(sizeof(node));
-        if (current->children->no == NULL)
+        current->fils->no = malloc(sizeof(noeud));
+        if (current->fils->no == NULL)
         {
             printf("mkdir: failed to allocate memory.\n");
             return false;
         }
-        memcpy(current->children->no->name, name, strlen(name) + 1);
-        current->children->no->is_folder = true;
-        current->children->no->children = NULL;
-        current->children->no->parent = current;
-        current->children->no->root = current->root;
-        current->children->succ = NULL;
+        memcpy(current->fils->no->nom, name, strlen(name) + 1);
+        current->fils->no->est_dossier = true;
+        current->fils->no->fils = NULL;
+        current->fils->no->pere = current;
+        current->fils->no->racine = current->racine;
+        current->fils->succ = NULL;
         return true;
     }
 
     for (; children != NULL; children = children->succ)
     {
-        if (strcmp(children->no->name, name) == 0)
+        if (strcmp(children->no->nom, name) == 0)
         {
             printf("mkdir: the folder already exists.\n");
             return false;
@@ -58,7 +57,7 @@ bool mkdir(node *current, char *name)
 
 
 
-    node *new_node = create_node(name, true, current, current->root);
+    noeud *new_node = create_node(name, true, current, current->racine);
     if (new_node == NULL)
     {
         printf("mkdir: failed to create node.\n");

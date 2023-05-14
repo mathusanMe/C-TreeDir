@@ -1,67 +1,59 @@
 #include "nodes.h"
 
-node *create_root()
+noeud *create_root()
 {
-    node *root = create_node("", true, NULL, NULL);
+    noeud *root = create_node("", true, NULL, NULL);
     if (root == NULL)
     {
         printf("create_root: failed to allocate memory.\n");
         return NULL;
     }
-    root->parent = root;
-    root->root = root;
-
+    root->pere = root;
+    root->racine = root;
     return root;
 }
 
-node *create_node(char *name, bool is_folder, node *parent, node *root)
+noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root)
 {
-    node *new_node = malloc(sizeof(node));
-
+    noeud *new_node = malloc(sizeof(noeud));
     if (new_node == NULL)
     {
         printf("create_node: failed to allocate memory.\n");
         return NULL;
     }
-
-    memcpy(new_node->name, name, strlen(name) + 1);
-    new_node->is_folder = is_folder;
-    new_node->parent = parent;
-    new_node->root = root;
-    new_node->children = NULL;
-
+    memcpy(new_node->nom, name, strlen(name) + 1);
+    new_node->est_dossier = is_folder;
+    new_node->pere = parent;
+    new_node->racine = root;
+    new_node->fils = NULL;
     return new_node;
 }
 
-list_node *create_list_node(node *no, list_node *succ)
+liste_noeud *create_list_node(noeud *no, liste_noeud *succ)
 {
-    list_node *new_list_node = malloc(sizeof(list_node));
-
+    liste_noeud *new_list_node = malloc(sizeof(liste_noeud));
     if (new_list_node == NULL)
     {
         printf("create_list_node: failed to allocate memory.\n");
         return NULL;
     }
-
     new_list_node->no = no;
     new_list_node->succ = succ;
-
     return new_list_node;
 }
 
-bool add_child(node *parent, node *child)
+bool add_child(noeud *parent, noeud *child)
 {
     if (parent == NULL || child == NULL)
     {
         return false;
     }
 
-    list_node *children = parent->children;
-
+    liste_noeud *children = parent->fils;
     if (children == NULL)
     {
-        parent->children = create_list_node(child, NULL);
-        if (parent->children == NULL)
+        parent->fils = create_list_node(child, NULL);
+        if (parent->fils == NULL)
         {
             return false;
         }
@@ -70,42 +62,41 @@ bool add_child(node *parent, node *child)
 
     for (; children != NULL; children = children->succ)
     {
-        if (strcmp(children->no->name, child->name) == 0)
+        if (strcmp(children->no->nom, child->nom) == 0)
         {
             return false;
         }
     }
 
-    list_node *new_list_node = create_list_node(child, NULL);
+    liste_noeud *new_list_node = create_list_node(child, NULL);
     if (new_list_node == NULL)
     {
         return false;
     }
 
-    children = parent->children;
+    children = parent->fils;
     for (; children->succ != NULL; children = children->succ)
         ;
     children->succ = new_list_node;
-
     return true;
 }
 
-void free_node(node *node)
+void free_node(noeud *node)
 {
     if (node == NULL)
     {
         return;
     }
 
-    if (node->children != NULL)
+    if (node->fils != NULL)
     {
-        free_node_list(node->children);
+        free_node_list(node->fils);
     }
 
     free(node);
 }
 
-void free_node_list(list_node *list)
+void free_node_list(liste_noeud *list)
 {
     if (list == NULL)
     {

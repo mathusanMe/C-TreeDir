@@ -6,32 +6,32 @@
 #include <stdio.h>
 #include <string.h>
 
-struct node;
-struct list_node;
+struct noeud;
+struct liste_noeud;
 
-struct node
+struct noeud
 {
-    bool is_folder;
-    char name[100];
-    struct node *parent;
-    struct node *root;
-    struct list_node *children;
+    bool est_dossier;
+    char nom[100];
+    struct noeud *pere;
+    struct noeud *racine;
+    struct liste_noeud *fils;
 };
 
-struct list_node
+struct liste_noeud
 {
-    struct node *no;
-    struct list_node *succ;
+    struct noeud *no;
+    struct liste_noeud *succ;
 };
 
-typedef struct node node;
-typedef struct list_node list_node;
+typedef struct noeud noeud;
+typedef struct liste_noeud liste_noeud;
 
-node *create_root();
-node *create_node(char *name, bool is_folder, node *parent, node *root);
-list_node *create_list_node(node *no, list_node *succ);
-bool add_child(node *parent, node *child);
-void free_node(node *node);
-void free_node_list(list_node *list);
+noeud *create_root();
+noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root);
+liste_noeud *create_list_node(noeud *no, liste_noeud *succ);
+bool add_child(noeud *parent, noeud *child);
+void free_node(noeud *node);
+void free_node_list(liste_noeud *list);
 
 #endif

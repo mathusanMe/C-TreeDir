@@ -1,13 +1,13 @@
 #include "cd.h"
 
-node *cd(node *current, char *path)
+noeud *cd(noeud *current, char *path)
 {
     if (current == NULL || path == NULL)
     {
         return current;
     }
 
-    if (!current->is_folder)
+    if (!current->est_dossier)
     {
         printf("cd: Not a directory\n");
         return NULL;
@@ -24,14 +24,15 @@ node *cd(node *current, char *path)
     // If the path is empty, return the current node
     if (modifiable_path[0] == '\0')
     {
+        printf("cd: path is empty, returning to root\n");
         free(modifiable_path);
-        return current->root;
+        return current->racine;
     }
 
     // If the path is absolute, start from the root
     if (modifiable_path[0] == '/')
     {
-        node *result = cd(current->root, modifiable_path + 1);
+        noeud *result = cd(current->racine, modifiable_path + 1);
         free(modifiable_path);
         return result;
     }
@@ -46,11 +47,11 @@ node *cd(node *current, char *path)
 
         if (strcmp(next_token, "..") == 0) // If the next token is "..", go to the parent
         {
-            current = current->parent;
+            current = current->pere;
         }
         else
         {
-            list_node *children = current->children;
+            liste_noeud *children = current->fils;
 
             if (children == NULL)
             {
@@ -61,9 +62,9 @@ node *cd(node *current, char *path)
 
             for (; children != NULL; children = children->succ)
             {
-                if (strcmp(children->no->name, next_token) == 0)
+                if (strcmp(children->no->nom, next_token) == 0)
                 {
-                    if (!children->no->is_folder)
+                    if (!children->no->est_dossier)
                     {
                         printf("cd: %s: Not a directory\n", next_token);
                         free(modifiable_path);
@@ -75,7 +76,6 @@ node *cd(node *current, char *path)
             }
         }
     }
-
     free(modifiable_path);
     return current;
 }
