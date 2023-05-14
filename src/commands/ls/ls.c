@@ -17,8 +17,7 @@ bool ls(noeud *current, char *path)
 
     if (node_from_path->fils == NULL)
     {
-        VERBOSE_PRINT ? printf("ls: %s: There is no file or directory.\n", node_from_path->nom) : 0;
-        return false;
+        return true;
     }
 
     for (liste_noeud *liste = node_from_path->fils; liste != NULL; liste = liste->succ)
