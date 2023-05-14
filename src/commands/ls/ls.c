@@ -2,8 +2,7 @@
 
 bool ls(noeud *current, char *path)
 {
-    noeud *copy_current = current;
-    noeud *node_from_path = get_noeud(copy_current, path);
+    noeud *node_from_path = get_noeud(current, path);
 
     if (node_from_path == NULL)
     {
