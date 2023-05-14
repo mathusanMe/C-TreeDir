@@ -31,17 +31,7 @@ bool mkdir(noeud *current, char *name)
             printf("mkdir: failed to allocate memory.\n");
             return false;
         }
-        current->fils->no = malloc(sizeof(noeud));
-        if (current->fils->no == NULL)
-        {
-            printf("mkdir: failed to allocate memory.\n");
-            return false;
-        }
-        memcpy(current->fils->no->nom, name, strlen(name) + 1);
-        current->fils->no->est_dossier = true;
-        current->fils->no->fils = NULL;
-        current->fils->no->pere = current;
-        current->fils->no->racine = current->racine;
+        current->fils->no = create_node(name, true, current, current->racine);
         current->fils->succ = NULL;
         return true;
     }

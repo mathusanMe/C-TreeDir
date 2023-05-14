@@ -62,7 +62,8 @@ bool add_child(noeud *parent, noeud *child)
         return true;
     }
 
-    for (; children != NULL; children = children->succ)
+    liste_noeud *last_child = NULL;
+    for (; children != NULL; last_child = children, children = children->succ)
     {
         if (strcmp(children->no->nom, child->nom) == 0)
         {
@@ -76,12 +77,10 @@ bool add_child(noeud *parent, noeud *child)
         return false;
     }
 
-    children = parent->fils;
-    while (children != NULL) 
+    if (last_child != NULL)
     {
-        children = children->succ;
+        last_child->succ = new_list_node;
     }
-    children->succ = new_list_node;
     return true;
 }
 
@@ -132,24 +131,13 @@ void create_test_tree_dir()
     noeud *A7 = create_node("td1", false, A3, A1);
     noeud *A8 = create_node("td2", false, A3, A1);
 
-    // add_child(A1, A2);
-    // add_child(A1, A3);
-    // add_child(A1, A4);
-    // add_child(A2, A5);
-    // add_child(A2, A6);
-    // add_child(A3, A7);
-    // add_child(A3, A8);
-
-    liste_noeud *children = create_list_node(A4, NULL);
-    children = create_list_node(A3, children);
-    children = create_list_node(A2, children);
-    A1->fils = children;
-    liste_noeud *children1 = create_list_node(A6, NULL);
-    children1 = create_list_node(A5, children1);
-    A2->fils = children1;
-    liste_noeud *children2 = create_list_node(A8, NULL);
-    children2 = create_list_node(A7, children2);
-    A3->fils = children2;
+    add_child(A1, A2);
+    add_child(A1, A3);
+    add_child(A1, A4);
+    add_child(A2, A5);
+    add_child(A2, A6);
+    add_child(A3, A7);
+    add_child(A3, A8);
 
     test_tree_dir = A1;
 }
