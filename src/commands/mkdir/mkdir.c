@@ -56,33 +56,22 @@ bool mkdir(node *current, char *name)
         }
     }
 
-    node *new_node = malloc(sizeof(node));
 
+
+    node *new_node = create_node(name, true, current, current->root);
     if (new_node == NULL)
     {
-        printf("mkdir: failed to allocate memory.\n");
+        printf("mkdir: failed to create node.\n");
         return false;
     }
 
-    memcpy(new_node->name, name, strlen(name) + 1);
-    new_node->is_folder = true;
-    new_node->children = NULL;
-    new_node->parent = current;
-    new_node->root = current->root;
-
-    children->succ = malloc(sizeof(list_node));
+    children->succ = create_list_node(new_node, NULL);
     if (children->succ == NULL)
     {
-        printf("mkdir: failed to allocate memory.\n");
+        printf("mkdir: failed to create list node.\n");
         free(new_node);
         return false;
     }
-
-    children->succ->no = new_node;
-    children->succ->succ = NULL;
-
-    // Update the parent's children pointer to the new node
-    current->children = children->succ;
 
     return true;
 }
@@ -91,25 +80,25 @@ bool is_name_valid(char *name)
 {
     if (name == NULL)
     {
-        printf("the name is null.\n");
+        printf("mkdir: the name is null.\n");
         return false;
     }
 
     if (is_string_blank(name))
     {
-        printf("the name is blank.\n");
+        printf("mkdir: the name is blank.\n");
         return false;
     }
 
     if (!(is_string_alnum(name)))
     {
-        printf("the name is not alphanumeric.\n");
+        printf("mkdir: the name is not alphanumeric.\n");
         return false;
     }
 
     if (!(is_length_valid(name, 1, 99)))
     {
-        printf("the name is longer than 99 characters.\n");
+        printf("mkdir: the name is longer than 99 characters.\n");
         return false;
     }
 
