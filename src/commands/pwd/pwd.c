@@ -7,6 +7,12 @@
  */
 bool pwd(noeud *node)
 {
+    if (node == NULL)
+    {
+        printf("pwd: Current node is NULL\n");
+        return false;
+    }
+
     bool is_valid = pwd_rec(node);
     puts("");
 
@@ -25,7 +31,7 @@ bool pwd_rec(noeud *node)
     }
 
     // If current node is root
-    if (node->pere == node)
+    if (node->racine == node)
     {
         printf("/");
         return true;

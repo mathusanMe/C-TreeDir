@@ -24,9 +24,15 @@ bool test_current_node_is_root()
 bool test_current_node_is_correct()
 {
     noeud *root = get_test_tree_dir();
+    noeud *current_node = cd(root, "/Cours/ProjetC");
+
+    if (current_node == NULL)
+    {
+        return false;
+    }
 
     // TODO : check what's being print
-    bool is_valid = pwd(root) == true;
+    bool is_valid = pwd(current_node) == true;
 
     display_test(is_valid, "test_current_node_is_correct");
     return is_valid;

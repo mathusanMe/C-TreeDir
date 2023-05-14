@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include "../../utils/display_test.h"
 #include "../../../src/commands/pwd/pwd.h"
+#include "../../../src/commands/cd/cd.h"
 
 bool test_current_node_is_null();
 bool test_current_node_is_root();
