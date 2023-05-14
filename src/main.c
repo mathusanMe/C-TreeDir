@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    char **tests_keys = TESTS_KEYS;
+    char *tests_keys[] = TESTS_KEYS;
 
     if (contains(tests_keys, TESTS_KEYS_SIZE, argv[1]))
     {
