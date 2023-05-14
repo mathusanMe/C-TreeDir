@@ -34,7 +34,7 @@ bool test_path_contains_file()
 
 bool test_valid_path() {
     noeud *root = create_root();
-    
+
     noeud *l1n1 = create_node("l1n1", true, root, root);
     noeud *l1n2 = create_node("l1n2", true, root, root);
     noeud *l1n3 = create_node("l1n3", false, root, root);
@@ -51,7 +51,7 @@ bool test_valid_path() {
     children2 = create_list_node(l2n2, children2);
     l1n2->fils = children2;
 
-    bool is_valid = cd(l1n1, "/l1n2/l2n1/") == l2n1;
+    bool is_valid = cd(l1n1, "/../l1n2/./l2n1/") == l2n1;
     free_node(root);
     display_test(is_valid, "test_valid_path");
     return is_valid;
