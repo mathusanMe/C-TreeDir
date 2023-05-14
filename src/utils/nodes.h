@@ -1,3 +1,6 @@
+#ifndef NODES_H
+#define NODES_H
+
 #include <stdbool.h>
 
 struct noeud;
@@ -20,3 +23,5 @@ struct liste_noeud
 
 typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
+
+#endif
