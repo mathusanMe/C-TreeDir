@@ -1,5 +1,19 @@
 #include "nodes.h"
 
+node *create_root()
+{
+    node *root = create_node("", true, NULL, NULL);
+    if (root == NULL)
+    {
+        printf("create_root: failed to allocate memory.\n");
+        return NULL;
+    }
+    root->parent = root;
+    root->root = root;
+
+    return root;
+}
+
 node *create_node(char *name, bool is_folder, node *parent, node *root)
 {
     node *new_node = malloc(sizeof(node));

@@ -15,6 +15,7 @@ node *cd(node *current, char *path)
 
     // Copy path to a modifiable buffer
     char *modifiable_path = strdup(path);
+
     if (modifiable_path == NULL)
     {
         return NULL;

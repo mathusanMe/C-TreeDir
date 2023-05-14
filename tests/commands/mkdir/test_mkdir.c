@@ -42,11 +42,7 @@ bool test_name_too_long()
 
 bool test_name_already_exists()
 {
-    node *root = malloc(sizeof(node));
-    root->is_folder = true;
-    root->children = NULL;
-    root->parent = root;
-    root->root = root;
+    node *root = create_root();
 
     bool is_valid = mkdir(root, "test") && !mkdir(root, "test");
 

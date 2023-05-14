@@ -27,6 +27,7 @@ struct list_node
 typedef struct node node;
 typedef struct list_node list_node;
 
+node *create_root();
 node *create_node(char *name, bool is_folder, node *parent, node *root);
 list_node *create_list_node(node *no, list_node *succ);
 bool add_child(node *parent, node *child);
