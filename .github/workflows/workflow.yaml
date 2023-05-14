@@ -1,0 +1,22 @@
+name: "C-Project Workflow"
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: messeb/valgrind
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./
+    steps:
+      - name: "GCC Version"
+        run: gcc --version
+      - name: "Check out repository"
+        uses: actions/checkout@v3
+      - name: "Compile Project"
+        run: make --file=Makefile all
+      - name: "Test"
+        run: ./program test
+      - name: "Search for memory leaks"
+        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 --verbose ./program test
