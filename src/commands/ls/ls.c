@@ -12,19 +12,19 @@ bool ls(noeud *current, char *path)
 
     if (!node_from_path->est_dossier)
     {
-        printf("ls: %s: Not a directory.\n", node_from_path->nom);
+        VERBOSE_PRINT ? printf("ls: %s: Not a directory.\n", node_from_path->nom) : 0;
         return false;
     }
 
     if (node_from_path->fils == NULL)
     {
-        printf("ls: %s: There is no file or directory.\n", node_from_path->nom);
+        VERBOSE_PRINT ? printf("ls: %s: There is no file or directory.\n", node_from_path->nom) : 0;
         return false;
     }
 
     for (liste_noeud *liste = node_from_path->fils; liste != NULL; liste = liste->succ)
     {
-        printf("%s\n", liste->no->nom);
+        VERBOSE_PRINT ? printf("%s\n", liste->no->nom) : 0;
     }
 
     return true;
@@ -36,7 +36,7 @@ noeud *get_noeud(noeud *current, char *path)
 
     if (node_from_path == NULL)
     {
-        printf("ls: cannot access '%s': No such directory.\n", path);
+        VERBOSE_PRINT ? printf("ls: cannot access '%s': No such directory.\n", path) : 0;
         return NULL;
     }
 

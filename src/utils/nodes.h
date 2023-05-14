@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "cfg.h"
+
 struct noeud;
 struct liste_noeud;
 

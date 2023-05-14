@@ -9,7 +9,7 @@ noeud *cd(noeud *current, char *path)
 
     if (!current->est_dossier)
     {
-        printf("cd: Not a directory.\n");
+        VERBOSE_PRINT ? printf("cd: Not a directory.\n") : 0;
         return NULL;
     }
 
@@ -22,7 +22,7 @@ noeud *cd(noeud *current, char *path)
 
     if (modifiable_path[0] == '\0')
     {
-        printf("cd: path is empty, returning to root.\n");
+        VERBOSE_PRINT ? printf("cd: path is empty, returning to root.\n") : 0;
         free(modifiable_path);
         return current->racine;
     }
@@ -45,7 +45,7 @@ noeud *cd(noeud *current, char *path)
         {
             if (current->pere == NULL)
             {
-                printf("cd: Can't move to parent directory, node not declared.\n");
+                VERBOSE_PRINT ? printf("cd: Can't move to parent directory, node not declared.\n") : 0;
                 free(modifiable_path);
                 return NULL;
             }
@@ -57,7 +57,7 @@ noeud *cd(noeud *current, char *path)
 
         if (children == NULL)
         {
-            printf("cd: %s: No such directory.\n", next_token);
+            VERBOSE_PRINT ? printf("cd: %s: No such directory.\n", next_token) : 0;
             free(modifiable_path);
             return NULL;
         }
@@ -70,14 +70,14 @@ noeud *cd(noeud *current, char *path)
 
         if (child == NULL)
         {
-            printf("cd: %s: No such directory.\n", next_token);
+            VERBOSE_PRINT ? printf("cd: %s: No such directory.\n", next_token) : 0;
             free(modifiable_path);
             return NULL;
         }
 
         if (!child->no->est_dossier)
         {
-            printf("cd: %s: Not a directory.\n", next_token);
+            VERBOSE_PRINT ? printf("cd: %s: Not a directory.\n", next_token) : 0;
             free(modifiable_path);
             return NULL;
         }
