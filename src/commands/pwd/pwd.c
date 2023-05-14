@@ -17,6 +17,12 @@ void pwd(noeud *node)
  */
 void pwd_rec(noeud *node)
 {
+    if (node == NULL)
+    {
+        return;
+    }
+
+    // If current node is root
     if (node->pere == node)
     {
         printf("/");
