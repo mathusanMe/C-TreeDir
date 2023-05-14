@@ -62,19 +62,10 @@ noeud *cd(noeud *current, char *path)
             return NULL;
         }
 
-        liste_noeud *child;
-        for (child = children; child != NULL; child = child->succ)
+        liste_noeud *child = children;
+        while (child != NULL && strcmp(child->no->nom, next_token) != 0)
         {
-            if (strcmp(child->no->nom, next_token) == 0)
-            {
-                if (!child->no->est_dossier)
-                {
-                    printf("cd: %s: Not a directory\n", next_token);
-                    free(modifiable_path);
-                    return NULL;
-                }
-                break;
-            }
+            child = child->succ;
         }
 
         if (child == NULL)
@@ -84,7 +75,12 @@ noeud *cd(noeud *current, char *path)
             return NULL;
         }
 
-        // Update current to the found child
+        if (!child->no->est_dossier)
+        {
+            printf("cd: %s: Not a directory\n", next_token);
+            free(modifiable_path);
+            return NULL;
+        }
         current = child->no;
     }
 
