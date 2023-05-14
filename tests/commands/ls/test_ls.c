@@ -29,9 +29,8 @@ bool test_path_to_directory_with_files()
 
 bool run_test_ls()
 {
-    bool result = true;
     display_test(-1, "ls");
-    result &= test_path_to_file();
+    bool result = test_path_to_file();
     result &= test_path_to_empty_directory();
     result &= test_path_to_directory_with_files();
     return result;

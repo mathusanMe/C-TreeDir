@@ -50,8 +50,8 @@ bool test_valid_path()
 
 bool run_test_cd()
 {
-    bool result = test_path_is_empty();
     display_test(-1, "cd");
+    bool result = test_path_is_empty();
     result &= test_path_is_incorrect();
     result &= test_path_contains_file();
     result &= test_valid_path();
