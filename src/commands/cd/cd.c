@@ -2,12 +2,7 @@
 
 node *cd(node *current, char *path)
 {
-    if (current == NULL)
-    {
-        return NULL;
-    }
-
-    if (path == NULL)
+    if (current == NULL || path == NULL)
     {
         return current;
     }
