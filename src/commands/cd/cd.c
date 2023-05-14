@@ -45,7 +45,7 @@ noeud *cd(noeud *current, char *path)
         {
             if (current->pere == NULL)
             {
-                printf("cd: Can't move to parent directory, already at root\n");
+                printf("cd: Can't move to parent directory, node not declared.\n");
                 free(modifiable_path);
                 return NULL;
             }
