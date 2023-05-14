@@ -2,8 +2,6 @@
 
 bool run_tests()
 {
-    puts("\n\n /===== TESTS =====/ \n");
-
     system("chmod +x ./colors.sh");
     system("chmod +x ./lib_tests.sh");
 
