@@ -13,7 +13,7 @@ bool test_path_to_empty_directory()
 {
     noeud *root = get_test_tree_dir();
     char *path = "Cours/ProjetC/";
-    bool is_valid = !ls(root, path);
+    bool is_valid = ls(root, path);
     display_test(is_valid, "test_path_to_empty_directory");
     return is_valid;
 }
