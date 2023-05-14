@@ -35,10 +35,10 @@ noeud *create_root();
 noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root);
 liste_noeud *create_list_node(noeud *no, liste_noeud *succ);
 bool add_child(noeud *parent, noeud *child);
-
 void free_node(noeud *node);
 void free_node_list(liste_noeud *list);
 
+// Test tree dir
 void create_test_tree_dir();
 noeud *get_test_tree_dir();
 void free_test_tree_dir();
