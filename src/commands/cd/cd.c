@@ -2,11 +2,9 @@
 
 noeud *cd(noeud *current, char *path)
 {
-    noeud *start_node = current;
-
     if (current == NULL || path == NULL)
     {
-        return current;
+        return NULL;
     }
 
     if (!current->est_dossier)
@@ -15,15 +13,13 @@ noeud *cd(noeud *current, char *path)
         return NULL;
     }
 
-    // Copy path to a modifiable buffer
     char *modifiable_path = strdup(path);
 
     if (modifiable_path == NULL)
     {
-        return current;
+        return NULL;
     }
 
-    // If the path is empty, return the current node
     if (modifiable_path[0] == '\0')
     {
         printf("cd: path is empty, returning to root\n");
@@ -31,7 +27,6 @@ noeud *cd(noeud *current, char *path)
         return current->racine;
     }
 
-    // If the path is absolute, start from the root of the copied node
     if (modifiable_path[0] == '/')
     {
         noeud *result = cd(current->racine, modifiable_path + 1);
@@ -39,44 +34,60 @@ noeud *cd(noeud *current, char *path)
         return result;
     }
 
-    // If the path is relative, start from the copied current node
     for (char *next_token = strtok(modifiable_path, "/"); next_token != NULL; next_token = strtok(NULL, "/"))
     {
-        if (strcmp(next_token, ".") == 0) // If the next token is ".", do nothing
+        if (strcmp(next_token, ".") == 0)
         {
             continue;
         }
 
-        if (strcmp(next_token, "..") == 0) // If the next token is "..", go to the parent
+        if (strcmp(next_token, "..") == 0)
         {
-            current = current->pere;
-        }
-        else
-        {
-            liste_noeud *children = current->fils;
-
-            if (children == NULL)
+            if (current->pere == NULL)
             {
-                printf("cd: %s: No such directory\n", next_token);
+                printf("cd: Can't move to parent directory, already at root\n");
                 free(modifiable_path);
-                return current;
+                return NULL;
             }
+            current = current->pere;
+            continue;
+        }
 
-            for (; children != NULL; children = children->succ)
+        liste_noeud *children = current->fils;
+
+        if (children == NULL)
+        {
+            printf("cd: %s: No such directory\n", next_token);
+            free(modifiable_path);
+            return NULL;
+        }
+
+        liste_noeud *child;
+        for (child = children; child != NULL; child = child->succ)
+        {
+            if (strcmp(child->no->nom, next_token) == 0)
             {
-                if (strcmp(children->no->nom, next_token) == 0)
+                if (!child->no->est_dossier)
                 {
-                    if (!children->no->est_dossier)
-                    {
-                        printf("cd: %s: Not a directory\n", next_token);
-                        free(modifiable_path);
-                        return start_node;
-                    }
-                    break;
+                    printf("cd: %s: Not a directory\n", next_token);
+                    free(modifiable_path);
+                    return NULL;
                 }
+                break;
             }
         }
+
+        if (child == NULL)
+        {
+            printf("cd: %s: No such directory\n", next_token);
+            free(modifiable_path);
+            return NULL;
+        }
+
+        // Update current to the found child
+        current = child->no;
     }
+
     free(modifiable_path);
     return current;
 }

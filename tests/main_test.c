@@ -11,6 +11,7 @@ bool run_tests()
 
     bool all_tests_passed = run_test_mkdir();
     all_tests_passed &= run_test_cd();
+    all_tests_passed &= run_test_ls();
 
     free_test_tree_dir();
 
