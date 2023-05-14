@@ -19,9 +19,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "../utils/nodes.h"
 
 void parse_file(char *file_path);
-void parse_line(char *line);
-char** parse_arguments(char *command, int total_arguments);
+noeud *parse_line(noeud *current, char *line);
+char **parse_arguments(char *command, int total_arguments);
 
 #endif
