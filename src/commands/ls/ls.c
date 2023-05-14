@@ -22,7 +22,7 @@ bool ls(noeud *current, char *path)
 
     for (liste_noeud *liste = node_from_path->fils; liste != NULL; liste = liste->succ)
     {
-        VERBOSE_PRINT ? printf("%s\n", liste->no->nom) : 0;
+        printf("%s\n", liste->no->nom);
     }
 
     return true;
