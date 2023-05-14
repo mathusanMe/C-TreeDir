@@ -10,7 +10,7 @@ bool mkdir(node *current, char *name)
         return false;
     }
 
-    if (!(is_name_valid(name)))
+    if (!is_name_valid(name))
     {
         printf("mkdir: %s is not valid name.\n", name);
         return false;
