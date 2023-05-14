@@ -5,30 +5,33 @@
  * Then print newline
  * @param node current node
  */
-void pwd(noeud *node)
+bool pwd(noeud *node)
 {
-    pwd_rec(node);
+    bool is_valid = pwd_rec(node);
     puts("");
+
+    return is_valid;
 }
 
 /**
  * By walking back through the entire file tree,
  * from the root node, print the file's name then it's child's one
  */
-void pwd_rec(noeud *node)
+bool pwd_rec(noeud *node)
 {
-    if (node == NULL)
+    if (node == NULL || node->pere == NULL)
     {
-        return;
+        return false;
     }
 
     // If current node is root
     if (node->pere == node)
     {
         printf("/");
-        return;
+        return true;
     }
 
     pwd_rec(node->pere);
     printf("%s/", node->nom);
+    return true;
 }

@@ -2,9 +2,10 @@
 #define PWD_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "../../utils/nodes.h"
 
-void pwd(noeud *node);
-void pwd_rec(noeud *node);
+bool pwd(noeud *node);
+bool pwd_rec(noeud *node);
 
 #endif
