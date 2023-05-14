@@ -9,5 +9,6 @@
 #include "../cd/cd.h"
 
 bool ls(noeud *current, char *path);
+noeud *get_noeud(noeud *current, char *path);
 
 #endif

@@ -9,7 +9,7 @@ noeud *cd(noeud *current, char *path)
 
     if (!current->est_dossier)
     {
-        printf("cd: Not a directory\n");
+        printf("cd: Not a directory.\n");
         return NULL;
     }
 
@@ -22,7 +22,7 @@ noeud *cd(noeud *current, char *path)
 
     if (modifiable_path[0] == '\0')
     {
-        printf("cd: path is empty, returning to root\n");
+        printf("cd: path is empty, returning to root.\n");
         free(modifiable_path);
         return current->racine;
     }
@@ -57,7 +57,7 @@ noeud *cd(noeud *current, char *path)
 
         if (children == NULL)
         {
-            printf("cd: %s: No such directory\n", next_token);
+            printf("cd: %s: No such directory.\n", next_token);
             free(modifiable_path);
             return NULL;
         }
@@ -70,20 +70,19 @@ noeud *cd(noeud *current, char *path)
 
         if (child == NULL)
         {
-            printf("cd: %s: No such directory\n", next_token);
+            printf("cd: %s: No such directory.\n", next_token);
             free(modifiable_path);
             return NULL;
         }
 
         if (!child->no->est_dossier)
         {
-            printf("cd: %s: Not a directory\n", next_token);
+            printf("cd: %s: Not a directory.\n", next_token);
             free(modifiable_path);
             return NULL;
         }
         current = child->no;
     }
-
     free(modifiable_path);
     return current;
 }

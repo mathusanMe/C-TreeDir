@@ -6,6 +6,8 @@
 #include "../../utils/nodes.h"
 #include "../../utils/string.h"
 
-noeud *cd(noeud *current, char* path);
+// cd() returns NULL if the path is invalid or is a file,
+// else it returns the node from the path while changing the current node
+noeud *cd(noeud *current, char *path);
 
 #endif
