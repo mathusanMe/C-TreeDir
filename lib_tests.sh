@@ -6,7 +6,7 @@ SUCCESS_COLOR="cyan"
 FAILURE_COLOR="red"
 
 function testName() {
-    message="    - $*"
+    message="$*"
     ./colors.sh "$NAME_COLOR" "$message"
 }
 
