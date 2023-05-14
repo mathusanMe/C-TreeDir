@@ -7,6 +7,12 @@ node *cd(node *current, char *path)
         return current;
     }
 
+    if (!current->is_folder)
+    {
+        printf("cd: Not a directory\n");
+        return NULL;
+    }
+
     // Copy path to a modifiable buffer
     char *modifiable_path = strdup(path);
     if (modifiable_path == NULL)
@@ -36,17 +42,12 @@ node *cd(node *current, char *path)
         {
             continue;
         }
-        else if (strcmp(next_token, "..") == 0) // If the next token is "..", go to the parent
-        {
-            if (current->parent == NULL)
-            {
-                free(modifiable_path);
-                return NULL; // Or however you want to handle this case
-            }
 
+        if (strcmp(next_token, "..") == 0) // If the next token is "..", go to the parent
+        {
             current = current->parent;
         }
-        else if (current->is_folder)
+        else
         {
             list_node *children = current->children;
 
@@ -71,12 +72,6 @@ node *cd(node *current, char *path)
                     break;
                 }
             }
-        }
-        else
-        {
-            printf("cd: %s: No such directory\n", next_token);
-            free(modifiable_path);
-            return NULL;
         }
     }
 
