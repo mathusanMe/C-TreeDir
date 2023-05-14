@@ -77,8 +77,10 @@ bool add_child(noeud *parent, noeud *child)
     }
 
     children = parent->fils;
-    for (; children->succ != NULL; children = children->succ)
-        ;
+    while (children != NULL) 
+    {
+        children = children->succ;
+    }
     children->succ = new_list_node;
     return true;
 }
