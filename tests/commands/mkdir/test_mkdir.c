@@ -45,7 +45,7 @@ bool test_name_already_exists()
 bool run_test_mkdir()
 {
     bool result = true;
-
+    display_test(-1, "mkdir");
     result &= test_name_empty();
     result &= test_name_contains_non_alnum_char();
     result &= test_name_too_long();

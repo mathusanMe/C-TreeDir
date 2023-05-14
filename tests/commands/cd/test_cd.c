@@ -32,12 +32,14 @@ bool test_valid_path()
     noeud *root = get_test_tree_dir();
 
     noeud *projetC = cd(root, "Cours/ProjetC");
-    if (projetC == NULL) {
+    if (projetC == NULL)
+    {
         return false;
     }
 
     noeud *td = cd(root, "Td");
-    if (td == NULL) {
+    if (td == NULL)
+    {
         return false;
     }
 
@@ -49,6 +51,7 @@ bool test_valid_path()
 bool run_test_cd()
 {
     bool result = test_path_is_empty();
+    display_test(-1, "cd");
     result &= test_path_is_incorrect();
     result &= test_path_contains_file();
     result &= test_valid_path();
