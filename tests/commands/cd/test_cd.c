@@ -5,7 +5,7 @@ bool test_path_is_empty()
     noeud *root = get_test_tree_dir();
     noeud *current = cd(root, "");
     bool is_valid = current == root;
-    display_test(is_valid, "test_path_empty");
+    display_test(is_valid, "test_path_is_empty");
     return is_valid;
 }
 
