@@ -12,6 +12,6 @@ bool test_name_empty();
 bool test_name_contains_non_alnum_char();
 bool test_name_too_long();
 bool test_name_already_exists();
-bool run_test_mkdir();
+bool run_tests_mkdir();
 
 #endif

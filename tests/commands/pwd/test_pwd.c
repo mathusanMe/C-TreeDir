@@ -1,0 +1,44 @@
+#include "test_pwd.h"
+
+bool test_current_node_is_null()
+{
+    noeud *root = NULL;
+
+    bool is_valid = pwd(root) == false;
+
+    display_test(is_valid, "test_current_node_is_null");
+    return is_valid;
+}
+
+bool test_current_node_is_root()
+{
+    noeud *root = get_test_tree_dir();
+
+    // TODO : check what's being print
+    bool is_valid = pwd(root) == true;
+
+    display_test(is_valid, "test_current_node_is_root");
+    return is_valid;
+}
+
+bool test_current_node_is_correct()
+{
+    noeud *root = get_test_tree_dir();
+
+    // TODO : check what's being print
+    bool is_valid = pwd(root) == true;
+
+    display_test(is_valid, "test_current_node_is_correct");
+    return is_valid;
+}
+
+bool run_tests_pwd()
+{
+    bool result = true;
+
+    result &= test_current_node_is_null();
+    result &= test_current_node_is_root();
+    result &= test_current_node_is_correct();
+
+    return result;
+}

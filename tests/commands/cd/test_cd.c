@@ -1,6 +1,6 @@
 #include "test_cd.h"
 
-bool test_path_empty()
+bool test_path_is_empty()
 {
     noeud *root = get_test_tree_dir();
     noeud *current = cd(root, "");
@@ -37,9 +37,9 @@ bool test_valid_path()
     return is_valid;
 }
 
-bool run_test_cd()
+bool run_tests_cd()
 {
-    bool result = test_path_empty();
+    bool result = test_path_is_empty();
     result &= test_path_is_incorrect();
     result &= test_path_contains_file();
     result &= test_valid_path();

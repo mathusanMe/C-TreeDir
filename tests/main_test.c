@@ -9,8 +9,9 @@ bool run_tests()
 
     create_test_tree_dir();
 
-    bool all_tests_passed = run_test_mkdir();
-    all_tests_passed &= run_test_cd();
+    bool all_tests_passed = run_tests_mkdir();
+    all_tests_passed &= run_tests_cd();
+    all_tests_passed &= run_tests_pwd();
 
     free_test_tree_dir();
 
