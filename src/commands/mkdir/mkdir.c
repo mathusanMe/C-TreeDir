@@ -46,7 +46,9 @@ bool mkdir(noeud *current, char *name)
         return true;
     }
 
-    for (; children != NULL; children = children->succ)
+    liste_noeud *last_child = NULL;
+
+    for (; children != NULL; last_child = children, children = children->succ)
     {
         if (strcmp(children->no->nom, name) == 0)
         {
@@ -55,8 +57,6 @@ bool mkdir(noeud *current, char *name)
         }
     }
 
-
-
     noeud *new_node = create_node(name, true, current, current->racine);
     if (new_node == NULL)
     {
@@ -64,8 +64,20 @@ bool mkdir(noeud *current, char *name)
         return false;
     }
 
-    children->succ = create_list_node(new_node, NULL);
-    if (children->succ == NULL)
+    if (last_child == NULL)
+    {
+        current->fils = create_list_node(new_node, NULL);
+        if (current->fils == NULL)
+        {
+            printf("mkdir: failed to create list node.\n");
+            free(new_node);
+            return false;
+        }
+        return true;
+    }
+
+    last_child->succ = create_list_node(new_node, NULL);
+    if (last_child->succ == NULL)
     {
         printf("mkdir: failed to create list node.\n");
         free(new_node);

@@ -2,6 +2,8 @@
 
 noeud *cd(noeud *current, char *path)
 {
+    noeud *start_node = current;
+
     if (current == NULL || path == NULL)
     {
         return current;
@@ -18,7 +20,7 @@ noeud *cd(noeud *current, char *path)
 
     if (modifiable_path == NULL)
     {
-        return NULL;
+        return current;
     }
 
     // If the path is empty, return the current node
@@ -29,7 +31,7 @@ noeud *cd(noeud *current, char *path)
         return current->racine;
     }
 
-    // If the path is absolute, start from the root
+    // If the path is absolute, start from the root of the copied node
     if (modifiable_path[0] == '/')
     {
         noeud *result = cd(current->racine, modifiable_path + 1);
@@ -37,7 +39,7 @@ noeud *cd(noeud *current, char *path)
         return result;
     }
 
-    // If the path is relative, start from the current node
+    // If the path is relative, start from the copied current node
     for (char *next_token = strtok(modifiable_path, "/"); next_token != NULL; next_token = strtok(NULL, "/"))
     {
         if (strcmp(next_token, ".") == 0) // If the next token is ".", do nothing
@@ -57,7 +59,7 @@ noeud *cd(noeud *current, char *path)
             {
                 printf("cd: %s: No such directory\n", next_token);
                 free(modifiable_path);
-                return NULL;
+                return current;
             }
 
             for (; children != NULL; children = children->succ)
@@ -68,9 +70,8 @@ noeud *cd(noeud *current, char *path)
                     {
                         printf("cd: %s: Not a directory\n", next_token);
                         free(modifiable_path);
-                        return NULL;
+                        return start_node;
                     }
-                    current = children->no;
                     break;
                 }
             }

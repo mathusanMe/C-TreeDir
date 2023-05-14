@@ -1,5 +1,7 @@
 #include "nodes.h"
 
+noeud *test_tree_dir = NULL;
+
 noeud *create_root()
 {
     noeud *root = create_node("", true, NULL, NULL);
@@ -110,4 +112,47 @@ void free_node_list(liste_noeud *list)
 
     free_node(list->no);
     free(list);
+}
+
+noeud *get_test_tree_dir()
+{
+    return test_tree_dir;
+}
+
+void create_test_tree_dir()
+{
+    noeud *A1 = create_root();
+    noeud *A2 = create_node("Cours", true, A1, A1);
+    noeud *A3 = create_node("Td", true, A1, A1);
+    noeud *A4 = create_node("edt", false, A1, A1);
+    noeud *A5 = create_node("ProjetC", true, A2, A1);
+    noeud *A6 = create_node("Anglais", true, A2, A1);
+    noeud *A7 = create_node("td1", false, A3, A1);
+    noeud *A8 = create_node("td2", false, A3, A1);
+
+    // add_child(A1, A2);
+    // add_child(A1, A3);
+    // add_child(A1, A4);
+    // add_child(A2, A5);
+    // add_child(A2, A6);
+    // add_child(A3, A7);
+    // add_child(A3, A8);
+
+    liste_noeud *children = create_list_node(A4, NULL);
+    children = create_list_node(A3, children);
+    children = create_list_node(A2, children);
+    A1->fils = children;
+    liste_noeud *children1 = create_list_node(A6, NULL);
+    children1 = create_list_node(A5, children1);
+    A2->fils = children1;
+    liste_noeud *children2 = create_list_node(A8, NULL);
+    children2 = create_list_node(A7, children2);
+    A3->fils = children2;
+
+    test_tree_dir = A1;
+}
+
+void free_test_tree_dir()
+{
+    free_node(test_tree_dir);
 }

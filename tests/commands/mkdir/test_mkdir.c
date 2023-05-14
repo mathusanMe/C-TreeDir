@@ -2,18 +2,17 @@
 
 bool test_name_empty()
 {
-    noeud *root = create_root();
+    noeud *root = get_test_tree_dir();
+
     bool is_valid = mkdir(root, "") == false;
-    free_node(root);
     display_test(is_valid, "test_name_empty");
     return is_valid;
 }
 
 bool test_name_contains_non_alnum_char()
 {
-    noeud *root = create_root();
+    noeud *root = get_test_tree_dir();
     bool is_valid = mkdir(root, "test!") == false;
-    free_node(root);
     display_test(is_valid, "test_name_contains_non_alnum_char");
     return is_valid;
 }
@@ -28,19 +27,17 @@ bool test_name_too_long()
     }
     memset(name, 'a', 255);
     name[255] = '\0';
-    noeud *root = create_root();
+    noeud *root = get_test_tree_dir();
     bool is_valid = mkdir(root, name) == false;
     free(name);
-    free_node(root);
     display_test(is_valid, "test_name_too_long");
     return is_valid;
 }
 
 bool test_name_already_exists()
 {
-    noeud *root = create_root();
+    noeud *root = get_test_tree_dir();
     bool is_valid = mkdir(root, "test") && !mkdir(root, "test");
-    free_node(root);
     display_test(is_valid, "test_name_already_exists");
     return is_valid;
 }
