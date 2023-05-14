@@ -16,7 +16,7 @@ bool mkdir(node *current, char *name)
         return false;
     }
 
-    if (!(current->is_folder))
+    if (!current->is_folder)
     {
         printf("mkdir: %s is not a folder.\n", current->name);
         return false;
