@@ -11,7 +11,7 @@ bool ls(noeud *current, char *path)
 
     if (!node_from_path->est_dossier)
     {
-        VERBOSE_PRINT ? printf("ls: %s: Not a directory.\n", node_from_path->nom) : 0;
+        printf("ls: %s: Not a directory.\n", node_from_path->nom);
         return false;
     }
 
@@ -34,7 +34,7 @@ noeud *get_noeud(noeud *current, char *path)
 
     if (node_from_path == NULL)
     {
-        VERBOSE_PRINT ? printf("ls: cannot access '%s': No such directory.\n", path) : 0;
+        printf("ls: cannot access '%s': No such directory.\n", path);
         return NULL;
     }
 
