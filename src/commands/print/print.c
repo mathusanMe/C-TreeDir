@@ -25,8 +25,8 @@ void print_node_tab(noeud *node, char *indent_for_file, char *indent)
 
     while (current != NULL)
     {
-        char *new_indent_for_file = handleFilePosition(current, indent);
-        char *new_indent = handleFileDepth(current, indent);
+        char *new_indent_for_file = handleFileIndentation(true, current, indent);
+        char *new_indent = handleFileIndentation(false, current, indent);
 
         print_node_tab(current->no, new_indent_for_file, new_indent);
         current = current->succ;
@@ -63,45 +63,26 @@ char *handleFileTypePrinting(noeud *node)
 }
 
 /**
- * Add to indent an suffix depending whether or not
- * the current `liste_noeud` is the last or has successor.
- * The indentation returned is supposed to fit the printed node.
- * @param current the `liste_noeud` containing the node going to be printed
- */
-char *handleFilePosition(liste_noeud *current, char *indent)
-{
-    char *prefix;
-    if (current->succ == NULL)
-    {
-        prefix = END_FILE;
-    }
-    else
-    {
-        prefix = TOP_FILE;
-    }
-
-    return addToString(indent, prefix);
-}
-
-/**
- * Add to indent an suffix depending whether or not
+ * Add to indentation a suffix depending whether or not
  * the current `liste_noeud` is the last or has successor.
  * The indentation returned is supposed to fit subdirectories of the printed node.
  * @param current the `liste_noeud` containing the node going to be printed
+ * @param isIndentTheLast a boolean being true if the indent being added is
+ *                        juxtaposed to file's name
  */
-char *handleFileDepth(liste_noeud *current, char *indent)
+char *handleFileIndentation(bool isIndentTheLast, liste_noeud *current, char *indent)
 {
-    char *prefix;
+    char *suffix;
     if (current->succ == NULL)
     {
-        prefix = NO_SPACE;
+        suffix = isIndentTheLast ? END_FILE : NO_SPACE;
     }
     else
     {
-        prefix = MID_FILE;
+        suffix = isIndentTheLast ? TOP_FILE : MID_FILE;
     }
 
-    return addToString(indent, prefix);
+    return addToString(indent, suffix);
 }
 
 /**
