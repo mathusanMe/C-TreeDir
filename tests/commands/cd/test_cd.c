@@ -39,9 +39,14 @@ bool test_valid_path()
 
 bool run_test_cd()
 {
+    create_test_tree_dir();
+
     bool result = test_path_empty();
     result &= test_path_is_incorrect();
     result &= test_path_contains_file();
     result &= test_valid_path();
+
+    free_test_tree_dir();
+
     return result;
 }
