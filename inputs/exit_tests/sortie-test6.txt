@@ -1,0 +1,49 @@
+[root]
+ ├─ [Rep1]
+ │   ├─ [Rep11]
+ │   │   └─ file111
+ │   └─ [Rep12]
+ │       ├─ file121
+ │       └─ file122
+ ├─ [Rep2]
+ │   ├─ file21
+ │   └─ file22
+ └─ [Rep3]
+     └─ [Rep31]
+         ├─ [Rep11]
+         │   └─ file111
+         └─ [Rep12]
+             ├─ file121
+             └─ file122
+Rep12 Rep311 
+/Rep1
+Rep11 Rep12
+[root]
+ ├─ [Rep1]
+ │   ├─ [Rep11]
+ │   │   └─ file111
+ │   └─ [Rep12]
+ │       ├─ file121
+ │       └─ file122
+ ├─ [Rep2]
+ │   ├─ file21
+ │   └─ file22
+ └─ [Rep3]
+     └─ [Rep31]
+         ├─ [Rep12]
+         │   ├─ file121
+         │   └─ file122
+         └─ [Rep311]
+[root]
+ ├─ [Rep1]
+ │   ├─ [Rep11]
+ │   │   └─ file111
+ │   └─ [Rep12]
+ │       ├─ file121
+ │       └─ file122
+ └─ [Rep3]
+     └─ [Rep31]
+         ├─ [Rep12]
+         │   ├─ file121
+         │   └─ file122
+         └─ [Rep311]

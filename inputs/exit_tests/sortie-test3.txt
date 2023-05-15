@@ -1,0 +1,13 @@
+[root]
+ └─ [Rep1]
+     └─ [Rep11]
+         └─ [Rep111]
+             └─ file1111
+/Rep2
+[root]
+ ├─ [Rep1]
+ │   └─ [Rep11]
+ │       └─ [Rep111]
+ │           └─ file1111
+ └─ [Rep2]
+     └─ file21
