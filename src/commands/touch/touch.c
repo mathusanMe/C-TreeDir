@@ -45,4 +45,14 @@ bool touch(noeud *current, char *name)
         printf("touch: failed to create node.\n");
         return false;
     }
+
+    last_child->succ = create_list_node(new_node, NULL);
+    if (last_child->succ == NULL)
+    {
+        printf("touch: failed to create list node.\n");
+        free(new_node);
+        return false;
+    }
+
+    return true;
 }
