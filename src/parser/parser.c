@@ -113,7 +113,7 @@ char **parse_arguments(char *command, int total_arguments)
         strToken = strtok(NULL, SEPARATORS);
         if (strToken == NULL)
         {
-            printf("Error: %s: not enough arguments", command);
+            printf("Error: %s: not enough arguments\n", command);
             exit(EXIT_FAILURE);
         }
 
@@ -124,7 +124,7 @@ char **parse_arguments(char *command, int total_arguments)
     strToken = strtok(NULL, SEPARATORS);
     if (strToken != NULL)
     {
-        printf("Error: %s: too much arguments", command);
+        printf("Error: %s: too much arguments\n", command);
         exit(EXIT_FAILURE);
     }
 
