@@ -6,17 +6,17 @@ SUCCESS_COLOR="cyan"
 FAILURE_COLOR="red"
 
 function testName() {
-    message="$*"
+    message=" |___ $*"
     ./colors.sh "$NAME_COLOR" "$message"
 }
 
 function testPass() {
-    message="    - $*"
+    message="    |____ $*"
     ./colors.sh "$SUCCESS_COLOR" "$message"
 }
 
 function testFail() {
-    message="    - $*"
+    message="    |____ $*"
     ./colors.sh "$FAILURE_COLOR" "$message"
 }
 

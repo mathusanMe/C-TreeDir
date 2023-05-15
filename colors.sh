@@ -2,7 +2,7 @@
 set +x
 
 function format_color() {
-    echo -e "\x1B[${1}m ${*:2} \x1B[0m"
+    echo -e "\x1B[${1}m${*:2}\x1B[0m"
 }
 
 function black() {
