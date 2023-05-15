@@ -37,7 +37,10 @@ bool pwd_rec(noeud *node)
         return true;
     }
 
-    pwd_rec(node->pere);
-    printf("%s/", node->nom);
-    return true;
+    if (pwd_rec(node->pere))
+    {
+        printf("%s/", node->nom);
+        return true;
+    }
+    return false;
 }
