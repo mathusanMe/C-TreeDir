@@ -35,7 +35,7 @@ runTests() {
         exit 1
     fi
 
-    ./program tests 
+    ./program test
 
     echo -e "\n====================" > $OUTPUT
 }
@@ -82,7 +82,8 @@ case "$1" in
     "test" | "tests")
         runTests
     ;;
-    * | "")
+    *)
+        echo "Usage: run.sh"
         run
     ;;
 esac
