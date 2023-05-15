@@ -1,10 +1,15 @@
-#include <stdlib.h>
-#include "utils/nodes.h"
-#include "commands/print/print.h"
+#include "main.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-    noeud root_node = {true, "", NULL, NULL, NULL};
-    print_node(&root_node);
+    if (argc == 2 && strcmp(argv[1], "test") == 0)
+    {
+        if (run_tests())
+        {
+            return EXIT_SUCCESS;
+        }
+        return EXIT_FAILURE;
+    }
+
     return EXIT_SUCCESS;
 }

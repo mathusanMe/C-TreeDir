@@ -37,6 +37,8 @@
 *.hex
 
 # Debug files
+*.log*
+*.err*
 *.dSYM/
 *.su
 *.idb
@@ -56,5 +58,11 @@ dkms.conf
 # PDF Files
 *.pdf
 
-# VSC
+# Visual Studio Code and its extensions
 .vscode/*
+.prettierignore
+
+# Mac OS
+.DS_Store
+
+program

@@ -1,10 +1,5 @@
 #include "print.h"
 
-#define TOP_FILE " ├─ "
-#define MID_FILE " |  "
-#define END_FILE " ⌎─ "
-#define NO_SPACE "    "
-
 /**
  * Used to print the root node of the tree
  * @param node the root of the tree

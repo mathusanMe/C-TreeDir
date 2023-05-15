@@ -1,6 +1,11 @@
 #ifndef PRINT_H
 #define PRINT_H
 
+#define TOP_FILE " ├─ "
+#define MID_FILE " │  "
+#define END_FILE " └─ "
+#define NO_SPACE "    "
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
