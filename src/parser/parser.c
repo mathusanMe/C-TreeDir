@@ -27,7 +27,7 @@ void parse_file(char *file_path)
         perror("Closing file caused an error.");
         printf("'%s' could not be closed.", file_path);
 
-        return NULL;
+        return;
     }
 
     exit(EXIT_SUCCESS);
