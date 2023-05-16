@@ -52,13 +52,13 @@ noeud *parse_line(noeud *current, char *line)
 
     else if (strcmp(strToken, "cd") == 0)
     {
-        arguments = malloc(NB_CD_ARGUMENTS * sizeof(char *));
+        arguments = calloc(NB_CD_ARGUMENTS, sizeof(char *));
 
         if (parse_arguments(strToken, "cd", NB_CD_ARGUMENTS, arguments))
         {
             current = cd(current, arguments[0]);
         }
-        else if (strToken == NULL)
+        else if ((strToken = strtok(NULL, SEPARATORS)) == NULL)
         {
             current = cd(current, "/");
         }
@@ -68,8 +68,10 @@ noeud *parse_line(noeud *current, char *line)
 
     else if (strcmp(strToken, "pwd") == 0)
     {
-        parse_arguments(strToken, "pwd", NB_PWD_ARGUMENTS, arguments);
-        // TODO: Send toward pwd command with no arguments
+        if (parse_arguments(strToken, "pwd", NB_PWD_ARGUMENTS, arguments))
+        {
+            pwd(current);
+        }
     }
 
     else if (strcmp(strToken, "mkdir") == 0)
@@ -88,8 +90,10 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_TOUCH_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "touch", NB_TOUCH_ARGUMENTS, arguments);
-        // TODO: Send toward touch command with one arguments
+        if (parse_arguments(strToken, "touch", NB_TOUCH_ARGUMENTS, arguments))
+        {
+            touch(current, arguments[0]);
+        }
 
         free_arguments(arguments, NB_TOUCH_ARGUMENTS);
     }
@@ -126,8 +130,10 @@ noeud *parse_line(noeud *current, char *line)
 
     else if (strcmp(strToken, "print") == 0)
     {
-        parse_arguments(strToken, "print", NB_PRINT_ARGUMENTS, arguments);
-        // TODO: Send toward print command with no arguments
+        if (parse_arguments(strToken, "print", NB_PRINT_ARGUMENTS, arguments))
+        {
+            print_node(current->racine);
+        }
     }
 
     return current;

@@ -24,7 +24,10 @@
 #include "../utils/string.h"
 #include "../commands/ls/ls.h"
 #include "../commands/cd/cd.h"
+#include "../commands/pwd/pwd.h"
 #include "../commands/mkdir/mkdir.h"
+#include "../commands/touch/touch.h"
+#include "../commands/print/print.h"
 
 bool parse_file(char *file_path);
 noeud *parse_line(noeud *current, char *line);
