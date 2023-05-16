@@ -40,11 +40,14 @@ bool test_current_node_is_correct()
 
 bool run_tests_pwd()
 {
-    bool result = true;
+    create_test_tree_dir();
 
-    result &= test_current_node_is_null();
+    display_test(-1, "pwd");
+    bool result = test_current_node_is_null();
     result &= test_current_node_is_root();
     result &= test_current_node_is_correct();
+
+    free_test_tree_dir();
 
     return result;
 }
