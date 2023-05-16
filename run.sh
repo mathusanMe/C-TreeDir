@@ -83,9 +83,7 @@ case "$1" in
         runTests
     ;;
     *)
-        echo "Usage: run.sh"
         run
     ;;
 esac
-
 exit 0
