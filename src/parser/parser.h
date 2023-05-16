@@ -2,7 +2,7 @@
 #define PARSER_H
 
 #define MAX_LINE_LENGTH 1000
-#define SEPARATORS " "
+#define SEPARATORS " \n"
 
 #define NB_LS_ARGUMENTS 0
 #define NB_CD_ARGUMENTS 1
@@ -28,6 +28,6 @@
 
 bool parse_file(char *file_path);
 noeud *parse_line(noeud *current, char *line);
-char **parse_arguments(char *command, int total_arguments);
+bool parse_arguments(char *strToken, char *command, int total_arguments, char **arguments);
 
 #endif
