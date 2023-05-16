@@ -27,8 +27,12 @@ bool parse_file(char *file_path)
         perror("Closing file caused an error.");
         printf("'%s' could not be closed.", file_path);
 
+        free_node(root);
+
         return false;
     }
+
+    free_node(root);
 
     return true;
 }
@@ -36,76 +40,101 @@ bool parse_file(char *file_path)
 noeud *parse_line(noeud *current, char *line)
 {
     char *strToken = strtok(line, SEPARATORS);
+    char **arguments = NULL;
 
     if (strcmp(strToken, "ls") == 0)
     {
-        parse_arguments("ls", NB_LS_ARGUMENTS);
-        ls(current, ".");
-        return current;
+        if (parse_arguments(strToken, "ls", NB_LS_ARGUMENTS, arguments))
+        {
+            ls(current, ".");
+        }
     }
 
-    if (strcmp(strToken, "cd") == 0)
+    else if (strcmp(strToken, "cd") == 0)
     {
-        // TODO: Disintguish cases
-        // TODO: Send toward cd command with associated arguments
+        arguments = malloc(NB_CD_ARGUMENTS * sizeof(char *));
 
-        return NULL;
+        if (parse_arguments(strToken, "cd", NB_CD_ARGUMENTS, arguments))
+        {
+            current = cd(current, arguments[0]);
+        }
+        else if (strToken == NULL)
+        {
+            current = cd(current, "/");
+        }
+
+        free_arguments(arguments, NB_CD_ARGUMENTS);
     }
 
-    if (strcmp(strToken, "pwd") == 0)
+    else if (strcmp(strToken, "pwd") == 0)
     {
-        parse_arguments("pwd", NB_PWD_ARGUMENTS);
+        parse_arguments(strToken, "pwd", NB_PWD_ARGUMENTS, arguments);
         // TODO: Send toward pwd command with no arguments
-        return current;
     }
 
-    if (strcmp(strToken, "mkdir") == 0)
+    else if (strcmp(strToken, "mkdir") == 0)
     {
-        char **arguments = parse_arguments("mkdir", NB_MKDIR_ARGUMENTS);
-        mkdir(current, arguments[0]);
-        return current;
+        arguments = malloc(NB_MKDIR_ARGUMENTS * sizeof(char *));
+
+        if (parse_arguments(strToken, "mkdir", NB_MKDIR_ARGUMENTS, arguments))
+        {
+            mkdir(current, arguments[0]);
+        }
+
+        free_arguments(arguments, NB_MKDIR_ARGUMENTS);
     }
 
-    if (strcmp(strToken, "touch") == 0)
+    else if (strcmp(strToken, "touch") == 0)
     {
-        char **arguments = parse_arguments("touch", NB_TOUCH_ARGUMENTS);
+        arguments = malloc(NB_TOUCH_ARGUMENTS * sizeof(char *));
+
+        parse_arguments(strToken, "touch", NB_TOUCH_ARGUMENTS, arguments);
         // TODO: Send toward touch command with one arguments
-        return current;
+
+        free_arguments(arguments, NB_TOUCH_ARGUMENTS);
     }
 
-    if (strcmp(strToken, "rm") == 0)
+    else if (strcmp(strToken, "rm") == 0)
     {
-        char **arguments = parse_arguments("rm", NB_RM_ARGUMENTS);
+        arguments = malloc(NB_RM_ARGUMENTS * sizeof(char *));
+
+        parse_arguments(strToken, "rm", NB_RM_ARGUMENTS, arguments);
         // TODO: Send toward rm command with one arguments
-        return current;
+
+        free_arguments(arguments, NB_RM_ARGUMENTS);
     }
 
-    if (strcmp(strToken, "cp") == 0)
+    else if (strcmp(strToken, "cp") == 0)
     {
-        char **arguments = parse_arguments("cp", NB_CP_ARGUMENTS);
+        arguments = malloc(NB_CP_ARGUMENTS * sizeof(char *));
+
+        parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments);
         // TODO: Send toward cp command with two arguments
-        return current;
+
+        free_arguments(arguments, NB_CP_ARGUMENTS);
     }
 
-    if (strcmp(strToken, "mv") == 0)
+    else if (strcmp(strToken, "mv") == 0)
     {
-        char **arguments = parse_arguments("mv", NB_MV_ARGUMENTS);
+        arguments = malloc(NB_MV_ARGUMENTS * sizeof(char *));
+
+        parse_arguments(strToken, "mv", NB_MV_ARGUMENTS, arguments);
         // TODO: Send toward mv command with two arguments
-        return current;
+
+        free_arguments(arguments, NB_MV_ARGUMENTS);
     }
 
-    if (strcmp(strToken, "print") == 0)
+    else if (strcmp(strToken, "print") == 0)
     {
-        parse_arguments("print", NB_PRINT_ARGUMENTS);
+        parse_arguments(strToken, "print", NB_PRINT_ARGUMENTS, arguments);
         // TODO: Send toward print command with no arguments
-        return current;
     }
+
+    return current;
 }
 
-char **parse_arguments(char *command, int total_arguments)
+bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments)
 {
-    char *strToken = NULL;
-    char **arguments = malloc(MAX_ARGUMENTS * sizeof(char *));
     int increment = 0;
 
     while (increment < total_arguments)
@@ -114,10 +143,20 @@ char **parse_arguments(char *command, int total_arguments)
         if (strToken == NULL)
         {
             printf("Error: %s: not enough arguments\n", command);
-            exit(EXIT_FAILURE);
+            return false;
         }
 
-        *(arguments + increment) = strToken;
+        *(arguments + increment) = malloc((strlen(strToken) + 1) * sizeof(char));
+
+        if (*(arguments + increment) == NULL)
+        {
+            printf("Error %s: Unable to allocate memory.\n", command);
+
+            return false;
+        }
+
+        strcpy(*(arguments + increment), strToken);
+
         ++increment;
     }
 
@@ -125,8 +164,18 @@ char **parse_arguments(char *command, int total_arguments)
     if (strToken != NULL && !is_string_blank(strToken) && !contains_newline(strToken))
     {
         printf("Error: %s: too much arguments\n", command);
-        exit(EXIT_FAILURE);
+        return false;
     }
 
-    return arguments;
+    return true;
+}
+
+void free_arguments(char **args, size_t size)
+{
+    for (size_t index = 0; index < size; ++index)
+    {
+        free(*(args + index));
+    }
+
+    free(args);
 }

@@ -28,6 +28,7 @@
 
 bool parse_file(char *file_path);
 noeud *parse_line(noeud *current, char *line);
-bool parse_arguments(char *strToken, char *command, int total_arguments, char **arguments);
+bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments);
+void free_arguments(char **args, size_t size);
 
 #endif
