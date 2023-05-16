@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
-#include "../../utils/display_test.h"
+#include "../utils/display_test.h"
 #include "../../src/parser/parser.h"
 
 bool test_inputs(char *path, size_t number_of_tests);
