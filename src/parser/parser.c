@@ -40,7 +40,7 @@ noeud *parse_line(noeud *current, char *line)
     if (strcmp(strToken, "ls") == 0)
     {
         parse_arguments("ls", NB_LS_ARGUMENTS);
-        // TODO: Send toward ls command with no arguments
+        ls(current, ".");
         return current;
     }
 
