@@ -2,6 +2,7 @@
 
 bool test_inputs(char *path, size_t number_of_tests)
 {
+    bool is_valid = false;
     for (size_t index = 1; index <= number_of_tests; ++index)
     {
         char *input_path = malloc((strlen(path) + 1) * sizeof(char));
@@ -12,9 +13,10 @@ bool test_inputs(char *path, size_t number_of_tests)
             return false;
         }
 
-        test_an_input(input_path);
+        is_valid &= test_an_input(input_path);
         free(input_path);
     }
+    return is_valid;
 }
 
 bool test_an_input(char *input_path)
