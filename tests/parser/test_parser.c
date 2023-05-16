@@ -2,7 +2,7 @@
 
 bool test_inputs(char *path, size_t number_of_tests)
 {
-    if (path == NULL || number_of_tests == NULL)
+    if (path == NULL)
     {
         return false;
     }
