@@ -48,7 +48,7 @@ bool test_valid_path()
     return is_valid;
 }
 
-bool run_test_cd()
+bool run_tests_cd()
 {
     create_test_tree_dir();
 

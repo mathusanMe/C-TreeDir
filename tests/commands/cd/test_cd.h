@@ -12,6 +12,6 @@ bool test_path_is_empty();
 bool test_path_is_incorrect();
 bool test_path_contains_file();
 bool test_valid_path();
-bool run_test_cd();
+bool run_tests_cd();
 
 #endif

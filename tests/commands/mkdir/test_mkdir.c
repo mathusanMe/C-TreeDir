@@ -42,7 +42,7 @@ bool mkdir_test_name_already_exists()
     return is_valid;
 }
 
-bool run_test_mkdir()
+bool run_tests_mkdir()
 {
     create_test_tree_dir();
 
