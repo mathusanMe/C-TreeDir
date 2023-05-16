@@ -1,15 +1,15 @@
-#include "mkdir.h"
+#include "touch.h"
 
-bool mkdir(noeud *current, char *name)
+bool touch(noeud *current, char *name)
 {
-    if (current == NULL || !is_name_valid(name, "mkdir"))
+    if (current == NULL || !is_name_valid(name, "touch"))
     {
         return false;
     }
 
     if (!current->est_dossier)
     {
-        printf("mkdir: %s is not a folder.\n", current->nom);
+        printf("touch: %s is not a folder.\n", current->nom);
         return false;
     }
 
@@ -20,7 +20,7 @@ bool mkdir(noeud *current, char *name)
         current->fils = malloc(sizeof(liste_noeud));
         if (current->fils == NULL)
         {
-            printf("mkdir: failed to allocate memory.\n");
+            printf("touch: failed to allocate memory.\n");
             return false;
         }
         current->fils->no = create_node(name, true, current, current->racine);
@@ -34,34 +34,22 @@ bool mkdir(noeud *current, char *name)
     {
         if (strcmp(children->no->nom, name) == 0)
         {
-            printf("mkdir: the folder already exists.\n");
+            printf("touch: file already exists.\n");
             return false;
         }
     }
 
-    noeud *new_node = create_node(name, true, current, current->racine);
+    noeud *new_node = create_node(name, false, current, current->racine);
     if (new_node == NULL)
     {
-        printf("mkdir: failed to create node.\n");
+        printf("touch: failed to create node.\n");
         return false;
-    }
-
-    if (last_child == NULL)
-    {
-        current->fils = create_list_node(new_node, NULL);
-        if (current->fils == NULL)
-        {
-            printf("mkdir: failed to create list node.\n");
-            free(new_node);
-            return false;
-        }
-        return true;
     }
 
     last_child->succ = create_list_node(new_node, NULL);
     if (last_child->succ == NULL)
     {
-        printf("mkdir: failed to create list node.\n");
+        printf("touch: failed to create list node.\n");
         free(new_node);
         return false;
     }

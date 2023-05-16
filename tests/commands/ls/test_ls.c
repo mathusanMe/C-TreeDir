@@ -29,9 +29,14 @@ bool test_path_to_directory_with_files()
 
 bool run_test_ls()
 {
+    create_test_tree_dir();
+
     display_test(-1, "ls");
     bool result = test_path_to_file();
     result &= test_path_to_empty_directory();
     result &= test_path_to_directory_with_files();
+
+    free_test_tree_dir();
+
     return result;
 }

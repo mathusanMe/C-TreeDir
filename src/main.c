@@ -1,9 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "utils/string.h"
-#include "parser/parser.h"
-#include "utils/nodes.h"
-#include "../tests/main_test.h"
+#include "main.h"
 
 #define TESTS_KEYS                       \
     {                                    \
