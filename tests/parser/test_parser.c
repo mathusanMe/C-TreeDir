@@ -2,6 +2,11 @@
 
 bool test_inputs(char *path, size_t number_of_tests)
 {
+    if (path == NULL || number_of_tests == NULL)
+    {
+        return false;
+    }
+
     bool is_valid = false;
     for (size_t index = 1; index <= number_of_tests; ++index)
     {
