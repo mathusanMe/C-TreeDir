@@ -122,7 +122,7 @@ char **parse_arguments(char *command, int total_arguments)
     }
 
     strToken = strtok(NULL, SEPARATORS);
-    if (strToken != NULL)
+    if (strToken != NULL && !is_string_blank(strToken) && !contains_newline(strToken))
     {
         printf("Error: %s: too much arguments\n", command);
         exit(EXIT_FAILURE);

@@ -21,6 +21,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "../utils/nodes.h"
+#include "../utils/string.h"
 #include "../commands/ls/ls.h"
 #include "../commands/cd/cd.h"
 #include "../commands/mkdir/mkdir.h"
