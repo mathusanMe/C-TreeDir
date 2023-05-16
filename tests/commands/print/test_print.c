@@ -11,7 +11,12 @@ bool test_print_test_tree()
 
 bool run_tests_print()
 {
+    create_test_tree_dir();
+
     display_test(-1, "print");
     bool result = test_print_test_tree();
+
+    free_test_tree_dir();
+
     return result;
 }

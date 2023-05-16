@@ -1,11 +1,11 @@
-#ifndef MKDIR_H
-#define MKDIR_H
+#ifndef TOUCH_H
+#define TOUCH_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../utils/nodes.h"
 #include "../../utils/string.h"
 
-bool mkdir(noeud *current, char *name);
+bool touch(noeud *current, char *name);
 
 #endif
