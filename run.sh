@@ -58,6 +58,15 @@ run() {
     echo "==================" > $OUTPUT
 }
 
+launchValgrind() {
+    if [ "$OUTPUT" = "/dev/stdout" ]; then
+        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program tests;
+    else
+        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program tests;
+    fi
+    
+}
+
 while getopts ':av' OPTION; do
     case "$OPTION" in
         v)
@@ -81,6 +90,10 @@ case "$1" in
     ;;
     "test" | "tests")
         runTests
+    ;;
+    "valgrind")
+        compile
+        launchValgrind        
     ;;
     *)
         run
