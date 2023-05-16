@@ -1,6 +1,6 @@
 #include "parser.h"
 
-void parse_file(char *file_path)
+bool parse_file(char *file_path)
 {
     char line[MAX_LINE_LENGTH];
     FILE *file = fopen(file_path, "r");
@@ -10,7 +10,7 @@ void parse_file(char *file_path)
         perror("Opening file caused an error.");
         printf("'%s' could not be opened.", file_path);
 
-        exit(EXIT_FAILURE);
+        return false;
     }
 
     noeud *root; // = create_root()
@@ -27,10 +27,10 @@ void parse_file(char *file_path)
         perror("Closing file caused an error.");
         printf("'%s' could not be closed.", file_path);
 
-        return;
+        return false;
     }
 
-    exit(EXIT_SUCCESS);
+    return true;
 }
 
 noeud *parse_line(noeud *current, char *line)
