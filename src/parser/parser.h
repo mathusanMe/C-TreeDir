@@ -21,6 +21,9 @@
 #include <string.h>
 #include <stdbool.h>
 #include "../utils/nodes.h"
+#include "../commands/ls/ls.h"
+#include "../commands/cd/cd.h"
+#include "../commands/mkdir/mkdir.h"
 
 bool parse_file(char *file_path);
 noeud *parse_line(noeud *current, char *line);
