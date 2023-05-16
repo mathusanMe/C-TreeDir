@@ -13,7 +13,7 @@ bool parse_file(char *file_path)
         return false;
     }
 
-    noeud *root; // = create_root()
+    noeud *root = create_root();
     noeud *current = root;
 
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
