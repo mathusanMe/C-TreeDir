@@ -25,6 +25,20 @@ bool is_string_blank(char *str)
     return true;
 }
 
+bool contains_newline(char *str)
+{
+    while (*str != '\0')
+    {
+        // printf("%s\n", *str == '\n' ? "true" : "false");
+        if (*str == '\n')
+        {
+            return true;
+        }
+        str++;
+    }
+    return false;
+}
+
 bool is_string_alnum(char *str)
 {
     while (*str != '\0')
