@@ -76,10 +76,10 @@ done
 shift $((OPTIND - 1))
 
 case "$1" in
-    "compile")
+    "compile" | "--compile")
         compile
     ;;
-    "test" | "tests")
+    "test" | "tests" | "--test" | "--tests")
         runTests
     ;;
     *)
