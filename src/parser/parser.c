@@ -62,7 +62,7 @@ noeud *parse_line(noeud *current, char *line)
     if (strcmp(strToken, "mkdir") == 0)
     {
         char **arguments = parse_arguments("mkdir", NB_MKDIR_ARGUMENTS);
-        // TODO: Send toward mkdir command with one arguments
+        mkdir(current, arguments[0]);
         return current;
     }
 
