@@ -47,6 +47,7 @@ bool run_tests_touch()
 {
     create_test_tree_dir();
 
+    display_test(-1, "touch");
     bool result = true;
     result &= touch_test_name_empty();
     result &= touch_test_name_contains_non_alnum_char();

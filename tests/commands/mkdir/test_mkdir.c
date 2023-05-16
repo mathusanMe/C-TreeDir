@@ -46,8 +46,8 @@ bool run_test_mkdir()
 {
     create_test_tree_dir();
 
-    bool result = true;
-    result &= mkdir_test_name_empty();
+    display_test(-1, "mkdir");
+    bool result = mkdir_test_name_empty();
     result &= mkdir_test_name_contains_non_alnum_char();
     result &= mkdir_test_name_too_long();
     result &= mkdir_test_name_already_exists();
