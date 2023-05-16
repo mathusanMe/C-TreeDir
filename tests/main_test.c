@@ -9,6 +9,7 @@ bool run_tests()
     all_tests_passed &= run_tests_touch();
     all_tests_passed &= run_tests_cd();
     all_tests_passed &= run_test_ls();
+    all_tests_passed &= run_tests_print();
     all_tests_passed &= run_tests_pwd();
 
     return all_tests_passed;

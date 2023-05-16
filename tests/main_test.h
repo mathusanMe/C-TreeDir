@@ -8,6 +8,7 @@
 #include "commands/cd/test_cd.h"
 #include "commands/touch/test_touch.h"
 #include "commands/ls/test_ls.h"
+#include "commands/print/test_print.h"
 #include "commands/pwd/test_pwd.h"
 
 bool run_tests();

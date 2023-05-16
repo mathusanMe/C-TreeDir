@@ -132,7 +132,6 @@ int time = 0; // Time in seconds since the beginning of the game
 ### Tests
 
 - Any code that is not tested will not be accepted
-
 - Tests are expected for the majority of functions
 - It is expected that tests be independent of each other (no dependency between tests)
 - One test per function and per test case is expected, _e.g._

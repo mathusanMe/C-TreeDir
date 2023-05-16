@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "utils/nodes.h"
-#include "../tests/main_test.h"
+#include "main.h"
 
 int main(int argc, char *argv[])
 {
