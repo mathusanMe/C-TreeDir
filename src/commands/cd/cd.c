@@ -22,7 +22,6 @@ noeud *cd(noeud *current, char *path)
 
     if (modifiable_path[0] == '\0')
     {
-        printf("cd: path is empty, returning to root.\n");
         free(modifiable_path);
         return current->racine;
     }
