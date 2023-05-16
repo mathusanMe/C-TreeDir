@@ -8,6 +8,7 @@
 #include "commands/mkdir/test_mkdir.h"
 #include "commands/cd/test_cd.h"
 #include "commands/ls/test_ls.h"
+#include "parser/test_parser.h"
 
 bool run_tests();
 
