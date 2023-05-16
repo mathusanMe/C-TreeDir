@@ -15,7 +15,7 @@ jobs:
       - name: "Check out repository"
         uses: actions/checkout@v3
       - name: "Compile Project"
-        run: ./run.sh --compile
+        run: ./run.sh compile
       - name: "Tests"
         run: ./program test
       - name: "Search for memory leaks"
