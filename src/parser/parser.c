@@ -60,7 +60,12 @@ noeud *parse_line(noeud *current, char *line)
         }
         else if ((strToken = strtok(NULL, SEPARATORS)) == NULL)
         {
-            current = cd(current, "/");
+            noeud *node = cd(current, "/");
+
+            if (node != NULL)
+            {
+                current = node;
+            }
         }
 
         free_arguments(arguments, NB_CD_ARGUMENTS);
