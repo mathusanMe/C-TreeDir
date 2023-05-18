@@ -133,8 +133,10 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_MV_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "mv", NB_MV_ARGUMENTS, arguments);
-        // TODO: Send toward mv command with two arguments
+        if (parse_arguments(strToken, "mv", NB_MV_ARGUMENTS, arguments))
+        {
+            mv(current, arguments[0], arguments[1]);
+        }
 
         free_arguments(arguments, NB_MV_ARGUMENTS);
     }
