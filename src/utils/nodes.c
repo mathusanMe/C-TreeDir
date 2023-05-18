@@ -141,7 +141,11 @@ nearest *get_nearest(noeud *current, char *path)
     }
 
     nearest *nrst = malloc(sizeof(nearest));
-    nrst->name = malloc(sizeof(char) * 99);
+    if (nrst == NULL)
+    {
+        printf("get_nearest: nrst is NULL.\n");
+        return NULL;
+    }
 
     if (nrst == NULL)
     {
@@ -152,7 +156,7 @@ nearest *get_nearest(noeud *current, char *path)
     if (modifiable_path[0] == '\0')
     {
         nrst->parent = current->pere;
-        strcpy(nrst->name, current->nom);
+        nrst->name = current->nom;
         free(modifiable_path);
         return nrst;
     }
@@ -194,7 +198,7 @@ nearest *get_nearest(noeud *current, char *path)
                 if (next_token == NULL)
                 {
                     nrst->parent = tmp->pere;
-                    strcpy(nrst->name, tmp->nom);
+                    nrst->name = tmp->nom;
                     free(modifiable_path);
                     return nrst;
                 }
@@ -204,7 +208,7 @@ nearest *get_nearest(noeud *current, char *path)
                 if (next_token == NULL)
                 {
                     nrst->parent = tmp->pere;
-                    strcpy(nrst->name, tmp->nom);
+                    nrst->name = tmp->nom;
                     free(modifiable_path);
                     return nrst;
                 }
@@ -232,7 +236,7 @@ nearest *get_nearest(noeud *current, char *path)
                         return NULL;
                     }
                     nrst->parent = tmp;
-                    strcpy(nrst->name, current_child->no->nom);
+                    nrst->name = current_child->no->nom;
                     free(modifiable_path);
                     return nrst;
                 }
@@ -252,7 +256,7 @@ nearest *get_nearest(noeud *current, char *path)
             }
 
             nrst->parent = tmp;
-            strcpy(nrst->name, next_token);
+            nrst->name = next_token;
             free(modifiable_path);
             return nrst;
         }
