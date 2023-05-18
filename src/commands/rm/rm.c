@@ -4,7 +4,7 @@ void rm(noeud *current, char *path)
 {
 }
 
-void is_path_a_parent(noeud *node_to_rm)
+bool is_path_a_parent(noeud *current, noeud *node_to_rm_parent, char *node_to_rm)
 {
 }
 
