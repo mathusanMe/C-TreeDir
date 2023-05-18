@@ -41,7 +41,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
         return true;
     }
 
-    for (liste_noeud *child = children->succ; child != NULL; child = child->succ)
+    for (liste_noeud *child = children->succ; child != NULL; child = child->succ, children = children->succ)
     {
         if ((strcmp(child->no->nom, name)) == 0)
         {
