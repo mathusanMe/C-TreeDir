@@ -317,6 +317,15 @@ nearest *get_nearest(noeud *current, char *path)
             return nrst;
         }
     }
+
+    if (tmp->est_dossier)
+    {
+        nrst->parent = tmp;
+        strcpy(nrst->name, tmp->nom);
+        free(modifiable_path);
+        return nrst;
+    }
+
     nrst->parent = tmp->pere;
     strcpy(nrst->name, tmp->nom);
     free(modifiable_path);
