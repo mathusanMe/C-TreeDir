@@ -267,6 +267,11 @@ nearest *get_nearest(noeud *current, char *path)
     return nrst;
 }
 
+bool is_nearest_null(nearest *nrst)
+{
+    return nrst == NULL || nrst->parent == NULL || nrst->name == NULL;
+}
+
 noeud *get_test_tree_dir()
 {
     return test_tree_dir;
