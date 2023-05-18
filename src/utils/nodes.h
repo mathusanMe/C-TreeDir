@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "string.h"
 
 struct noeud;
 struct liste_noeud;
