@@ -27,6 +27,12 @@ struct liste_noeud
 typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
 
+typedef struct nearest
+{
+    noeud *parent;
+    char *name;
+} nearest;
+
 extern noeud *test_tree_dir;
 
 noeud *create_root();
@@ -36,6 +42,8 @@ bool add_child(noeud *parent, noeud *child);
 void print_node(noeud *node);
 void free_node(noeud *node);
 void free_node_list(liste_noeud *list);
+
+nearest *get_nearest(noeud *current, char *path);
 
 // Test tree dir
 void create_test_tree_dir();
