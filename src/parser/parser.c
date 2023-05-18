@@ -123,8 +123,9 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_CP_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments);
-        // TODO: Send toward cp command with two arguments
+        if (parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments)) {
+            cp(current, arguments[0], arguments[1]);
+        }
 
         free_arguments(arguments, NB_CP_ARGUMENTS);
     }

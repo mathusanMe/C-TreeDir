@@ -51,6 +51,8 @@ bool add_child(noeud *parent, noeud *child)
         return false;
     }
 
+    child->pere = parent;
+
     liste_noeud *children = parent->fils;
     if (children == NULL)
     {
@@ -81,6 +83,7 @@ bool add_child(noeud *parent, noeud *child)
     {
         last_child->succ = new_list_node;
     }
+
     return true;
 }
 
@@ -132,11 +135,18 @@ nearest *get_nearest(noeud *current, char *path)
     }
 
     nearest *nrst = malloc(sizeof(nearest));
-    nrst->name = malloc(sizeof(char) * 99);
 
     if (nrst == NULL)
     {
         printf("get_nearest: nrst is NULL.\n");
+        return NULL;
+    }
+
+    nrst->name = malloc(sizeof(char) * 99);
+
+    if (nrst->name == NULL)
+    {
+        printf("get_nearest: nrst->name is NULL.\n");
         return NULL;
     }
 

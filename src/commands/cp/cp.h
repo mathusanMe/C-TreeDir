@@ -9,5 +9,7 @@
 #include "../cd/cd.h"
 
 void cp(noeud *current, char *src, char *dest);
+bool is_ancestor_to(noeud *nodeA, noeud *nodeB);
+noeud *deep_copy_node(noeud *node);
 
 #endif
