@@ -4,12 +4,14 @@ bool rm(noeud *current, char *path)
 {
     nearest *nrst = get_nearest(current, path);
 
-    if (nrst != NULL || nrst->parent == NULL || nrst->name == NULL)
+    if (nrst == NULL || nrst->parent == NULL || nrst->name == NULL)
     {
-        exit_system("rm: error while getting nearest dir.\n", 1);
+        exit_system("rm: error while getting nearest dir. exit program.\n", 1);
     }
 
-    return remove_child(current, nrst->parent, nrst->name);
+    bool deleted = remove_child(current, nrst->parent, nrst->name);
+    free(nrst);
+    return deleted;
 }
 
 bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
@@ -23,7 +25,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
 
     if (children == NULL)
     {
-        exit_system("rm: file does not exist.", 1);
+        exit_system("rm: file does not exist. exit program.", 1);
     }
 
     noeud *first_child = children->no;
@@ -31,7 +33,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
     {
         if (is_file_a_parent(current, first_child))
         {
-            exit_system("rm: cannot delete a parent folder.\n", 1);
+            exit_system("rm: cannot delete a parent folder. exit program.\n", 1);
         }
 
         to_delete_parent->fils = children->succ;
@@ -47,7 +49,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
 
             if (is_file_a_parent(current, to_delete))
             {
-                exit_system("rm: cannot delete a parent folder.\n", 1);
+                exit_system("rm: cannot delete a parent folder. exit program.\n", 1);
             }
 
             children->succ = child->succ;
@@ -79,4 +81,6 @@ bool is_file_a_parent(noeud *current, noeud *node_to_rm)
 
 void exit_system(char *message, int code)
 {
+    printf("%s\n", message);
+    exit(code);
 }
