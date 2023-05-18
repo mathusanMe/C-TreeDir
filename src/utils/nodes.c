@@ -139,6 +139,7 @@ nearest *get_nearest(noeud *current, char *path)
     if (nrst == NULL)
     {
         printf("get_nearest: nrst is NULL.\n");
+        free(modifiable_path);
         return NULL;
     }
 
@@ -147,6 +148,8 @@ nearest *get_nearest(noeud *current, char *path)
     if (nrst->name == NULL)
     {
         printf("get_nearest: nrst->name is NULL.\n");
+        free(modifiable_path);
+        free(nrst);
         return NULL;
     }
 
@@ -179,6 +182,7 @@ nearest *get_nearest(noeud *current, char *path)
             if (tmp->pere == NULL)
             {
                 free(modifiable_path);
+                free(nrst->name);
                 free(nrst);
                 return NULL;
             }
@@ -248,6 +252,7 @@ nearest *get_nearest(noeud *current, char *path)
             if (strtok(NULL, "/") != NULL)
             {
                 free(modifiable_path);
+                free(nrst->name);
                 free(nrst);
                 return NULL;
             }
@@ -259,6 +264,7 @@ nearest *get_nearest(noeud *current, char *path)
         }
     }
     nrst->parent = tmp->pere;
+    free(nrst->name);
     nrst->name = tmp->nom;
     free(modifiable_path);
     return nrst;
