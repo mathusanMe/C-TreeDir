@@ -12,7 +12,7 @@
 #include <string.h>
 #include "../../utils/nodes.h"
 
-void print_node(noeud *node);
+void print(noeud *node);
 void print_node_tab(noeud *node, char *pretab, char *indent);
 char *handleFileTypePrinting(noeud *node);
 char *handleFileIndentation(bool isParentDirTheLast, liste_noeud *current, char *indent);

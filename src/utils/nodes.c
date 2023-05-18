@@ -84,6 +84,15 @@ bool add_child(noeud *parent, noeud *child)
     return true;
 }
 
+void print_node(noeud *node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+    printf("[%c][%s]\n", node->est_dossier ? 'D' : 'F', node->nom);
+}
+
 void free_node(noeud *node)
 {
     if (node == NULL)
