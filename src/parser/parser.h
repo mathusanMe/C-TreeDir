@@ -4,7 +4,7 @@
 #define MAX_LINE_LENGTH 1000
 #define SEPARATORS " \n"
 
-#define NB_LS_ARGUMENTS 0
+#define NB_LS_ARGUMENTS 1
 #define NB_CD_ARGUMENTS 1
 #define NB_PWD_ARGUMENTS 0
 #define NB_MKDIR_ARGUMENTS 1
