@@ -2,7 +2,8 @@
 
 noeud *test_tree_dir = NULL;
 
-bool is_equal(noeud *nodeA, noeud * nodeB, bool initial_call) {
+bool is_equal(noeud *nodeA, noeud *nodeB, bool initial_call)
+{
     if (nodeA == NULL || nodeB == NULL)
     {
         return false;
@@ -206,7 +207,16 @@ nearest *get_nearest(noeud *current, char *path)
     if (modifiable_path[0] == '/')
     {
         nearest *nrst_rec = get_nearest(current->racine, modifiable_path + 1);
+        if (nrst_rec == NULL)
+        {
+            free(modifiable_path);
+            free(nrst->name);
+            free(nrst);
+            return NULL;
+        }
+        free(nrst->name);
         free(modifiable_path);
+        free(nrst);
         return nrst_rec;
     }
 
@@ -258,6 +268,7 @@ nearest *get_nearest(noeud *current, char *path)
                 else
                 {
                     free(modifiable_path);
+                    free(nrst->name);
                     free(nrst);
                     return NULL;
                 }
@@ -275,6 +286,7 @@ nearest *get_nearest(noeud *current, char *path)
                     if (strtok(NULL, "/") != NULL)
                     {
                         free(modifiable_path);
+                        free(nrst->name);
                         free(nrst);
                         return NULL;
                     }
@@ -306,8 +318,7 @@ nearest *get_nearest(noeud *current, char *path)
         }
     }
     nrst->parent = tmp->pere;
-    free(nrst->name);
-    nrst->name = tmp->nom;
+    strcpy(nrst->name, tmp->nom);
     free(modifiable_path);
     return nrst;
 }

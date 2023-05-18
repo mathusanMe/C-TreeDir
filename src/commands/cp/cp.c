@@ -34,9 +34,15 @@ void cp(noeud *current, char *src, char *dest)
     if (nrst_dest->parent == NULL || nrst_dest->name == NULL)
     {
         printf("cp: %s: No such file or directory - dest\n", dest);
-        free(nrst_src->name);
+        if (nrst_src->name != NULL)
+        {
+            free(nrst_src->name);
+        }
+        if (nrst_dest->name != NULL)
+        {
+            free(nrst_dest->name);
+        }
         free(nrst_src);
-        free(nrst_dest->name);
         free(nrst_dest);
         return;
     }
@@ -84,9 +90,15 @@ void cp(noeud *current, char *src, char *dest)
     if (copy_src_node == NULL)
     {
         printf("cp: %s: node can't be copied\n", src_node->nom);
-        free(nrst_src->name);
+        if (nrst_src->name != NULL)
+        {
+            free(nrst_src->name);
+        }
+        if (nrst_dest->name != NULL)
+        {
+            free(nrst_dest->name);
+        }
         free(nrst_src);
-        free(nrst_dest->name);
         free(nrst_dest);
         return;
     }
@@ -100,8 +112,15 @@ void cp(noeud *current, char *src, char *dest)
 
     add_child(dest_node, copy_src_node);
 
+    if (nrst_src->name != NULL)
+    {
+        free(nrst_src->name);
+    }
+    if (nrst_dest->name != NULL)
+    {
+        free(nrst_dest->name);
+    }
     free(nrst_src);
-    free(nrst_dest->name);
     free(nrst_dest);
 }
 
