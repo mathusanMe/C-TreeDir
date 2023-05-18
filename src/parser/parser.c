@@ -40,10 +40,12 @@ bool parse_file(char *file_path)
 noeud *parse_line(noeud *current, char *line)
 {
     char *strToken = strtok(line, SEPARATORS);
-    char **arguments = malloc(NB_LS_ARGUMENTS * sizeof(char *));
+    char **arguments = NULL;
 
     if (strcmp(strToken, "ls") == 0)
     {
+        arguments = calloc(NB_LS_ARGUMENTS, sizeof(char *));
+
         if (parse_arguments(strToken, "ls", NB_LS_ARGUMENTS, arguments))
         {
             ls(current, arguments[0]);
