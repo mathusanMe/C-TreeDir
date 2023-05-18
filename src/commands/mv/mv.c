@@ -10,10 +10,34 @@ bool mv(noeud *current, char *src, char *dest)
         exit_system("mv: cannot allocate memory.\n", 1);
     }
 
+    update_destination(dest_nrst, src_nrst->name);
+
     bool moved = move(current, src_nrst, dest_nrst);
     free(src_nrst);
     free(dest_nrst);
     return moved;
+}
+
+void update_destination(nearest *nrst, char *name)
+{
+    if (is_nearest_null(nrst))
+    {
+        return;
+    }
+
+    for (liste_noeud *children = nrst->parent->fils; children != NULL; children = children->succ)
+    {
+        noeud *child = children->no;
+        if ((strcmp(child->nom, nrst->name)) == 0)
+        {
+            if (child->est_dossier)
+            {
+                nrst->parent = child;
+                nrst->name = name;
+            }
+            return;
+        }
+    }
 }
 
 bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
