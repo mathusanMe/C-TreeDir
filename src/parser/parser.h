@@ -27,6 +27,7 @@
 #include "../commands/pwd/pwd.h"
 #include "../commands/mkdir/mkdir.h"
 #include "../commands/touch/touch.h"
+#include "../commands/rm/rm.h"
 #include "../commands/print/print.h"
 
 bool parse_file(char *file_path);
