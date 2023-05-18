@@ -2,6 +2,48 @@
 
 noeud *test_tree_dir = NULL;
 
+bool is_equal(noeud *nodeA, noeud * nodeB, bool initial_call) {
+    if (nodeA == NULL || nodeB == NULL)
+    {
+        return false;
+    }
+
+    if (!initial_call && strcmp(nodeA->nom, nodeB->nom) != 0)
+    {
+        return false;
+    }
+
+    if (nodeA->racine != nodeB->racine)
+    {
+        return false;
+    }
+
+    if (nodeA->est_dossier != nodeB->est_dossier)
+    {
+        return false;
+    }
+
+    if (nodeA->fils == NULL && nodeB->fils == NULL)
+    {
+        return true;
+    }
+
+    if (nodeA->fils == NULL || nodeB->fils == NULL)
+    {
+        return false;
+    }
+
+    for (liste_noeud *tmpA = nodeA->fils, *tmpB = nodeB->fils; tmpA != NULL && tmpB != NULL; tmpA = tmpA->succ, tmpB = tmpB->succ)
+    {
+        if (!is_equal(tmpA->no, tmpB->no, false))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 noeud *create_root()
 {
     noeud *root = create_node("", true, NULL, NULL);

@@ -59,7 +59,7 @@ void cp(noeud *current, char *src, char *dest)
         }
     }
 
-    if(src_node == NULL)
+    if (src_node == NULL)
     {
         printf("cp: %s: No source node found\n", src);
         free(nrst_src->name);
@@ -78,7 +78,6 @@ void cp(noeud *current, char *src, char *dest)
         free(nrst_dest);
         return;
     }
-
 
     noeud *copy_src_node = deep_copy_node(src_node);
 
@@ -106,7 +105,8 @@ void cp(noeud *current, char *src, char *dest)
     free(nrst_dest);
 }
 
-bool is_ancestor_to(noeud *nodeA, noeud *nodeB) {
+bool is_ancestor_to(noeud *nodeA, noeud *nodeB)
+{
     if (nodeA == NULL || nodeB == NULL)
     {
         return false;
@@ -125,7 +125,8 @@ bool is_ancestor_to(noeud *nodeA, noeud *nodeB) {
     return is_ancestor_to(nodeA, nodeB->pere);
 }
 
-noeud *deep_copy_node(noeud *node) {
+noeud *deep_copy_node(noeud *node)
+{
     noeud *copy_node = malloc(sizeof(noeud));
 
     if (copy_node == NULL)
