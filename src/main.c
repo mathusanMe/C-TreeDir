@@ -1,8 +1,22 @@
 #include "main.h"
 
+#define TESTS_KEYS                       \
+    {                                    \
+        "test", "tests", "TEST", "TESTS" \
+    }
+
+#define TESTS_KEYS_SIZE 4
+
 int main(int argc, char *argv[])
 {
-    if (argc == 2 && strcmp(argv[1], "test") == 0)
+    if (argc != 2)
+    {
+        return EXIT_FAILURE;
+    }
+
+    char *tests_keys[] = TESTS_KEYS;
+
+    if (contains(tests_keys, TESTS_KEYS_SIZE, argv[1]))
     {
         if (run_tests())
         {
@@ -10,6 +24,8 @@ int main(int argc, char *argv[])
         }
         return EXIT_FAILURE;
     }
+
+    parse_file(argv[1]);
 
     return EXIT_SUCCESS;
 }

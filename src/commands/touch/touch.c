@@ -23,7 +23,7 @@ bool touch(noeud *current, char *name)
             printf("touch: failed to allocate memory.\n");
             return false;
         }
-        current->fils->no = create_node(name, true, current, current->racine);
+        current->fils->no = create_node(name, false, current, current->racine);
         current->fils->succ = NULL;
         return true;
     }
