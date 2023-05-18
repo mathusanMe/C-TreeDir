@@ -46,7 +46,7 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
 
     if (children == NULL)
     {
-        exit_system("rm: file does not exist. exit program.", 1);
+        exit_system("mv: file does not exist. exit program.", 1);
     }
 
     noeud *first_child = children->no;
@@ -54,13 +54,58 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
     {
         if (is_file_a_parent(current, first_child))
         {
-            exit_system("rm: cannot delete a parent folder. exit program.\n", 1);
+            exit_system("mv: cannot delete a parent folder. exit program.\n", 1);
         }
 
         src_nrst->parent->fils = children->succ;
-        // TODO : Move it
+        if (dest_nrst->parent != first_child->racine)
+        {
+            strcpy(first_child->nom, dest_nrst->name);
+        }
+        add_child(dest_nrst->parent, first_child);
+        first_child->pere = dest_nrst->parent;
         return true;
     }
+
+    for (liste_noeud *child = children->succ; child != NULL; child = child->succ, children = children->succ)
+    {
+        if ((strcmp(child->no->nom, src_nrst->name)) == 0)
+        {
+            noeud *to_move = child->no;
+
+            if (is_file_a_parent(current, to_move))
+            {
+                exit_system("mv: cannot move a parent folder. exit program.\n", 1);
+            }
+
+            children->succ = child->succ;
+            if (dest_nrst->parent != to_move->racine)
+            {
+                strcpy(to_move->nom, dest_nrst->name);
+            }
+            add_child(dest_nrst->parent, to_move);
+            to_move->pere = dest_nrst->parent;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool is_file_a_parent(noeud *current, noeud *node_to_mv)
+{
+    if (node_to_mv == current->racine)
+    {
+        return true;
+    }
+
+    for (; current != current->racine; current = current->pere)
+    {
+        if (current == node_to_mv)
+        {
+            return true;
+        }
+    }
+
     return false;
 }
 
