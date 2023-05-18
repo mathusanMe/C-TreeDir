@@ -3,8 +3,11 @@
 bool test_cp_file() {
     noeud *root = get_test_tree_dir();
     cp(root, "Td/td1", "Td/td1copy");
-    liste_noeud *td1 = get_nearest(root, "Td/td1")->parent->fils;
+    nearest *nrst = get_nearest(root, "Td/td1");
+    liste_noeud *td1 = nrst->parent->fils;
     bool is_valid = is_equal(td1->no, td1->succ->succ->no, true);
+    free(nrst->name);
+    free(nrst);
     display_test(is_valid, "test_cp_file");
     return is_valid;
 }
