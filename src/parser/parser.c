@@ -53,19 +53,19 @@ noeud *parse_line(noeud *current, char *line)
     else if (strcmp(strToken, "cd") == 0)
     {
         arguments = calloc(NB_CD_ARGUMENTS, sizeof(char *));
-
+        noeud *node = NULL;
         if (parse_arguments(strToken, "cd", NB_CD_ARGUMENTS, arguments))
         {
-            current = cd(current, arguments[0]);
+            node = cd(current, arguments[0]);
         }
         else if ((strToken = strtok(NULL, SEPARATORS)) == NULL)
         {
-            noeud *node = cd(current, "/");
+            node = cd(current, "/");
+        }
 
-            if (node != NULL)
-            {
-                current = node;
-            }
+        if (node != NULL)
+        {
+            current = node;
         }
 
         free_arguments(arguments, NB_CD_ARGUMENTS);
