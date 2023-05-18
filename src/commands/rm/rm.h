@@ -8,8 +8,9 @@
 #include "../../utils/nodes.h"
 #include "../cd/cd.h"
 
-void rm(noeud *current, char *path);
-bool is_path_a_parent(noeud *current, noeud *node_to_rm_parent, char *node_to_rm);
+bool rm(noeud *current, char *path);
+bool remove_child(noeud *current, noeud *to_delete_parent, char *name);
+bool is_file_a_parent(noeud *current, noeud *node_to_rm_parent);
 void exit_system(char *message, int code);
 
 #endif
