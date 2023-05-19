@@ -4,14 +4,14 @@
  * Used to print the root node of the tree
  * @param node the root of the tree
  */
-void print(noeud *node)
+void print(noeud *node, FILE *output)
 {
     if (node == NULL || !node->est_dossier)
     {
         return;
     }
 
-    print_node_tab(node, "", "");
+    print_node_tab(node, "", "", output);
 }
 
 /**
@@ -20,10 +20,10 @@ void print(noeud *node)
  * @param indent_for_file indentation you print before the name of the node (end with TOP_FILE OR END_FILE)
  * @param indent indentation of subdirectories
  */
-void print_node_tab(noeud *node, char *indent_for_file, char *indent)
+void print_node_tab(noeud *node, char *indent_for_file, char *indent, FILE *output)
 {
     char *fileName = handleFileTypePrinting(node);
-    printf("%s%s\n", indent_for_file, fileName);
+    fprintf(output, "%s%s\n", indent_for_file, fileName);
     free(fileName);
 
     liste_noeud *current = node->fils;
@@ -33,7 +33,7 @@ void print_node_tab(noeud *node, char *indent_for_file, char *indent)
         char *new_indent_for_file = handleFileIndentation(true, current, indent);
         char *new_indent = handleFileIndentation(false, current, indent);
 
-        print_node_tab(current->no, new_indent_for_file, new_indent);
+        print_node_tab(current->no, new_indent_for_file, new_indent, output);
         current = current->succ;
 
         free(new_indent_for_file);

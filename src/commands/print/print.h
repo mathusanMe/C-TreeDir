@@ -12,8 +12,8 @@
 #include <string.h>
 #include "../../utils/nodes.h"
 
-void print(noeud *node);
-void print_node_tab(noeud *node, char *pretab, char *indent);
+void print(noeud *node, FILE *output);
+void print_node_tab(noeud *node, char *pretab, char *indent, FILE *output);
 char *handleFileTypePrinting(noeud *node);
 char *handleFileIndentation(bool isParentDirTheLast, liste_noeud *current, char *indent);
 char *addToString(char *string, char *toAdd);

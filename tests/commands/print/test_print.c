@@ -1,22 +1,22 @@
 #include "test_print.h"
 
-bool test_print_test_tree()
+bool test_print_test_tree(FILE *output)
 {
-    noeud *root_node = get_test_tree_dir();
-    print(root_node);
-    display_test(true, "print_test_tree");
+    noeud *root_node = get_test_tree_dir(output);
+    print(root_node, output);
+    display_test(true, "print_test_tree", output);
 
     return true;
 }
 
-bool run_tests_print()
+bool run_tests_print(FILE *output, bool verbose)
 {
-    create_test_tree_dir();
+    create_test_tree_dir(output, verbose);
 
-    display_test(-1, "print");
-    bool result = test_print_test_tree();
+    display_test(-1, "print", output);
+    bool result = test_print_test_tree(output);
 
-    free_test_tree_dir();
+    free_test_tree_dir(output, verbose);
 
     return result;
 }

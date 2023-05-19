@@ -4,12 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "../../utils/output.h"
 #include "../../utils/nodes.h"
 #include "../../utils/string.h"
 #include "../cd/cd.h"
 
-bool ls(noeud *current, char *path);
-noeud *get_noeud(noeud *current, char *path);
+bool ls(noeud *current, char *path, FILE *output, bool verbose);
 
 #endif

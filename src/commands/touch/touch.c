@@ -1,17 +1,17 @@
 #include "touch.h"
 
-bool touch(noeud *current, char *name)
+bool touch(noeud *current, char *name, FILE *output, bool verbose)
 {
-    if (current == NULL || !is_name_valid(name, "touch"))
+    if (current == NULL || !is_name_valid(name, "touch", output, verbose))
     {
         return false;
     }
 
     if (!current->est_dossier)
     {
-        if (VERBOSE)
+        if (verbose)
         {
-            printf("touch: %s is not a folder.\n", current->nom);
+            fprintf(output, "touch: %s is not a folder.\n", current->nom);
         }
         return false;
     }
@@ -23,13 +23,13 @@ bool touch(noeud *current, char *name)
         current->fils = malloc(sizeof(liste_noeud));
         if (current->fils == NULL)
         {
-            if (VERBOSE)
+            if (verbose)
             {
-                printf("touch: failed to allocate memory.\n");
+                fprintf(output, "touch: failed to allocate memory.\n");
             }
             return false;
         }
-        current->fils->no = create_node(name, false, current, current->racine);
+        current->fils->no = create_node(name, false, current, current->racine, output, verbose);
         current->fils->succ = NULL;
         return true;
     }
@@ -40,27 +40,27 @@ bool touch(noeud *current, char *name)
     {
         if (strcmp(children->no->nom, name) == 0)
         {
-            printf("touch: file already exists. exit program.\n");
+            fprintf(output, "touch: file already exists. exit program.\n");
             exit(1);
         }
     }
 
-    noeud *new_node = create_node(name, false, current, current->racine);
+    noeud *new_node = create_node(name, false, current, current->racine, output, verbose);
     if (new_node == NULL)
     {
-        if (VERBOSE)
+        if (verbose)
         {
-            printf("touch: failed to create node.\n");
+            fprintf(output, "touch: failed to create node.\n");
         }
         return false;
     }
 
-    last_child->succ = create_list_node(new_node, NULL);
+    last_child->succ = create_list_node(new_node, NULL, output, verbose);
     if (last_child->succ == NULL)
     {
-        if (VERBOSE)
+        if (verbose)
         {
-            printf("touch: failed to create list node.\n");
+            fprintf(output, "touch: failed to create list node.\n");
         }
         free(new_node);
         return false;

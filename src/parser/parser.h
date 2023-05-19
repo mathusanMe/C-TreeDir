@@ -17,7 +17,6 @@
 #define MAX_ARGUMENTS 2
 
 #include "../utils/nodes.h"
-#include "../utils/output.h"
 #include "../main.h"
 #include "../utils/string.h"
 #include "../commands/ls/ls.h"
@@ -27,9 +26,9 @@
 #include "../commands/touch/touch.h"
 #include "../commands/print/print.h"
 
-bool parse_file(char *file_path);
-noeud *parse_line(noeud *current, char *line);
-bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments, bool could_have_no_arguments);
+bool parse_file(char *file_path, FILE *output, bool verbose);
+noeud *parse_line(noeud *current, char *line, FILE *output, bool verbose);
+bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments, bool could_have_no_arguments, FILE *output, bool verbose);
 void free_arguments(char **args, size_t size);
 
 #endif

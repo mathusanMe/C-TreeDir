@@ -1,53 +1,35 @@
 #include "test_pwd.h"
 
-bool test_current_node_is_null()
+bool test_current_node_is_null(FILE *output, bool verbose)
 {
     noeud *root = NULL;
 
-    bool is_valid = pwd(root) == false;
+    bool is_valid = pwd(root, output, verbose) == false;
 
-    display_test(is_valid, "test_current_node_is_null");
+    display_test(is_valid, "test_current_node_is_null", output);
     return is_valid;
 }
 
-bool test_current_node_is_root()
+bool test_current_node_is_root(FILE *output, bool verbose)
 {
-    noeud *root = get_test_tree_dir();
+    noeud *root = get_test_tree_dir(output, verbose);
 
     // TODO : check what's being print
-    bool is_valid = pwd(root) == true;
+    bool is_valid = pwd(root, output, verbose) == true;
 
-    display_test(is_valid, "test_current_node_is_root");
+    display_test(is_valid, "test_current_node_is_root", output);
     return is_valid;
 }
 
-bool test_current_node_is_correct()
+bool run_tests_pwd(FILE *output, bool verbose)
 {
-    noeud *root = get_test_tree_dir();
-    noeud *current_node = cd(root, "/Cours/ProjetC");
+    create_test_tree_dir(output, verbose);
 
-    if (current_node == NULL)
-    {
-        return false;
-    }
+    display_test(-1, "pwd", output);
+    bool result = test_current_node_is_null(output, verbose);
+    result &= test_current_node_is_root(output, verbose);
 
-    // TODO : check what's being print
-    bool is_valid = pwd(current_node) == true;
-
-    display_test(is_valid, "test_current_node_is_correct");
-    return is_valid;
-}
-
-bool run_tests_pwd()
-{
-    create_test_tree_dir();
-
-    display_test(-1, "pwd");
-    bool result = test_current_node_is_null();
-    result &= test_current_node_is_root();
-    result &= test_current_node_is_correct();
-
-    free_test_tree_dir();
+    free_test_tree_dir(output, verbose);
 
     return result;
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 EXEC="program"
-OUTPUT="stdout"
+OUTPUT="&1"
 VERBOSE=false
 COMPILE_ALL=false
 
@@ -13,8 +13,8 @@ compile() {
         return
     fi
 
-    echo "==================" > $OUTPUT
-    echo -e "Compiling...\n" > $OUTPUT
+    echo "=================="
+    echo -e "Compiling...\n"
 
     # Check if the Makefile exists
     if [ ! -f "Makefile" ]; then
@@ -23,20 +23,20 @@ compile() {
     fi
 
     if [ "$COMPILE_ALL" = true ]; then
-        make clean > $OUTPUT
+        make clean
     fi
-    make all > $OUTPUT
+    make all
 
-    echo -e "\nDone compiling." > $OUTPUT
-    echo "====================" > $OUTPUT
+    echo -e "\nDone compiling."
+    echo "===================="
 
     COMPILED=true
 }
 
 runTests() {
 
-    echo -e "\n==================" > $OUTPUT
-    echo -e "Running tests...\n" > $OUTPUT
+    echo -e "\n=================="
+    echo "Running tests..."
 
     # Check if 'program' exists
     if [ ! -f "$EXEC" ]; then
@@ -45,18 +45,19 @@ runTests() {
     fi
 
     if [ "$VERBOSE" = true ]; then
-        ./program -t -v -o $OUTPUT
+        ./program -t -v -o "$OUTPUT"
     else
-        ./program -t -o $OUTPUT
+        ./program -t -o "$OUTPUT"
     fi
 
-    echo -e "\n====================" > $OUTPUT
+    echo "Done running tests."
+    echo -e "===================="
 }
 
 run() {
 
-    echo -e "\n==================" > $OUTPUT
-    echo -e "Running...\n" > $OUTPUT
+    echo -e "\n=================="
+    echo  "Running..."
 
     # Check if 'EXEC' exists
     if [ ! -f "$EXEC" ]; then
@@ -71,26 +72,27 @@ run() {
 
     # Run the main program
     if [ "$VERBOSE" = true ]; then
-        ./program -v -o $OUTPUT "$1"
+        ./program -v -o "$OUTPUT" "$1"
     else
-        ./program -o $OUTPUT "$1"
+        ./program -o "$OUTPUT" "$1"
     fi
 
-    echo "==================" > $OUTPUT
+    echo "Done running."
+    echo "=================="
 }
 
 runWithValgrind() {
 
     if [ "$VERBOSE" = true ]; then
-        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v "$1" -o $OUTPUT;
+        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v "$1" -o "$OUTPUT";
     else
-        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program "$1" -o $OUTPUT;
+        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program "$1" -o "$OUTPUT";
     fi
     
     VALGRIND=false
 }
 
-while getopts ':avio' OPTION; do
+while getopts ':avo:' OPTION; do
     case "$OPTION" in
         v)
             VERBOSE=true
@@ -99,7 +101,11 @@ while getopts ':avio' OPTION; do
             COMPILE_ALL=true
         ;;
         o)
-            OUTPUT=$OPTARG
+            OUTPUT="$OPTARG"
+
+            if [ -e "$OUTPUT" ]; then
+                rm "$OUTPUT"
+            fi
         ;;
         ?)
             echo "Usage: run.sh [-vao] [compile | valgrind | test(s) | r(un)] [files...]"

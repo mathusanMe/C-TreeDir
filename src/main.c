@@ -1,10 +1,10 @@
 #include "main.h"
 
-bool VERBOSE = false;
-FILE *OUTPUT = NULL;
-
 int main(int argc, char *argv[])
 {
+    bool verbose;
+    bool output_set = false;
+    FILE *output;
     bool tests = false;
     size_t optind;
 
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
         switch (argv[optind][1])
         {
         case 'v':
-            VERBOSE = true;
+            verbose = true;
             break;
         case 't':
             tests = true;
@@ -26,17 +26,17 @@ int main(int argc, char *argv[])
             }
             else
             {
-                OUTPUT = fopen(argv[++optind], "w+");
+                output = fopen(argv[++optind], "a+");
 
-                if (OUTPUT == NULL)
+                if (output == NULL)
                 {
                     perror("Opening output file caused an error.");
-                    printf("'%s' could not be opened.\n", argv[optind]);
+                    fprintf(stderr, "'%s' could not be opened.\n", argv[optind]);
 
                     exit(EXIT_FAILURE);
                 }
 
-                set_output(OUTPUT);
+                output_set = true;
             }
             break;
         default:
@@ -46,9 +46,14 @@ int main(int argc, char *argv[])
     }
     argv += optind;
 
+    if (!output_set)
+    {
+        output = stdout;
+    }
+
     if (tests)
     {
-        exit(run_tests() ? EXIT_SUCCESS : EXIT_FAILURE);
+        exit(run_tests(output, verbose) ? EXIT_SUCCESS : EXIT_FAILURE);
     }
 
     if (argv == NULL)
@@ -59,8 +64,18 @@ int main(int argc, char *argv[])
 
     for (size_t i = 0; i < argc - optind; i++)
     {
-        parse_file(argv[i]);
+        parse_file(argv[i], output, verbose);
     }
 
-    close_output();
+    int closed = fclose(output);
+
+    if (closed != 0)
+    {
+        perror("Closing output file caused an error.");
+        fprintf(stderr, "'%s' could not be closed.\n", argv[optind]);
+
+        exit(EXIT_FAILURE);
+    }
+
+    exit(EXIT_SUCCESS);
 }

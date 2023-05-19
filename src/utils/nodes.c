@@ -2,14 +2,14 @@
 
 noeud *test_tree_dir = NULL;
 
-noeud *create_root()
+noeud *create_root(FILE *output, bool verbose)
 {
-    noeud *root = create_node("", true, NULL, NULL);
+    noeud *root = create_node("", true, NULL, NULL, output, verbose);
     if (root == NULL)
     {
-        if (VERBOSE)
+        if (verbose)
         {
-            printf("create_root: failed to allocate memory.\n");
+            fprintf(output, "create_root: failed to allocate memory.\n");
         }
         return NULL;
     }
@@ -18,14 +18,14 @@ noeud *create_root()
     return root;
 }
 
-noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root)
+noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root, FILE *output, bool verbose)
 {
     noeud *new_node = malloc(sizeof(noeud));
     if (new_node == NULL)
     {
-        if (VERBOSE)
+        if (verbose)
         {
-            printf("create_node: failed to allocate memory.\n");
+            fprintf(output, "create_node: failed to allocate memory.\n");
         }
         return NULL;
     }
@@ -37,14 +37,14 @@ noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root)
     return new_node;
 }
 
-liste_noeud *create_list_node(noeud *no, liste_noeud *succ)
+liste_noeud *create_list_node(noeud *no, liste_noeud *succ, FILE *output, bool verbose)
 {
     liste_noeud *new_list_node = malloc(sizeof(liste_noeud));
     if (new_list_node == NULL)
     {
-        if (VERBOSE)
+        if (verbose)
         {
-            printf("create_list_node: failed to allocate memory.\n");
+            fprintf(output, "create_list_node: failed to allocate memory.\n");
         }
         return NULL;
     }
@@ -53,7 +53,7 @@ liste_noeud *create_list_node(noeud *no, liste_noeud *succ)
     return new_list_node;
 }
 
-bool add_child(noeud *parent, noeud *child)
+bool add_child(noeud *parent, noeud *child, FILE *output, bool verbose)
 {
     if (parent == NULL || child == NULL)
     {
@@ -63,7 +63,7 @@ bool add_child(noeud *parent, noeud *child)
     liste_noeud *children = parent->fils;
     if (children == NULL)
     {
-        parent->fils = create_list_node(child, NULL);
+        parent->fils = create_list_node(child, NULL, output, verbose);
         if (parent->fils == NULL)
         {
             return false;
@@ -80,7 +80,7 @@ bool add_child(noeud *parent, noeud *child)
         }
     }
 
-    liste_noeud *new_list_node = create_list_node(child, NULL);
+    liste_noeud *new_list_node = create_list_node(child, NULL, output, verbose);
     if (new_list_node == NULL)
     {
         return false;
@@ -129,24 +129,24 @@ noeud *get_test_tree_dir()
     return test_tree_dir;
 }
 
-void create_test_tree_dir()
+void create_test_tree_dir(FILE *output, bool verbose)
 {
-    noeud *A1 = create_root();
-    noeud *A2 = create_node("Cours", true, A1, A1);
-    noeud *A3 = create_node("Td", true, A1, A1);
-    noeud *A4 = create_node("edt", false, A1, A1);
-    noeud *A5 = create_node("ProjetC", true, A2, A1);
-    noeud *A6 = create_node("Anglais", true, A2, A1);
-    noeud *A7 = create_node("td1", false, A3, A1);
-    noeud *A8 = create_node("td2", false, A3, A1);
+    noeud *A1 = create_root(output, verbose);
+    noeud *A2 = create_node("Cours", true, A1, A1, output, verbose);
+    noeud *A3 = create_node("Td", true, A1, A1, output, verbose);
+    noeud *A4 = create_node("edt", false, A1, A1, output, verbose);
+    noeud *A5 = create_node("ProjetC", true, A2, A1, output, verbose);
+    noeud *A6 = create_node("Anglais", true, A2, A1, output, verbose);
+    noeud *A7 = create_node("td1", false, A3, A1, output, verbose);
+    noeud *A8 = create_node("td2", false, A3, A1, output, verbose);
 
-    add_child(A1, A2);
-    add_child(A1, A3);
-    add_child(A1, A4);
-    add_child(A2, A5);
-    add_child(A2, A6);
-    add_child(A3, A7);
-    add_child(A3, A8);
+    add_child(A1, A2, output, verbose);
+    add_child(A1, A3, output, verbose);
+    add_child(A1, A4, output, verbose);
+    add_child(A2, A5, output, verbose);
+    add_child(A2, A6, output, verbose);
+    add_child(A3, A7, output, verbose);
+    add_child(A3, A8, output, verbose);
 
     test_tree_dir = A1;
 }
