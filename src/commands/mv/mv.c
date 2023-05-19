@@ -33,7 +33,7 @@ void update_destination(nearest *nrst, char *name)
             if (child->est_dossier)
             {
                 nrst->parent = child;
-                nrst->name = name;
+                strncpy(nrst->name, name, strlen(name) + 1);
             }
             return;
         }
@@ -60,10 +60,11 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
         src_nrst->parent->fils = children->succ;
         if (dest_nrst->parent != first_child->racine)
         {
-            strcpy(first_child->nom, dest_nrst->name);
+            strncpy(first_child->nom, dest_nrst->name, strlen(dest_nrst->name) + 1);
         }
         add_child(dest_nrst->parent, first_child);
         first_child->pere = dest_nrst->parent;
+        free(children);
         return true;
     }
 
@@ -81,10 +82,11 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
             children->succ = child->succ;
             if (dest_nrst->parent != to_move->racine)
             {
-                strcpy(to_move->nom, dest_nrst->name);
+                strncpy(to_move->nom, dest_nrst->name, strlen(dest_nrst->name) + 1);
             }
             add_child(dest_nrst->parent, to_move);
             to_move->pere = dest_nrst->parent;
+            free(child);
             return true;
         }
     }

@@ -33,7 +33,7 @@ extern noeud *test_tree_dir;
 typedef struct nearest
 {
     noeud *parent;
-    char *name;
+    char name[100];
 } nearest;
 
 noeud *create_root();

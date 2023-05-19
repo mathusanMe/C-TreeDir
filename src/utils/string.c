@@ -59,7 +59,8 @@ char *strdup(const char *s)
     {
         return NULL;
     }
-    strcpy(d, s);
+    strncpy(d, s, strlen(s));
+    d[strlen(s)] = '\0';
     return d;
 }
 

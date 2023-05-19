@@ -23,7 +23,7 @@ noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root)
         printf("create_node: failed to allocate memory.\n");
         return NULL;
     }
-    memcpy(new_node->nom, name, strlen(name) + 1);
+    strncpy(new_node->nom, name, strlen(name) + 1);
     new_node->est_dossier = is_folder;
     new_node->pere = parent;
     new_node->racine = root;
@@ -140,20 +140,10 @@ nearest *get_nearest(noeud *current, char *path)
         return NULL;
     }
 
-    nrst->name = malloc(sizeof(char) * 99);
-
-    if (nrst->name == NULL)
-    {
-        printf("get_nearest: nrst->name is NULL.\n");
-        free(modifiable_path);
-        free(nrst);
-        return NULL;
-    }
-
     if (modifiable_path[0] == '\0')
     {
         nrst->parent = current->pere;
-        strcpy(nrst->name, current->nom);
+        strncpy(nrst->name, current->nom, strlen(current->nom) + 1);
         free(modifiable_path);
         return nrst;
     }
@@ -162,6 +152,7 @@ nearest *get_nearest(noeud *current, char *path)
     {
         nearest *nrst_rec = get_nearest(current->racine, modifiable_path + 1);
         free(modifiable_path);
+        free(nrst);
         return nrst_rec;
     }
 
@@ -179,7 +170,6 @@ nearest *get_nearest(noeud *current, char *path)
             if (tmp->pere == NULL)
             {
                 free(modifiable_path);
-                free(nrst->name);
                 free(nrst);
                 return NULL;
             }
@@ -196,7 +186,7 @@ nearest *get_nearest(noeud *current, char *path)
                 if (next_token == NULL)
                 {
                     nrst->parent = tmp->pere;
-                    strcpy(nrst->name, tmp->nom);
+                    strncpy(nrst->name, tmp->nom, strlen(tmp->nom) + 1);
                     free(modifiable_path);
                     return nrst;
                 }
@@ -206,7 +196,7 @@ nearest *get_nearest(noeud *current, char *path)
                 if (next_token == NULL)
                 {
                     nrst->parent = tmp->pere;
-                    strcpy(nrst->name, tmp->nom);
+                    strncpy(nrst->name, tmp->nom, strlen(tmp->nom) + 1);
                     free(modifiable_path);
                     return nrst;
                 }
@@ -234,7 +224,7 @@ nearest *get_nearest(noeud *current, char *path)
                         return NULL;
                     }
                     nrst->parent = tmp;
-                    strcpy(nrst->name, current_child->no->nom);
+                    strncpy(nrst->name, current_child->no->nom, strlen(current_child->no->nom) + 1);
                     free(modifiable_path);
                     return nrst;
                 }
@@ -249,20 +239,18 @@ nearest *get_nearest(noeud *current, char *path)
             if (strtok(NULL, "/") != NULL)
             {
                 free(modifiable_path);
-                free(nrst->name);
                 free(nrst);
                 return NULL;
             }
 
             nrst->parent = tmp;
-            strcpy(nrst->name, next_token);
+            strncpy(nrst->name, next_token, strlen(next_token) + 1);
             free(modifiable_path);
             return nrst;
         }
     }
     nrst->parent = tmp->pere;
-    free(nrst->name);
-    nrst->name = tmp->nom;
+    strncpy(nrst->name, tmp->nom, strlen(tmp->nom) + 1);
     free(modifiable_path);
     return nrst;
 }
