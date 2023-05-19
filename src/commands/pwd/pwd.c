@@ -9,7 +9,10 @@ bool pwd(noeud *node)
 {
     if (node == NULL)
     {
-        printf("pwd: Current node is NULL\n");
+        if (VERBOSE)
+        {
+            printf("pwd: Current node is NULL\n");
+        }
         return false;
     }
 

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include "../../main.h"
 #include "../../utils/nodes.h"
 
 bool pwd(noeud *node);
