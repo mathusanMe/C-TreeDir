@@ -38,6 +38,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
 
         to_delete_parent->fils = children->succ;
         free_node(first_child);
+        free(children);
         return true;
     }
 
