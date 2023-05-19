@@ -37,9 +37,9 @@ bool pwd_rec(noeud *node)
         return true;
     }
 
-    if (pwd_rec(node->pere))
+    if (node->pere == node->racine || pwd_rec(node->pere))
     {
-        printf("%s/", node->nom);
+        printf("/%s", node->nom);
         return true;
     }
     return false;

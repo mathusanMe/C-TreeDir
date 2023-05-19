@@ -10,6 +10,8 @@
 #include "commands/mkdir/test_mkdir.h"
 #include "commands/touch/test_touch.h"
 #include "commands/mv/test_mv.h"
+#include "commands/rm/test_rm.h"
+#include "commands/cp/test_cp.h"
 #include "commands/print/test_print.h"
 #include "parser/test_parser.h"
 

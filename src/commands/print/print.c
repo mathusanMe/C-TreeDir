@@ -4,7 +4,7 @@
  * Used to print the root node of the tree
  * @param node the root of the tree
  */
-void print_node(noeud *node)
+void print(noeud *node)
 {
     print_node_tab(node, "", "");
 }

@@ -5,9 +5,14 @@ bool mv(noeud *current, char *src, char *dest)
     nearest *src_nrst = get_nearest(current, src);
     nearest *dest_nrst = get_nearest(current, dest);
 
-    if (is_nearest_null(src_nrst) || is_nearest_null(dest_nrst))
+    if (src_nrst == NULL || dest_nrst == NULL)
     {
         exit_system("mv: cannot allocate memory.\n", 1);
+    }
+
+    if (is_nearest_null(src_nrst) || is_nearest_null(dest_nrst))
+    {
+        exit_system("mv: error while getting nearest dir. exit program.\n", 1);
     }
 
     update_destination(dest_nrst, src_nrst->name);
@@ -58,7 +63,7 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
         }
 
         src_nrst->parent->fils = children->succ;
-        if (dest_nrst->parent != first_child->racine)
+        if (is_name_valid(dest_nrst->name, "mv"))
         {
             strncpy(first_child->nom, dest_nrst->name, strlen(dest_nrst->name) + 1);
         }
@@ -80,7 +85,7 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
             }
 
             children->succ = child->succ;
-            if (dest_nrst->parent != to_move->racine)
+            if (is_name_valid(dest_nrst->name, "mv"))
             {
                 strncpy(to_move->nom, dest_nrst->name, strlen(dest_nrst->name) + 1);
             }
@@ -109,10 +114,4 @@ bool is_file_a_parent(noeud *current, noeud *node_to_mv)
     }
 
     return false;
-}
-
-void exit_system(char *message, int code)
-{
-    printf("%s\n", message);
-    exit(code);
 }

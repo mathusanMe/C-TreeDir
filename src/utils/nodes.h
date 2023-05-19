@@ -28,18 +28,20 @@ struct liste_noeud
 typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
 
-extern noeud *test_tree_dir;
-
 typedef struct nearest
 {
     noeud *parent;
     char name[100];
 } nearest;
 
+extern noeud *test_tree_dir;
+
+bool is_equal(noeud *nodeA, noeud *nodeB, bool initial_call);
 noeud *create_root();
 noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root);
 liste_noeud *create_list_node(noeud *no, liste_noeud *succ);
 bool add_child(noeud *parent, noeud *child);
+void print_node(noeud *node);
 void free_node(noeud *node);
 void free_node_list(liste_noeud *list);
 

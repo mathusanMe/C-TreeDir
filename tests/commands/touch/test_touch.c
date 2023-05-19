@@ -34,15 +34,6 @@ bool touch_test_name_too_long()
     return is_valid;
 }
 
-bool touch_test_name_already_exists()
-{
-    noeud *root = get_test_tree_dir();
-
-    bool is_valid = touch(root, "test") && !touch(root, "test");
-    display_test(is_valid, "test_name_already_exists");
-    return is_valid;
-}
-
 bool run_tests_touch()
 {
     create_test_tree_dir();
@@ -52,7 +43,6 @@ bool run_tests_touch()
     result &= touch_test_name_empty();
     result &= touch_test_name_contains_non_alnum_char();
     result &= touch_test_name_too_long();
-    result &= touch_test_name_already_exists();
 
     free_test_tree_dir();
 

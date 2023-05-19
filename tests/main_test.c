@@ -10,6 +10,8 @@ bool run_tests()
     all_tests_passed &= run_tests_pwd();
     all_tests_passed &= run_tests_mkdir();
     all_tests_passed &= run_tests_touch();
+    all_tests_passed &= run_tests_rm();
+    all_tests_passed &= run_tests_cp();
     all_tests_passed &= run_tests_mv();
     all_tests_passed &= run_tests_print();
     all_tests_passed &= run_tests_parser();
