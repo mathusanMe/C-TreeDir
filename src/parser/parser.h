@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include "../main.h"
 #include "../utils/nodes.h"
 #include "../utils/string.h"
 #include "../commands/ls/ls.h"
@@ -29,9 +30,9 @@
 #include "../commands/touch/touch.h"
 #include "../commands/print/print.h"
 
-bool parse_file(char *file_path, bool verbose, FILE *output);
+bool parse_file(char *file_path);
 noeud *parse_line(noeud *current, char *line);
-bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments);
+bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments, bool could_have_no_arguments);
 void free_arguments(char **args, size_t size);
 
 #endif

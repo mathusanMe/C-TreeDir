@@ -1,14 +1,14 @@
 #include "parser.h"
 
-bool parse_file(char *file_path, bool verbose, FILE *output)
+bool parse_file(char *input_file_path)
 {
     char line[MAX_LINE_LENGTH];
-    FILE *file = fopen(file_path, "r");
+    FILE *INPUT = fopen(input_file_path, "r");
 
-    if (file == NULL)
+    if (INPUT == NULL)
     {
         perror("Opening file caused an error.");
-        printf("'%s' could not be opened.", file_path);
+        printf("'%s' could not be opened.", input_file_path);
 
         return false;
     }
@@ -16,16 +16,16 @@ bool parse_file(char *file_path, bool verbose, FILE *output)
     noeud *root = create_root();
     noeud *current = root;
 
-    while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
+    while (fgets(line, MAX_LINE_LENGTH, INPUT) != NULL)
     {
         current = parse_line(current, line);
     }
 
-    int closed = fclose(file);
+    int closed = fclose(INPUT);
     if (closed != 0)
     {
         perror("Closing file caused an error.");
-        printf("'%s' could not be closed.", file_path);
+        printf("'%s' could not be closed.", input_file_path);
 
         free_node(root);
 
@@ -44,7 +44,7 @@ noeud *parse_line(noeud *current, char *line)
 
     if (strcmp(strToken, "ls") == 0)
     {
-        if (parse_arguments(strToken, "ls", NB_LS_ARGUMENTS, arguments))
+        if (parse_arguments(strToken, "ls", NB_LS_ARGUMENTS, arguments, true))
         {
             ls(current, arguments[0]);
         }
@@ -60,7 +60,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = calloc(NB_CD_ARGUMENTS, sizeof(char *));
         noeud *node = NULL;
-        if (parse_arguments(strToken, "cd", NB_CD_ARGUMENTS, arguments))
+        if (parse_arguments(strToken, "cd", NB_CD_ARGUMENTS, arguments, true))
         {
             node = cd(current, arguments[0]);
         }
@@ -79,7 +79,7 @@ noeud *parse_line(noeud *current, char *line)
 
     else if (strcmp(strToken, "pwd") == 0)
     {
-        if (parse_arguments(strToken, "pwd", NB_PWD_ARGUMENTS, arguments))
+        if (parse_arguments(strToken, "pwd", NB_PWD_ARGUMENTS, arguments, true))
         {
             pwd(current);
         }
@@ -89,7 +89,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_MKDIR_ARGUMENTS * sizeof(char *));
 
-        if (parse_arguments(strToken, "mkdir", NB_MKDIR_ARGUMENTS, arguments))
+        if (parse_arguments(strToken, "mkdir", NB_MKDIR_ARGUMENTS, arguments, false))
         {
             mkdir(current, arguments[0]);
         }
@@ -101,7 +101,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_TOUCH_ARGUMENTS * sizeof(char *));
 
-        if (parse_arguments(strToken, "touch", NB_TOUCH_ARGUMENTS, arguments))
+        if (parse_arguments(strToken, "touch", NB_TOUCH_ARGUMENTS, arguments, false))
         {
             touch(current, arguments[0]);
         }
@@ -113,7 +113,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_RM_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "rm", NB_RM_ARGUMENTS, arguments);
+        parse_arguments(strToken, "rm", NB_RM_ARGUMENTS, arguments, false);
         // TODO: Send toward rm command with one arguments
 
         free_arguments(arguments, NB_RM_ARGUMENTS);
@@ -123,7 +123,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_CP_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments);
+        parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments, false);
         // TODO: Send toward cp command with two arguments
 
         free_arguments(arguments, NB_CP_ARGUMENTS);
@@ -133,7 +133,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_MV_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "mv", NB_MV_ARGUMENTS, arguments);
+        parse_arguments(strToken, "mv", NB_MV_ARGUMENTS, arguments, false);
         // TODO: Send toward mv command with two arguments
 
         free_arguments(arguments, NB_MV_ARGUMENTS);
@@ -141,7 +141,7 @@ noeud *parse_line(noeud *current, char *line)
 
     else if (strcmp(strToken, "print") == 0)
     {
-        if (parse_arguments(strToken, "print", NB_PRINT_ARGUMENTS, arguments))
+        if (parse_arguments(strToken, "print", NB_PRINT_ARGUMENTS, arguments, true))
         {
             print_node(current->racine);
         }
@@ -150,7 +150,7 @@ noeud *parse_line(noeud *current, char *line)
     return current;
 }
 
-bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments)
+bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments, bool could_have_no_arguments)
 {
     int increment = 0;
 
@@ -159,7 +159,10 @@ bool parse_arguments(char *strToken, char *command, size_t total_arguments, char
         strToken = strtok(NULL, SEPARATORS);
         if (strToken == NULL)
         {
-            printf("Error: %s: not enough arguments\n", command);
+            if (!could_have_no_arguments)
+            {
+                printf("Error: %s: not enough arguments\n", command);
+            }
             return false;
         }
 
