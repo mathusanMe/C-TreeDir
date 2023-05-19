@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-    bool verbose;
+    bool verbose = false;
     bool output_set = false;
     FILE *output;
     bool tests = false;
