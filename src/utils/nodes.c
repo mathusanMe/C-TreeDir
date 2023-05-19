@@ -7,7 +7,10 @@ noeud *create_root()
     noeud *root = create_node("", true, NULL, NULL);
     if (root == NULL)
     {
-        printf("create_root: failed to allocate memory.\n");
+        if (VERBOSE)
+        {
+            printf("create_root: failed to allocate memory.\n");
+        }
         return NULL;
     }
     root->pere = root;
@@ -20,7 +23,10 @@ noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root)
     noeud *new_node = malloc(sizeof(noeud));
     if (new_node == NULL)
     {
-        printf("create_node: failed to allocate memory.\n");
+        if (VERBOSE)
+        {
+            printf("create_node: failed to allocate memory.\n");
+        }
         return NULL;
     }
     memcpy(new_node->nom, name, strlen(name) + 1);
@@ -36,7 +42,10 @@ liste_noeud *create_list_node(noeud *no, liste_noeud *succ)
     liste_noeud *new_list_node = malloc(sizeof(liste_noeud));
     if (new_list_node == NULL)
     {
-        printf("create_list_node: failed to allocate memory.\n");
+        if (VERBOSE)
+        {
+            printf("create_list_node: failed to allocate memory.\n");
+        }
         return NULL;
     }
     new_list_node->no = no;
