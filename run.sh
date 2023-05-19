@@ -9,6 +9,8 @@ TO_TEST=false
 COMPILED=false
 USE_VALGRIND=false
 
+EXIT_STATUS=0
+
 compile() {
     if [ "$COMPILED" = true ]; then
         return
@@ -59,19 +61,19 @@ run() {
     # Check if 'EXEC' exists
     if [ ! -f "$EXEC" ]; then
         echo "Error: $EXEC not found."
-        exit 1
+        return
     fi
 
     if [ "$USE_VALGRIND" = true ]; then
         runWithValgrind $1
-        return
-    fi
-
-    # Run the main program
-    if [ "$VERBOSE" = true ]; then
-        ./program -v -o "$OUTPUT" "$1"
     else
-        ./program -o "$OUTPUT" "$1"
+
+        # Run the main program
+        if [ "$VERBOSE" = true ]; then
+            ./program -v -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        else
+            ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        fi
     fi
 
     echo "Done running."
@@ -81,18 +83,22 @@ run() {
 runWithValgrind() {
 
     if [ "$VERBOSE" = true ]; then
-        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v -o "$OUTPUT" "$1";
+        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
     else
-        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program -o "$OUTPUT" "$1";
+        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
     fi
+    
+    return 0
 }
 
 runTestsWithValgrind() {
     if [ "$VERBOSE" = true ]; then
-        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT";
+        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
     else
-        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program -t -o "$OUTPUT";
+        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -t -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
     fi
+
+    return 0
 }
 
 while getopts ':avVto:' OPTION; do
@@ -139,4 +145,4 @@ for arg in "$@"; do
     esac
 done
 
-exit 0
+exit $EXIT_STATUS

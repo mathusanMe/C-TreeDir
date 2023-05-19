@@ -15,4 +15,4 @@ jobs:
       - name: "Check out repository"
         uses: actions/checkout@v3
       - name: "Compile Project and run tests using valgrinds"
-        run: ./run.sh -t -v -o tests.txt
+        run: ./run.sh -t -v -V -o result.txt
