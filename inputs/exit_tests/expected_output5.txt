@@ -1,9 +1,9 @@
-[root]
+[]
  ├─ [Rep1]
  │   └─ [Rep11]
  │       └─ file111
  └─ [Rep2]
-[root]
+[]
  ├─ [Rep1]
  │   └─ [Rep11]
  │       └─ file111

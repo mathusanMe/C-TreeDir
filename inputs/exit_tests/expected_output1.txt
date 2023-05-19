@@ -1,8 +1,11 @@
-Rep1 Rep2 Rep3
+Rep1
+Rep2
+Rep3
 /Rep1/Rep12
-file121 file122
+file121
+file122
 file111
-[root]
+[]
  ├─ [Rep1]
  │   ├─ [Rep11]
  │   │   └─ file111

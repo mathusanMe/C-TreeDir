@@ -1,4 +1,4 @@
-[root]
+[]
  ├─ [Rep1]
  │   ├─ [Rep11]
  │   │   └─ file111
@@ -15,10 +15,12 @@
          └─ [Rep12]
              ├─ file121
              └─ file122
-Rep12 Rep311 
+Rep12
+Rep311 
 /Rep1
-Rep11 Rep12
-[root]
+Rep11
+Rep12
+[]
  ├─ [Rep1]
  │   ├─ [Rep11]
  │   │   └─ file111
@@ -34,7 +36,7 @@ Rep11 Rep12
          │   ├─ file121
          │   └─ file122
          └─ [Rep311]
-[root]
+[]
  ├─ [Rep1]
  │   ├─ [Rep11]
  │   │   └─ file111

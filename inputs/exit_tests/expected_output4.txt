@@ -1,11 +1,6 @@
-[root]
- ├─ [Rep1]
- │   ├─ [file11]
- │   ├─ [file12]
- │   └─ [Rep11]
- │       └─ file111
- └─ [Rep2]
-     └─ file111
-[root]
- └─ [Rep2]
-     └─ file111
+[]
+ └─ [Rep1]
+     ├─ file11
+     ├─ file12
+     └─ [Rep11]
+         └─ file111
