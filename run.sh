@@ -6,6 +6,7 @@ VERBOSE=false
 COMPILE_ALL=false
 TO_TEST=false
 
+NEW_OUTPUT=false
 COMPILED=false
 USE_VALGRIND=false
 
@@ -39,7 +40,7 @@ compile() {
 runTests() {
 
     echo -e "\n=================="
-    echo "Running tests..."
+    echo -e "Running tests...\n"
 
     # Check if 'program' exists
     if [ ! -f "$EXEC" ]; then
@@ -49,14 +50,14 @@ runTests() {
 
     runTestsWithValgrind
 
-    echo "Done running tests."
+    echo -e "\nDone running tests."
     echo -e "===================="
 }
 
 run() {
 
     echo -e "\n=================="
-    echo  "Running..."
+    echo -e "Running...\n"
 
     # Check if 'EXEC' exists
     if [ ! -f "$EXEC" ]; then
@@ -76,16 +77,24 @@ run() {
         fi
     fi
 
-    echo "Done running."
+    echo -e "\nDone running."
     echo "=================="
 }
 
 runWithValgrind() {
 
     if [ "$VERBOSE" = true ]; then
-        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        if [ "$NEW_OUTPUT" = true ]; then
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        else
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        fi
     else
-        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        if [ "$NEW_OUTPUT" = true ]; then
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        else
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+        fi
     fi
     
     return 0
@@ -93,9 +102,17 @@ runWithValgrind() {
 
 runTestsWithValgrind() {
     if [ "$VERBOSE" = true ]; then
-        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
+        if [ "$NEW_OUTPUT" = true]; then
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
+        else
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v && EXIT_STATUS=0 || EXIT_STATUS=1
+        fi
     else
-        valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -t -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
+        if [ "$NEW_OUTPUT" = true ]; then
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
+        else
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -t && EXIT_STATUS=0 || EXIT_STATUS=1
+        fi
     fi
 
     return 0
@@ -114,6 +131,7 @@ while getopts ':avVto:' OPTION; do
         ;;
         o)
             OUTPUT="$OPTARG"
+            NEW_OUTPUT=true
 
             if [ -e "$OUTPUT" ]; then
                 rm "$OUTPUT"
