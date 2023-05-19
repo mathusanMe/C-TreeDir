@@ -1,76 +1,74 @@
 # TREEDIR - Projet de Langage C
+## 1. Guide d'utilisation pour run.sh afin de compiler
+Ce script run.sh vous permet de compiler, tester et exécuter le programme.
 
-## 1. Guide d'utilisation pour run.sh afin de compiler 
+Les options que vous pouvez utiliser avec ce script sont :
 
-Ce script `run.sh` vous permet de compiler et de tester le programme.
-
-### Commandes
-
-Il y a plusieurs commandes que vous pouvez utiliser avec ce script :
-
-- `compile` : Cette commande va compiler le programme en utilisant le Makefile du répertoire. Si l'option `a` est spécifiée, elle nettoiera également les constructions précédentes.
-
-- `test` ou `tests` : Cette commande va d'abord compiler le programme puis exécuter nos tests.
-
-- `valgrind` : Cette commande va compiler le programme et l'exécuter avec valgrind pour vérifier les fuites de mémoire.
-
-- Aucun argument : Si vous exécutez le script sans aucune commande, il compilera et exécutera le programme principal.
-
-
-### Options
-
-De plus, il y a plusieurs options que vous pouvez utiliser avec ce script :
-
-- `-v` : Par défaut, toutes les sorties seront envoyées à `/dev/null`. Si vous voulez voir la sortie dans votre terminal, utilisez l'option `-v`.
-
-- `-a` : Cette option forcera une recompilation complète du programme en exécutant `make clean` avant `make all`.
-
-Attention, à bien mettre les options avant les commandes.
+-a : Force une recompilation complète du programme en exécutant make clean avant make all.
+-b : Active le mode verbeux. Par défaut, toutes les sorties seront envoyées à /dev/null. Si vous voulez voir la sortie dans votre terminal, utilisez l'option -b.
+-t : Effectue les tests après la compilation du programme.
+-v : Exécute le programme avec Valgrind pour vérifier les fuites de mémoire.
+-o : Redirige la sortie vers un fichier. Par exemple, -o output.txt enverra la sortie vers le fichier output.txt.
 
 ### Exemple d'utilisation
-
 Voici quelques exemples sur comment utiliser ce script :
 
 - Compiler le programme :
-    ```
-    ./run.sh -a compile
+    ```bash
+    ./run.sh -a
     ```
 
-- Exécuter nos tests :
-    ```
-    ./run.sh test
+- Compiler le programme et effectuer les tests :
+    ```bash
+    ./run.sh -a -t
     ```
 
 - Compiler et exécuter le programme avec sortie visible dans le terminal :
+    ```bash
+    ./run.sh -b
     ```
+
+- Compiler et exécuter le programme avec Valgrind :
+    ```bash
     ./run.sh -v
     ```
 
-- Compiler le programme et l'exécuter avec valgrind :
-    ```
-    ./run.sh valgrind
-    ```
+N'oubliez pas de donner les permissions d'exécution au script avec chmod +x run.sh s'il n'est pas déjà exécutable.
 
-N'oubliez pas de donner les permissions d'exécution au script avec `chmod +x run.sh` s'il n'est pas déjà exécutable.
+## 2. Guide d'utilisation de ./program avec un fichier texte
 
-## 2. Guide d'utilisation de `./program` avec un fichier texte
+La compilation avec run.sh produit un exécutable program qui peut être utilisé pour exécuter le programme. Il accepte un certain nombre d'options, que vous pouvez combiner à votre convenance :
 
-La compilation avec `run.sh` produit un executable `program` qui peut être utilisé pour exécuter le programme. 
-Il prend un fichier texte en entrée et exécute les commandes du fichier texte. Les resultats sont affichés dans le terminal.
+-v : Active le mode verbeux.
+-t : Exécute les tests intégrés.
+-o : Redirige la sortie vers un fichier. Par exemple, -o output.txt enverra la sortie vers le fichier output.txt.
 
-### Commandes
-
-- Pour exécuter le programme avec un fichier texte, utilisez la commande suivante :
-    ```
-    ./program <fichier texte>
+### Exemples
+- Pour exécuter le programme avec un fichier texte en mode verbeux :
+    ```bash
+    ./program -v <fichier texte>
     ```
 
-- Pour lancer valgrind lors de l'exécution du programme avec un fichier texte, utilisez la commande suivante :
+- Pour exécuter les tests intégrés en mode verbeux :
+    ```bash
+    ./program -v -t
     ```
+
+- Pour exécuter le programme avec un fichier texte et rediriger la sortie vers un fichier :
+    ```bash
+    ./program -o output.txt <fichier texte>
+    ```
+
+- Pour exécuter les tests intégrés et rediriger la sortie vers un fichier :
+    ```bash
+    ./program -t -o output.txt
+    ```
+
+- Pour lancer Valgrind lors de l'exécution du programme avec un fichier texte, utilisez la commande suivante :
+    ```bash
     valgrind ./program <fichier texte>
     ```
-
-- Une version plus détaillée de valgrind peut etre obtenue en utilisant la commande suivante :
-    ```
+- Une version plus détaillée de Valgrind peut être obtenue en utilisant la commande suivante :
+    ```bash
     valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./program <fichier texte>
     ```
