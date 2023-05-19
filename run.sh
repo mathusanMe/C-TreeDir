@@ -45,7 +45,7 @@ runTests() {
         exit 1
     fi
 
-    runTestsWithValgrind()
+    runTestsWithValgrind
 
     echo "Done running tests."
     echo -e "===================="
