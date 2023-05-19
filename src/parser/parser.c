@@ -8,7 +8,10 @@ bool parse_file(char *input_file_path)
     if (INPUT == NULL)
     {
         perror("Opening file caused an error.");
-        printf("'%s' could not be opened.\n", input_file_path);
+        if (VERBOSE)
+        {
+            printf("'%s' could not be opened.\n", input_file_path);
+        }
 
         exit(EXIT_FAILURE);
     }
@@ -25,7 +28,10 @@ bool parse_file(char *input_file_path)
     if (closed != 0)
     {
         perror("Closing file caused an error.");
-        printf("'%s' could not be closed.\n", input_file_path);
+        if (VERBOSE)
+        {
+            printf("'%s' could not be closed.\n", input_file_path);
+        }
 
         free_node(root);
 
@@ -170,7 +176,10 @@ bool parse_arguments(char *strToken, char *command, size_t total_arguments, char
 
         if (*(arguments + increment) == NULL)
         {
-            printf("Error %s: Unable to allocate memory.\n", command);
+            if (VERBOSE)
+            {
+                printf("Error %s: Unable to allocate memory.\n", command);
+            }
 
             return false;
         }
@@ -183,7 +192,10 @@ bool parse_arguments(char *strToken, char *command, size_t total_arguments, char
     strToken = strtok(NULL, SEPARATORS);
     if (strToken != NULL && !is_string_blank(strToken) && !contains_newline(strToken))
     {
-        printf("Error: %s: too much arguments\n", command);
+        if (VERBOSE)
+        {
+            printf("Error: %s: too much arguments\n", command);
+        }
         return false;
     }
 
