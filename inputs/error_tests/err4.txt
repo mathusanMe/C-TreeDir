@@ -1,0 +1,2 @@
+mkdir A
+cp doNotExist A
