@@ -45,11 +45,7 @@ runTests() {
         exit 1
     fi
 
-    if [ "$VERBOSE" = true ]; then
-        ./program -t -v -o "$OUTPUT"
-    else
-        ./program -t -o "$OUTPUT"
-    fi
+    runTestsWithValgrind()
 
     echo "Done running tests."
     echo -e "===================="
@@ -85,9 +81,17 @@ run() {
 runWithValgrind() {
 
     if [ "$VERBOSE" = true ]; then
-        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v "$1" -o "$OUTPUT";
+        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v -o "$OUTPUT" "$1";
     else
-        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program "$1" -o "$OUTPUT";
+        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program -o "$OUTPUT" "$1";
+    fi
+}
+
+runTestsWithValgrind() {
+    if [ "$VERBOSE" = true ]; then
+        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT";
+    else
+        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program -t -o "$OUTPUT";
     fi
 }
 
