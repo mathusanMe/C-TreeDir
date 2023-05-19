@@ -1,19 +1,19 @@
 # TREEDIR - Projet de Langage C
 ## 1. Guide d'utilisation pour run.sh afin de compiler
-Ce script `run.sh` vous permet de compiler, tester et exécuter le programme.
+Ce script run.sh vous permet de compiler, tester et exécuter le programme.
 
 Les options que vous pouvez utiliser avec ce script sont :
 
-* a : Force une recompilation complète du programme en exécutant make clean avant make all.
-* b : Active le mode verbeux. Par défaut, toutes les sorties seront envoyées à la sortie standard.
-* t : Effectue les tests après la compilation du programme.
-* v : Exécute le programme avec Valgrind pour vérifier les fuites de mémoire.
-* o : Redirige la sortie vers un fichier. Par exemple, -o output.txt enverra la sortie vers le fichier output.txt.
+-a : Force une recompilation complète du programme en exécutant make clean avant make all.
+-b : Active le mode verbeux. Par défaut, toutes les sorties seront envoyées à /dev/null. Si vous voulez voir la sortie dans votre terminal, utilisez l'option -b.
+-t : Effectue les tests après la compilation du programme.
+-v : Exécute le programme avec Valgrind pour vérifier les fuites de mémoire.
+-o : Redirige la sortie vers un fichier. Par exemple, -o output.txt enverra la sortie vers le fichier output.txt.
 
 ### Exemple d'utilisation
 Voici quelques exemples sur comment utiliser ce script :
 
-- Recompiler dans son entièreté le programme :
+- Compiler le programme :
     ```bash
     ./run.sh -a
     ```
@@ -22,7 +22,8 @@ Voici quelques exemples sur comment utiliser ce script :
     ```bash
     ./run.sh -a -t
     ```
-- Compiler et exécuter le programme avec sortie plus détaillée :
+
+- Compiler et exécuter le programme avec sortie visible dans le terminal :
     ```bash
     ./run.sh -b
     ```
@@ -33,7 +34,6 @@ Voici quelques exemples sur comment utiliser ce script :
     ```
 
 N'oubliez pas de donner les permissions d'exécution au script avec chmod +x run.sh s'il n'est pas déjà exécutable.
-N'oubliez pas de donner les permissions d'exécution au script avec `chmod +x run.sh` s'il n'est pas déjà exécutable.
 
 ## 2. Guide d'utilisation de ./program avec un fichier texte
 
