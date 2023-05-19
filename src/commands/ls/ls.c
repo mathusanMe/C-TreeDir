@@ -2,7 +2,10 @@
 
 bool ls(noeud *current, char *path)
 {
+    bool verbose_mode = VERBOSE;
+    set_verbose(false);
     noeud *node_from_path = cd(current, path);
+    set_verbose(verbose_mode);
 
     if (node_from_path == NULL || !node_from_path->est_dossier)
     {
