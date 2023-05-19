@@ -1,8 +1,12 @@
 #!/bin/bash
 
 EXEC="program"
-OUTPUT="/dev/null"
+OUTPUT="/dev/stdout"
+VERBOSE=false
 COMPILE_ALL=false
+
+COMPILED=false
+VALGRIND=false
 
 compile() {
     echo "==================" > $OUTPUT
@@ -21,6 +25,8 @@ compile() {
 
     echo -e "\nDone compiling." > $OUTPUT
     echo "====================" > $OUTPUT
+
+    COMPILED=true
 }
 
 runTests() {
@@ -35,7 +41,11 @@ runTests() {
         exit 1
     fi
 
-    ./program test
+    if [ "$VERBOSE" = true ]; then
+        ./program -t -v -o $OUTPUT
+    else
+        ./program -t -o $OUTPUT
+    fi
 
     echo -e "\n====================" > $OUTPUT
 }
@@ -52,31 +62,44 @@ run() {
         exit 1
     fi
 
+    if [ "$VALGRIND" = true ]; then
+        runWithValgrind $1
+        return
+    fi
+
     # Run the main program
-    ./program
+    if [ "$VERBOSE" = true ]; then
+        ./program -v "$1" -o $OUTPUT
+    else
+        ./program "$1" -o $OUTPUT
+    fi
 
     echo "==================" > $OUTPUT
 }
 
-launchValgrind() {
-    if [ "$OUTPUT" = "/dev/stdout" ]; then
-        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program tests;
+runWithValgrind() {
+    if [ "$VERBOSE" = true ]; then
+        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v "$1" -o $OUTPUT;
     else
-        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program tests;
+        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program "$1" -o $OUTPUT;
     fi
     
+    VALGRIND=false
 }
 
-while getopts ':av' OPTION; do
+while getopts ':avio' OPTION; do
     case "$OPTION" in
         v)
-            OUTPUT="/dev/stdout"
+            VERBOSE=true
         ;;
         a)
             COMPILE_ALL=true
         ;;
+        o)
+            OUTPUT=$OPTARG
+        ;;
         ?)
-            echo "Usage: run.sh [-v] [compile | test]"
+            echo "Usage: run.sh [-vao] [compile | valgrind | test(s) | r(un)] [files...]"
             exit 1
         ;;
     esac
@@ -84,19 +107,25 @@ done
 
 shift $((OPTIND - 1))
 
-case "$1" in
-    "compile")
-        compile
-    ;;
-    "test" | "tests")
-        runTests
-    ;;
-    "valgrind")
-        compile
-        launchValgrind        
-    ;;
-    *)
-        run
-    ;;
-esac
+for arg in "$@"; do
+    case "$arg" in
+        "compile")
+            !"$COMPILED" && compile
+        ;;
+        "test" | "tests")
+            runTests
+        ;;
+        "valgrind" | "v" | "-v" | "--v")
+            !"$COMPILED" && compile
+            VALGRIND=true
+        ;;
+        "run" | "r")
+            run $arg
+        ;;
+        *)
+            echo "Usage: run.sh [-vao] [compile | valgrind | test(s) | r(un) | files...]"
+            exit 1
+    esac
+done
+
 exit 0

@@ -1,6 +1,6 @@
 #include "parser.h"
 
-bool parse_file(char *file_path)
+bool parse_file(char *file_path, bool verbose, FILE *output)
 {
     char line[MAX_LINE_LENGTH];
     FILE *file = fopen(file_path, "r");

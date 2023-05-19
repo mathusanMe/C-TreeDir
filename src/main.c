@@ -1,31 +1,61 @@
 #include "main.h"
 
-#define TESTS_KEYS                       \
-    {                                    \
-        "test", "tests", "TEST", "TESTS" \
-    }
-
-#define TESTS_KEYS_SIZE 4
-
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
-    {
-        return EXIT_FAILURE;
-    }
+    bool verbose = false;
+    bool tests = false;
+    FILE *output = stdout;
+    size_t optind;
 
-    char *tests_keys[] = TESTS_KEYS;
-
-    if (contains(tests_keys, TESTS_KEYS_SIZE, argv[1]))
+    for (optind = 1; optind < argc && argv[optind][0] == '-'; optind++)
     {
-        if (run_tests())
+        switch (argv[optind][1])
         {
-            return EXIT_SUCCESS;
+        case 'v':
+            verbose = true;
+            break;
+        case 't':
+            tests = true;
+            break;
+        case 'o':
+            if (optind + 1 >= argc || argv[optind + 1][0] == '-')
+            {
+                fprintf(stderr, "-o option requires an argument\n");
+                exit(EXIT_FAILURE);
+            }
+            else
+            {
+                output = fopen(argv[++optind], "w+");
+
+                if (output == NULL)
+                {
+                    perror("Opening output file caused an error.");
+                    printf("'%s' could not be opened.", argv[optind]);
+
+                    exit(EXIT_FAILURE);
+                }
+            }
+            break;
+        default:
+            fprintf(stderr, "Usage: %s [-vto] [file...]\n", argv[0]);
+            exit(EXIT_FAILURE);
         }
-        return EXIT_FAILURE;
+    }
+    argv += optind;
+
+    if (tests)
+    {
+        exit(run_tests() ? EXIT_SUCCESS : EXIT_FAILURE);
     }
 
-    parse_file(argv[1]);
+    if (argv == NULL)
+    {
+        fprintf(stderr, "Usage: %s [-vto] [file...]\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
 
-    return EXIT_SUCCESS;
+    for (size_t i = 0; argv[i] != NULL; i++)
+    {
+        parse_file(argv[i], verbose, output);
+    }
 }
