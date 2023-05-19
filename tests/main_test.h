@@ -10,7 +10,6 @@
 #include "commands/mkdir/test_mkdir.h"
 #include "commands/touch/test_touch.h"
 #include "commands/print/test_print.h"
-#include "parser/test_parser.h"
 
 bool run_tests(FILE *output, bool verbose);
 

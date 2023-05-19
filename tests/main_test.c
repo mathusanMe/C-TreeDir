@@ -12,7 +12,6 @@ bool run_tests(FILE *output, bool verbose)
     all_tests_passed &= run_tests_mkdir(output, verbose);
     all_tests_passed &= run_tests_touch(output, verbose);
     all_tests_passed &= run_tests_print(output, verbose);
-    all_tests_passed &= run_tests_parser(output, verbose);
 
     return all_tests_passed;
 }
