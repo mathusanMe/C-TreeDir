@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
                 if (OUTPUT == NULL)
                 {
                     perror("Opening output file caused an error.");
-                    printf("'%s' could not be opened.", argv[optind]);
+                    printf("'%s' could not be opened.\n", argv[optind]);
 
                     exit(EXIT_FAILURE);
                 }
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    for (size_t i = 0; argv[i] != NULL; i++)
+    for (size_t i = 0; i < argc - optind; i++)
     {
         parse_file(argv[i]);
     }
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     if (closed != 0)
     {
         perror("Closing output file caused an error.");
-        printf("'%s' could not be closed.", argv[optind]);
+        printf("'%s' could not be closed.\n", argv[optind]);
 
         exit(EXIT_FAILURE);
     }
