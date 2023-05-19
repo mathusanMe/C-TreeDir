@@ -46,10 +46,12 @@ bool parse_file(char *input_file_path, FILE *output, bool verbose)
 noeud *parse_line(noeud *current, char *line, FILE *output, bool verbose)
 {
     char *strToken = strtok(line, SEPARATORS);
-    char **arguments = calloc(NB_LS_ARGUMENTS, sizeof(char *));
+    char **arguments = NULL;
 
     if (strcmp(strToken, "ls") == 0)
     {
+        arguments = calloc(NB_LS_ARGUMENTS, sizeof(char *));
+
         if (parse_arguments(strToken, "ls", NB_LS_ARGUMENTS, arguments, true, output, verbose))
         {
             ls(current, arguments[0], output, verbose);
