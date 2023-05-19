@@ -61,7 +61,7 @@ noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root)
         printf("create_node: failed to allocate memory.\n");
         return NULL;
     }
-    memcpy(new_node->nom, name, strlen(name) + 1);
+    strncpy(new_node->nom, name, strlen(name) + 1);
     new_node->est_dossier = is_folder;
     new_node->pere = parent;
     new_node->racine = root;
@@ -194,6 +194,7 @@ nearest *get_nearest(noeud *current, char *path)
     {
         nearest *nrst_rec = get_nearest(current->racine, modifiable_path + 1);
         free(modifiable_path);
+        free(nrst);
         return nrst_rec;
     }
 
@@ -290,6 +291,11 @@ nearest *get_nearest(noeud *current, char *path)
     strncpy(nrst->name, tmp->nom, strlen(tmp->nom) + 1);
     free(modifiable_path);
     return nrst;
+}
+
+bool is_nearest_null(nearest *nrst)
+{
+    return nrst != NULL && (nrst->parent == NULL || nrst->name == NULL);
 }
 
 noeud *get_test_tree_dir()

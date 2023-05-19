@@ -46,6 +46,7 @@ void free_node(noeud *node);
 void free_node_list(liste_noeud *list);
 
 nearest *get_nearest(noeud *current, char *path);
+bool is_nearest_null(nearest *nrst);
 
 // Test tree dir
 void create_test_tree_dir();

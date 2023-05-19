@@ -4,7 +4,7 @@ bool rm(noeud *current, char *path)
 {
     nearest *nrst = get_nearest(current, path);
 
-    if (nrst == NULL || nrst->parent == NULL || nrst->name == NULL)
+    if (nrst == NULL || nrst->parent == NULL)
     {
         exit_system("rm: error while getting nearest dir. exit program.\n", 1);
     }
@@ -78,10 +78,4 @@ bool is_nearest_dir_a_parent(noeud *current, noeud *node_to_rm)
     }
 
     return false;
-}
-
-void exit_system(char *message, int code)
-{
-    printf("%s\n", message);
-    exit(code);
 }

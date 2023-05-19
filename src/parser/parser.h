@@ -28,8 +28,9 @@
 #include "../commands/mkdir/mkdir.h"
 #include "../commands/touch/touch.h"
 #include "../commands/rm/rm.h"
-#include "../commands/print/print.h"
 #include "../commands/cp/cp.h"
+#include "../commands/mv/mv.h"
+#include "../commands/print/print.h"
 
 bool parse_file(char *file_path);
 noeud *parse_line(noeud *current, char *line);
