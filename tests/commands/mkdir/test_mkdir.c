@@ -34,14 +34,6 @@ bool mkdir_test_name_too_long()
     return is_valid;
 }
 
-bool mkdir_test_name_already_exists()
-{
-    noeud *root = get_test_tree_dir();
-    bool is_valid = mkdir(root, "test") && !mkdir(root, "test");
-    display_test(is_valid, "test_name_already_exists");
-    return is_valid;
-}
-
 bool run_tests_mkdir()
 {
     create_test_tree_dir();
@@ -50,7 +42,6 @@ bool run_tests_mkdir()
     bool result = mkdir_test_name_empty();
     result &= mkdir_test_name_contains_non_alnum_char();
     result &= mkdir_test_name_too_long();
-    result &= mkdir_test_name_already_exists();
 
     free_test_tree_dir();
 

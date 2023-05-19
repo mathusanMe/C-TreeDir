@@ -78,14 +78,6 @@ void cp(noeud *current, char *src, char *dest)
 
     add_child(dest_node, copy_src_node);
 
-    if (nrst_src->name != NULL)
-    {
-        free(nrst_src->name);
-    }
-    if (nrst_dest->name != NULL)
-    {
-        free(nrst_dest->name);
-    }
     free(nrst_src);
     free(nrst_dest);
 }

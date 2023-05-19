@@ -34,8 +34,8 @@ bool mkdir(noeud *current, char *name)
     {
         if (strcmp(children->no->nom, name) == 0)
         {
-            printf("mkdir: the folder already exists.\n");
-            return false;
+            printf("mkdir: the folder already exists. exit program.\n");
+            exit(1);
         }
     }
 

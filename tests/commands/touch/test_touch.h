@@ -11,7 +11,6 @@
 bool touch_test_name_empty();
 bool touch_test_name_contains_non_alnum_char();
 bool touch_test_name_too_long();
-bool touch_test_name_already_exists();
 bool run_tests_touch();
 
 #endif

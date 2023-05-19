@@ -44,7 +44,8 @@ noeud *parse_line(noeud *current, char *line)
 
     if (strcmp(strToken, "ls") == 0)
     {
-        arguments = malloc(NB_LS_ARGUMENTS * sizeof(char *));
+        arguments = calloc(NB_LS_ARGUMENTS, sizeof(char *));
+
         if (parse_arguments(strToken, "ls", NB_LS_ARGUMENTS, arguments))
         {
             ls(current, arguments[0]);
@@ -114,8 +115,10 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_RM_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "rm", NB_RM_ARGUMENTS, arguments);
-        // TODO: Send toward rm command with one arguments
+        if (parse_arguments(strToken, "rm", NB_RM_ARGUMENTS, arguments))
+        {
+            rm(current, arguments[0]);
+        }
 
         free_arguments(arguments, NB_RM_ARGUMENTS);
     }
@@ -124,7 +127,8 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_CP_ARGUMENTS * sizeof(char *));
 
-        if (parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments)) {
+        if (parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments))
+        {
             cp(current, arguments[0], arguments[1]);
         }
 
@@ -145,7 +149,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         if (parse_arguments(strToken, "print", NB_PRINT_ARGUMENTS, arguments))
         {
-            print_node(current->racine);
+            print(current->racine);
         }
     }
 

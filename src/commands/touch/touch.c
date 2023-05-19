@@ -34,8 +34,8 @@ bool touch(noeud *current, char *name)
     {
         if (strcmp(children->no->nom, name) == 0)
         {
-            printf("touch: file already exists.\n");
-            return false;
+            printf("touch: file already exists. exit program.\n");
+            exit(1);
         }
     }
 
