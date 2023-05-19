@@ -1,6 +1,6 @@
 CC=gcc
 SHELL=/bin/bash
-CFLAGS=-Wall -std=c99
+CFLAGS=-Wall -std=c99 -g
 EXEC=program
 SRC= $(shell find src/ tests/ -maxdepth 3 -type f -regex ".*\.c")
 OBJ= $(patsubst src/%, bin/%, $(SRC:.c=.o))

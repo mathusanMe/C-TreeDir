@@ -1,25 +1,18 @@
 name: "C-Project Workflow"
-on:
-  push:
-    branches:
-      - "**"
-  pull_request:
-    branches:
-      - "**"
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: messeb/valgrind
     defaults:
       run:
         shell: bash
         working-directory: ./
     steps:
-      - name: "GCC VERSION"
+      - name: "GCC Version"
         run: gcc --version
       - name: "Check out repository"
         uses: actions/checkout@v3
-      - name: "Compile Project"
-        run: make --file=Makefile all
-      - name: "Test"
-        run: ./program test
+      - name: "Compile Project and run tests using valgrinds"
+        run: ./run.sh -t -v -b -o result.txt

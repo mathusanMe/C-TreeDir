@@ -1,21 +1,27 @@
 #include "display_test.h"
 
-void display_test(int type, char *func_name)
+void display_test(nature_of_message type, char *func_name, FILE *output)
 {
-    char buffer[50];
+    switch (type)
+    {
+    case NAME:
+        fprintf(output, "\n[COMMAND - %s]\n", func_name);
+        break;
 
-    if (type < 0)
-    {
-        sprintf(buffer, "./lib_tests.sh name %s", func_name);
-    }
-    else if (type > 0)
-    {
-        sprintf(buffer, "./lib_tests.sh passed %s", func_name);
-    }
-    else
-    {
-        sprintf(buffer, "./lib_tests.sh failed %s", func_name);
-    }
+    case SUCCESS:
+        fprintf(output, "\tSUCCESS ✓ - %s\n", func_name);
+        break;
 
-    system(buffer);
+    case FAILURE:
+        fprintf(output, "\tFAILURE ✘ - %s\n", func_name);
+        break;
+
+    default:
+        break;
+    }
+}
+
+nature_of_message get_type_of_print(bool success)
+{
+    return success ? SUCCESS : FAILURE;
 }

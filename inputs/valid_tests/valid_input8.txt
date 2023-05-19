@@ -1,0 +1,20 @@
+mkdir A
+cd A
+touch a
+touch aa
+touch aaa
+mkdir C
+ls
+cd C
+touch d
+print
+cd /
+mkdir B
+cd B
+touch bb
+cd ..
+mv B A/C/D
+cp A/C .
+print
+rm C/d
+print
