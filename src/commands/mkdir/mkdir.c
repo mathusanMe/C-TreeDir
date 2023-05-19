@@ -9,7 +9,10 @@ bool mkdir(noeud *current, char *name)
 
     if (!current->est_dossier)
     {
-        printf("mkdir: %s is not a folder.\n", current->nom);
+        if (VERBOSE)
+        {
+            printf("mkdir: %s is not a folder.\n", current->nom);
+        }
         return false;
     }
 
@@ -20,7 +23,10 @@ bool mkdir(noeud *current, char *name)
         current->fils = malloc(sizeof(liste_noeud));
         if (current->fils == NULL)
         {
-            printf("mkdir: failed to allocate memory.\n");
+            if (VERBOSE)
+            {
+                printf("mkdir: failed to allocate memory.\n");
+            }
             return false;
         }
         current->fils->no = create_node(name, true, current, current->racine);
@@ -34,15 +40,18 @@ bool mkdir(noeud *current, char *name)
     {
         if (strcmp(children->no->nom, name) == 0)
         {
-            printf("mkdir: the folder already exists.\n");
-            return false;
+            printf("mkdir: the folder %s already exists. exit program.\n", name);
+            exit(1);
         }
     }
 
     noeud *new_node = create_node(name, true, current, current->racine);
     if (new_node == NULL)
     {
-        printf("mkdir: failed to create node.\n");
+        if (VERBOSE)
+        {
+            printf("mkdir: failed to create node.\n");
+        }
         return false;
     }
 
@@ -51,7 +60,10 @@ bool mkdir(noeud *current, char *name)
         current->fils = create_list_node(new_node, NULL);
         if (current->fils == NULL)
         {
-            printf("mkdir: failed to create list node.\n");
+            if (VERBOSE)
+            {
+                printf("mkdir: failed to create list node.\n");
+            }
             free(new_node);
             return false;
         }
@@ -61,7 +73,10 @@ bool mkdir(noeud *current, char *name)
     last_child->succ = create_list_node(new_node, NULL);
     if (last_child->succ == NULL)
     {
-        printf("mkdir: failed to create list node.\n");
+        if (VERBOSE)
+        {
+            printf("mkdir: failed to create list node.\n");
+        }
         free(new_node);
         return false;
     }
