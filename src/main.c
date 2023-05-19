@@ -1,10 +1,11 @@
 #include "main.h"
 
+bool VERBOSE = false;
+FILE *OUTPUT = NULL;
+
 int main(int argc, char *argv[])
 {
-    bool verbose = false;
     bool tests = false;
-    FILE *output = stdout;
     size_t optind;
 
     for (optind = 1; optind < argc && argv[optind][0] == '-'; optind++)
@@ -12,7 +13,7 @@ int main(int argc, char *argv[])
         switch (argv[optind][1])
         {
         case 'v':
-            verbose = true;
+            VERBOSE = true;
             break;
         case 't':
             tests = true;
@@ -25,9 +26,9 @@ int main(int argc, char *argv[])
             }
             else
             {
-                output = fopen(argv[++optind], "w+");
+                OUTPUT = fopen(argv[++optind], "w+");
 
-                if (output == NULL)
+                if (OUTPUT == NULL)
                 {
                     perror("Opening output file caused an error.");
                     printf("'%s' could not be opened.", argv[optind]);
@@ -43,6 +44,11 @@ int main(int argc, char *argv[])
     }
     argv += optind;
 
+    if (OUTPUT == NULL)
+    {
+        OUTPUT = stdout;
+    }
+
     if (tests)
     {
         exit(run_tests() ? EXIT_SUCCESS : EXIT_FAILURE);
@@ -56,6 +62,16 @@ int main(int argc, char *argv[])
 
     for (size_t i = 0; argv[i] != NULL; i++)
     {
-        parse_file(argv[i], verbose, output);
+        parse_file(argv[i]);
+    }
+
+    int closed = fclose(OUTPUT);
+
+    if (closed != 0)
+    {
+        perror("Closing output file caused an error.");
+        printf("'%s' could not be closed.", argv[optind]);
+
+        exit(EXIT_FAILURE);
     }
 }

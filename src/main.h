@@ -22,6 +22,9 @@
 #include "utils/nodes.h"
 #include "../tests/main_test.h"
 
+extern bool VERBOSE;
+extern FILE *OUTPUT;
+
 int main(int argc, char *argv[]);
 
 #endif
