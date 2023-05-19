@@ -4,8 +4,13 @@
  * Used to print the root node of the tree
  * @param node the root of the tree
  */
-void print_node(noeud *node)
+void print(noeud *node)
 {
+    if (node == NULL || !node->est_dossier)
+    {
+        return;
+    }
+
     print_node_tab(node, "", "");
 }
 
