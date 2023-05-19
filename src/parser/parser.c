@@ -46,6 +46,12 @@ bool parse_file(char *input_file_path, FILE *output, bool verbose)
 noeud *parse_line(noeud *current, char *line, FILE *output, bool verbose)
 {
     char *strToken = strtok(line, SEPARATORS);
+
+    if (strToken == NULL || is_string_blank(strToken) || contains_newline(strToken))
+    {
+        return current;
+    }
+
     char **arguments = NULL;
 
     if (strcmp(strToken, "ls") == 0)
