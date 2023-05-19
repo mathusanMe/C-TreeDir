@@ -8,9 +8,9 @@ bool parse_file(char *input_file_path)
     if (INPUT == NULL)
     {
         perror("Opening file caused an error.");
-        printf("'%s' could not be opened.", input_file_path);
+        printf("'%s' could not be opened.\n", input_file_path);
 
-        return false;
+        exit(EXIT_FAILURE);
     }
 
     noeud *root = create_root();
@@ -25,11 +25,11 @@ bool parse_file(char *input_file_path)
     if (closed != 0)
     {
         perror("Closing file caused an error.");
-        printf("'%s' could not be closed.", input_file_path);
+        printf("'%s' could not be closed.\n", input_file_path);
 
         free_node(root);
 
-        return false;
+        exit(EXIT_FAILURE);
     }
 
     free_node(root);
@@ -40,7 +40,7 @@ bool parse_file(char *input_file_path)
 noeud *parse_line(noeud *current, char *line)
 {
     char *strToken = strtok(line, SEPARATORS);
-    char **arguments = malloc(NB_LS_ARGUMENTS * sizeof(char *));
+    char **arguments = calloc(NB_LS_ARGUMENTS, sizeof(char *));
 
     if (strcmp(strToken, "ls") == 0)
     {
