@@ -48,7 +48,11 @@ runTests() {
         exit 1
     fi
 
-    runTestsWithValgrind
+    if [ "$USE_VALGRIND" = true ]; then
+        runTestsWithValgrind
+    else 
+        runTestsWoValgrind
+    fi
 
     echo -e "\nDone running tests."
     echo -e "===================="
@@ -102,7 +106,7 @@ runWithValgrind() {
 
 runTestsWithValgrind() {
     if [ "$VERBOSE" = true ]; then
-        if [ "$NEW_OUTPUT" = true]; then
+        if [ "$NEW_OUTPUT" = true ]; then
             valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
         else
             valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v && EXIT_STATUS=0 || EXIT_STATUS=1
@@ -118,9 +122,25 @@ runTestsWithValgrind() {
     return 0
 }
 
-while getopts ':avVto:' OPTION; do
+runTestsWoValgrind() {
+    if [ "$VERBOSE" = true ]; then 
+        if [ "$NEW_OUTPUT" = true ]; then
+            ./program -t -v -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
+        else
+            ./program -t -v && EXIT_STATUS=0 || EXIT_STATUS=1
+        fi
+    else 
+        if [ "$NEW_OUTPUT" = true ]; then
+            ./program -t -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
+        else
+            ./program -t && EXIT_STATUS=0 || EXIT_STATUS=1
+        fi
+    fi
+}
+
+while getopts ':abvto:' OPTION; do
     case "$OPTION" in
-        v)
+        b)
             VERBOSE=true
         ;;
         a)
@@ -137,11 +157,11 @@ while getopts ':avVto:' OPTION; do
                 rm "$OUTPUT"
             fi
         ;;
-        V)
+        v)
             USE_VALGRIND=true
         ;;
         ?)
-            echo "Usage: run.sh [-vato] [valgrind] [files...]"
+            echo "Usage: run.sh [-abtov] [files...]"
             exit 1
         ;;
     esac
