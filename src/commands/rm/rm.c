@@ -62,7 +62,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
     return false;
 }
 
-bool is_file_a_parent(noeud *current, noeud *node_to_rm)
+bool is_nearest_dir_a_parent(noeud *current, noeud *node_to_rm)
 {
     if (node_to_rm == current->racine)
     {
