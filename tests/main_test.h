@@ -12,6 +12,6 @@
 #include "commands/print/test_print.h"
 #include "parser/test_parser.h"
 
-bool run_tests();
+bool run_tests(FILE *output, bool verbose);
 
 #endif

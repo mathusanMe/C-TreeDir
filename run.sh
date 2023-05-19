@@ -4,9 +4,10 @@ EXEC="program"
 OUTPUT="&1"
 VERBOSE=false
 COMPILE_ALL=false
+TO_TEST=false
 
 COMPILED=false
-VALGRIND=false
+USE_VALGRIND=false
 
 compile() {
     if [ "$COMPILED" = true ]; then
@@ -65,7 +66,7 @@ run() {
         exit 1
     fi
 
-    if [ "$VALGRIND" = true ]; then
+    if [ "$USE_VALGRIND" = true ]; then
         runWithValgrind $1
         return
     fi
@@ -88,17 +89,18 @@ runWithValgrind() {
     else
         valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program "$1" -o "$OUTPUT";
     fi
-    
-    VALGRIND=false
 }
 
-while getopts ':avo:' OPTION; do
+while getopts ':avVto:' OPTION; do
     case "$OPTION" in
         v)
             VERBOSE=true
         ;;
         a)
             COMPILE_ALL=true
+        ;;
+        t)
+            TO_TEST=true
         ;;
         o)
             OUTPUT="$OPTARG"
@@ -107,8 +109,11 @@ while getopts ':avo:' OPTION; do
                 rm "$OUTPUT"
             fi
         ;;
+        V)
+            USE_VALGRIND=true
+        ;;
         ?)
-            echo "Usage: run.sh [-vao] [compile | valgrind | test(s) | r(un)] [files...]"
+            echo "Usage: run.sh [-vato] [valgrind] [files...]"
             exit 1
         ;;
     esac
@@ -118,14 +123,12 @@ shift $((OPTIND - 1))
 
 compile
 
+if [ "$TO_TEST" = true ]; then
+    runTests
+fi
+
 for arg in "$@"; do
     case "$arg" in
-        "test" | "tests")
-            runTests
-        ;;
-        "valgrind" | "v" | "-v" | "--v")
-            VALGRIND=true
-        ;;
         *)
             run $arg
             exit 1

@@ -14,9 +14,7 @@ jobs:
         run: gcc --version
       - name: "Check out repository"
         uses: actions/checkout@v3
-      - name: "Compile Project"
-        run: ./run.sh compile
-      - name: "Tests"
-        run: ./program test
+      - name: "Compile Project and run tests"
+        run: ./run.sh -t -v -o tests.txt
       - name: "Search for memory leaks"
         run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 --verbose ./program test
