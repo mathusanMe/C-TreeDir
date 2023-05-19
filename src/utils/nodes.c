@@ -24,14 +24,9 @@ bool is_equal(noeud *nodeA, noeud *nodeB, bool initial_call)
         return false;
     }
 
-    if (nodeA->fils == NULL && nodeB->fils == NULL)
-    {
-        return true;
-    }
-
     if (nodeA->fils == NULL || nodeB->fils == NULL)
     {
-        return false;
+        return nodeA->fils == NULL && nodeB->fils == NULL;
     }
 
     for (liste_noeud *tmpA = nodeA->fils, *tmpB = nodeB->fils; tmpA != NULL && tmpB != NULL; tmpA = tmpA->succ, tmpB = tmpB->succ)
@@ -303,17 +298,12 @@ nearest *get_nearest(noeud *current, char *path)
 
         if (!found)
         {
-            if (strtok(NULL, "/") != NULL)
+            if (strtok(NULL, "/") == NULL)
             {
+                nrst->parent = tmp;
+                strcpy(nrst->name, next_token);
                 free(modifiable_path);
-                free(nrst->name);
-                free(nrst);
-                return NULL;
             }
-
-            nrst->parent = tmp;
-            strcpy(nrst->name, next_token);
-            free(modifiable_path);
             return nrst;
         }
     }
