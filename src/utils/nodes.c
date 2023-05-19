@@ -100,10 +100,7 @@ void free_node(noeud *node)
         return;
     }
 
-    if (node->fils != NULL)
-    {
-        free_node_list(node->fils);
-    }
+    free_node_list(node->fils);
 
     free(node);
 }
@@ -115,10 +112,7 @@ void free_node_list(liste_noeud *list)
         return;
     }
 
-    if (list->succ != NULL)
-    {
-        free_node_list(list->succ);
-    }
+    free_node_list(list->succ);
 
     free_node(list->no);
     free(list);
