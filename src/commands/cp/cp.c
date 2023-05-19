@@ -19,13 +19,13 @@ void cp(noeud *current, char *src, char *dest)
         exit(1);
     }
 
-    if (nrst_src->parent == NULL || nrst_src->name == NULL)
+    if (nrst_src->parent == NULL)
     {
         printf("cp: %s: No such file or directory - src\n", src);
         exit(1);
     }
 
-    if (nrst_dest->parent == NULL || nrst_dest->name == NULL)
+    if (nrst_dest->parent == NULL)
     {
         printf("cp: %s: No such file or directory - dest\n", dest);
         exit(1);

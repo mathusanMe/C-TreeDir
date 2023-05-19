@@ -4,7 +4,7 @@ bool rm(noeud *current, char *path)
 {
     nearest *nrst = get_nearest(current, path);
 
-    if (nrst == NULL || nrst->parent == NULL || nrst->name == NULL)
+    if (nrst == NULL || nrst->parent == NULL)
     {
         exit_system("rm: error while getting nearest dir. exit program.\n", 1);
     }
