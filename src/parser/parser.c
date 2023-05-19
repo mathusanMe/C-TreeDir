@@ -149,7 +149,7 @@ noeud *parse_line(noeud *current, char *line)
     {
         if (parse_arguments(strToken, "print", NB_PRINT_ARGUMENTS, arguments, true))
         {
-            print_node(current->racine);
+            print(current->racine);
         }
     }
 

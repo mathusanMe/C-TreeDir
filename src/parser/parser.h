@@ -16,12 +16,9 @@
 
 #define MAX_ARGUMENTS 2
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include "../main.h"
 #include "../utils/nodes.h"
+#include "../utils/output.h"
+#include "../main.h"
 #include "../utils/string.h"
 #include "../commands/ls/ls.h"
 #include "../commands/cd/cd.h"

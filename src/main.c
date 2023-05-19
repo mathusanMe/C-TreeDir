@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
 
                     exit(EXIT_FAILURE);
                 }
+
+                set_output(OUTPUT);
             }
             break;
         default:
@@ -43,11 +45,6 @@ int main(int argc, char *argv[])
         }
     }
     argv += optind;
-
-    if (OUTPUT == NULL)
-    {
-        OUTPUT = stdout;
-    }
 
     if (tests)
     {
@@ -65,13 +62,5 @@ int main(int argc, char *argv[])
         parse_file(argv[i]);
     }
 
-    int closed = fclose(OUTPUT);
-
-    if (closed != 0)
-    {
-        perror("Closing output file caused an error.");
-        printf("'%s' could not be closed.\n", argv[optind]);
-
-        exit(EXIT_FAILURE);
-    }
+    close_output();
 }

@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include "utils/output.h"
 #include "utils/nodes.h"
 #include "../tests/main_test.h"
 

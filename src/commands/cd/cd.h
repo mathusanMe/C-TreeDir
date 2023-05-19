@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../main.h"
 #include "../../utils/nodes.h"
+#include "../../utils/output.h"
 #include "../../utils/string.h"
 
 // cd() returns NULL if the path is invalid or is a file,
