@@ -13,7 +13,7 @@ bool run_tests_print(FILE *output, bool verbose)
 {
     create_test_tree_dir(output, verbose);
 
-    display_test(-1, "print", output);
+    display_test(NAME, "print", output);
     bool result = test_print_test_tree(output);
 
     free_test_tree_dir(output, verbose);

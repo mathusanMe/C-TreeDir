@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                output = fopen(argv[++optind], "a+");
+                output = fopen(argv[++optind], "w+");
 
                 if (output == NULL)
                 {

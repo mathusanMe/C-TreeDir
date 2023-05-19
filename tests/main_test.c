@@ -1,10 +1,7 @@
 #include "main_test.h"
 
 bool run_tests(FILE *output, bool verbose)
-
 {
-    system("chmod +x ./colors.sh");
-    system("chmod +x ./lib_tests.sh");
 
     bool all_tests_passed = run_test_ls(output, verbose);
     all_tests_passed &= run_tests_cd(output, verbose);

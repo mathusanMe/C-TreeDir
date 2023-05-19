@@ -17,7 +17,7 @@ bool pwd(noeud *node, FILE *output, bool verbose)
     }
 
     bool is_valid = pwd_rec(node, output, verbose);
-    puts("");
+    fputs("\n", output);
 
     return is_valid;
 }
