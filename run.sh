@@ -179,7 +179,6 @@ for arg in "$@"; do
     case "$arg" in
         *)
             run $arg
-            exit 1
     esac
 done
 
