@@ -194,6 +194,7 @@ nearest *get_nearest(noeud *current, char *path)
     {
         nearest *nrst_rec = get_nearest(current->racine, modifiable_path + 1);
         free(modifiable_path);
+        free(nrst);
         return nrst_rec;
     }
 
