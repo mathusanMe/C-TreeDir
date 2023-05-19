@@ -31,7 +31,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
     noeud *first_child = children->no;
     if (strcmp(first_child->nom, name) == 0)
     {
-        if (is_file_a_parent(current, first_child))
+        if (is_nearest_dir_a_parent(current, first_child))
         {
             exit_system("rm: cannot delete a parent folder. exit program.\n", 1);
         }
@@ -48,7 +48,7 @@ bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
         {
             noeud *to_delete = child->no;
 
-            if (is_file_a_parent(current, to_delete))
+            if (is_nearest_dir_a_parent(current, to_delete))
             {
                 exit_system("rm: cannot delete a parent folder. exit program.\n", 1);
             }

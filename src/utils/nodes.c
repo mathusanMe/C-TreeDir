@@ -2,6 +2,44 @@
 
 noeud *test_tree_dir = NULL;
 
+bool is_equal(noeud *nodeA, noeud *nodeB, bool initial_call)
+{
+    if (nodeA == NULL || nodeB == NULL)
+    {
+        return false;
+    }
+
+    if (!initial_call && strcmp(nodeA->nom, nodeB->nom) != 0)
+    {
+        return false;
+    }
+
+    if (nodeA->racine != nodeB->racine)
+    {
+        return false;
+    }
+
+    if (nodeA->est_dossier != nodeB->est_dossier)
+    {
+        return false;
+    }
+
+    if (nodeA->fils == NULL || nodeB->fils == NULL)
+    {
+        return nodeA->fils == NULL && nodeB->fils == NULL;
+    }
+
+    for (liste_noeud *tmpA = nodeA->fils, *tmpB = nodeB->fils; tmpA != NULL && tmpB != NULL; tmpA = tmpA->succ, tmpB = tmpB->succ)
+    {
+        if (!is_equal(tmpA->no, tmpB->no, false))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 noeud *create_root()
 {
     noeud *root = create_node("", true, NULL, NULL);
@@ -51,6 +89,8 @@ bool add_child(noeud *parent, noeud *child)
         return false;
     }
 
+    child->pere = parent;
+
     liste_noeud *children = parent->fils;
     if (children == NULL)
     {
@@ -81,6 +121,7 @@ bool add_child(noeud *parent, noeud *child)
     {
         last_child->succ = new_list_node;
     }
+
     return true;
 }
 
@@ -141,16 +182,10 @@ nearest *get_nearest(noeud *current, char *path)
         return NULL;
     }
 
-    if (nrst == NULL)
-    {
-        printf("get_nearest: nrst is NULL.\n");
-        return NULL;
-    }
-
     if (modifiable_path[0] == '\0')
     {
         nrst->parent = current->pere;
-        nrst->name = current->nom;
+        strncpy(nrst->name, current->nom, strlen(current->nom) + 1);
         free(modifiable_path);
         return nrst;
     }
@@ -192,7 +227,7 @@ nearest *get_nearest(noeud *current, char *path)
                 if (next_token == NULL)
                 {
                     nrst->parent = tmp->pere;
-                    nrst->name = tmp->nom;
+                    strncpy(nrst->name, tmp->nom, strlen(tmp->nom) + 1);
                     free(modifiable_path);
                     return nrst;
                 }
@@ -202,7 +237,7 @@ nearest *get_nearest(noeud *current, char *path)
                 if (next_token == NULL)
                 {
                     nrst->parent = tmp->pere;
-                    nrst->name = tmp->nom;
+                    strncpy(nrst->name, tmp->nom, strlen(tmp->nom) + 1);
                     free(modifiable_path);
                     return nrst;
                 }
@@ -230,7 +265,7 @@ nearest *get_nearest(noeud *current, char *path)
                         return NULL;
                     }
                     nrst->parent = tmp;
-                    nrst->name = current_child->no->nom;
+                    strncpy(nrst->name, current_child->no->nom, strlen(current_child->no->nom) + 1);
                     free(modifiable_path);
                     return nrst;
                 }
@@ -242,21 +277,17 @@ nearest *get_nearest(noeud *current, char *path)
 
         if (!found)
         {
-            if (strtok(NULL, "/") != NULL)
+            if (strtok(NULL, "/") == NULL)
             {
+                nrst->parent = tmp;
+                strncpy(nrst->name, next_token, strlen(next_token) + 1);
                 free(modifiable_path);
-                free(nrst);
-                return NULL;
             }
-
-            nrst->parent = tmp;
-            nrst->name = next_token;
-            free(modifiable_path);
             return nrst;
         }
     }
     nrst->parent = tmp->pere;
-    nrst->name = tmp->nom;
+    strncpy(nrst->name, tmp->nom, strlen(tmp->nom) + 1);
     free(modifiable_path);
     return nrst;
 }

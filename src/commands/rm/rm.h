@@ -10,7 +10,7 @@
 
 bool rm(noeud *current, char *path);
 bool remove_child(noeud *current, noeud *to_delete_parent, char *name);
-bool is_file_a_parent(noeud *current, noeud *node_to_rm_parent);
+bool is_nearest_dir_a_parent(noeud *current, noeud *node_to_rm_parent);
 void exit_system(char *message, int code);
 
 #endif

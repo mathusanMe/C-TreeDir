@@ -31,11 +31,12 @@ typedef struct liste_noeud liste_noeud;
 typedef struct nearest
 {
     noeud *parent;
-    char *name;
+    char name[100];
 } nearest;
 
 extern noeud *test_tree_dir;
 
+bool is_equal(noeud *nodeA, noeud *nodeB, bool initial_call);
 noeud *create_root();
 noeud *create_node(char *name, bool is_folder, noeud *parent, noeud *root);
 liste_noeud *create_list_node(noeud *no, liste_noeud *succ);
