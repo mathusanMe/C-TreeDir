@@ -40,10 +40,11 @@ bool parse_file(char *file_path)
 noeud *parse_line(noeud *current, char *line)
 {
     char *strToken = strtok(line, SEPARATORS);
-    char **arguments = malloc(NB_LS_ARGUMENTS * sizeof(char *));
+    char **arguments = NULL;
 
     if (strcmp(strToken, "ls") == 0)
     {
+        arguments = malloc(NB_LS_ARGUMENTS * sizeof(char *));
         if (parse_arguments(strToken, "ls", NB_LS_ARGUMENTS, arguments))
         {
             ls(current, arguments[0]);
@@ -123,8 +124,9 @@ noeud *parse_line(noeud *current, char *line)
     {
         arguments = malloc(NB_CP_ARGUMENTS * sizeof(char *));
 
-        parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments);
-        // TODO: Send toward cp command with two arguments
+        if (parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments)) {
+            cp(current, arguments[0], arguments[1]);
+        }
 
         free_arguments(arguments, NB_CP_ARGUMENTS);
     }

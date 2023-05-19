@@ -2,6 +2,44 @@
 
 noeud *test_tree_dir = NULL;
 
+bool is_equal(noeud *nodeA, noeud *nodeB, bool initial_call)
+{
+    if (nodeA == NULL || nodeB == NULL)
+    {
+        return false;
+    }
+
+    if (!initial_call && strcmp(nodeA->nom, nodeB->nom) != 0)
+    {
+        return false;
+    }
+
+    if (nodeA->racine != nodeB->racine)
+    {
+        return false;
+    }
+
+    if (nodeA->est_dossier != nodeB->est_dossier)
+    {
+        return false;
+    }
+
+    if (nodeA->fils == NULL || nodeB->fils == NULL)
+    {
+        return nodeA->fils == NULL && nodeB->fils == NULL;
+    }
+
+    for (liste_noeud *tmpA = nodeA->fils, *tmpB = nodeB->fils; tmpA != NULL && tmpB != NULL; tmpA = tmpA->succ, tmpB = tmpB->succ)
+    {
+        if (!is_equal(tmpA->no, tmpB->no, false))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 noeud *create_root()
 {
     noeud *root = create_node("", true, NULL, NULL);
@@ -51,6 +89,8 @@ bool add_child(noeud *parent, noeud *child)
         return false;
     }
 
+    child->pere = parent;
+
     liste_noeud *children = parent->fils;
     if (children == NULL)
     {
@@ -81,6 +121,7 @@ bool add_child(noeud *parent, noeud *child)
     {
         last_child->succ = new_list_node;
     }
+
     return true;
 }
 
@@ -113,6 +154,172 @@ void free_node_list(liste_noeud *list)
 
     free_node(list->no);
     free(list);
+}
+
+nearest *get_nearest(noeud *current, char *path)
+{
+    if (current == NULL || path == NULL)
+    {
+        printf("get_nearest: current or path is NULL.\n");
+        return NULL;
+    }
+
+    char *modifiable_path = strdup(path);
+
+    if (modifiable_path == NULL)
+    {
+        printf("get_nearest: modifiable_path is NULL.\n");
+        return NULL;
+    }
+
+    nearest *nrst = malloc(sizeof(nearest));
+
+    if (nrst == NULL)
+    {
+        printf("get_nearest: nrst is NULL.\n");
+        free(modifiable_path);
+        return NULL;
+    }
+
+    nrst->name = malloc(sizeof(char) * 99);
+
+    if (nrst->name == NULL)
+    {
+        printf("get_nearest: nrst->name is NULL.\n");
+        free(modifiable_path);
+        free(nrst);
+        return NULL;
+    }
+
+    if (modifiable_path[0] == '\0')
+    {
+        nrst->parent = current->pere;
+        strcpy(nrst->name, current->nom);
+        free(modifiable_path);
+        return nrst;
+    }
+
+    if (modifiable_path[0] == '/')
+    {
+        nearest *nrst_rec = get_nearest(current->racine, modifiable_path + 1);
+        if (nrst_rec == NULL)
+        {
+            free(modifiable_path);
+            free(nrst->name);
+            free(nrst);
+            return NULL;
+        }
+        free(nrst->name);
+        free(modifiable_path);
+        free(nrst);
+        return nrst_rec;
+    }
+
+    noeud *tmp = current;
+
+    for (char *next_token = strtok(modifiable_path, "/"); next_token != NULL; next_token = strtok(NULL, "/"))
+    {
+        if (strcmp(next_token, ".") == 0)
+        {
+            continue;
+        }
+
+        if (strcmp(next_token, "..") == 0)
+        {
+            if (tmp->pere == NULL)
+            {
+                free(modifiable_path);
+                free(nrst->name);
+                free(nrst);
+                return NULL;
+            }
+            tmp = tmp->pere;
+            continue;
+        }
+
+        liste_noeud *children = tmp->fils;
+
+        if (children == NULL)
+        {
+            if (tmp->est_dossier)
+            {
+                if (next_token == NULL)
+                {
+                    nrst->parent = tmp->pere;
+                    strcpy(nrst->name, tmp->nom);
+                    free(modifiable_path);
+                    return nrst;
+                }
+            }
+            else
+            {
+                if (next_token == NULL)
+                {
+                    nrst->parent = tmp->pere;
+                    strcpy(nrst->name, tmp->nom);
+                    free(modifiable_path);
+                    return nrst;
+                }
+                else
+                {
+                    free(modifiable_path);
+                    free(nrst->name);
+                    free(nrst);
+                    return NULL;
+                }
+            }
+        }
+
+        bool found = false;
+
+        for (liste_noeud *current_child = children; current_child != NULL; current_child = current_child->succ)
+        {
+            if (strcmp(current_child->no->nom, next_token) == 0)
+            {
+                if (!current_child->no->est_dossier)
+                {
+                    if (strtok(NULL, "/") != NULL)
+                    {
+                        free(modifiable_path);
+                        free(nrst->name);
+                        free(nrst);
+                        return NULL;
+                    }
+                    nrst->parent = tmp;
+                    strcpy(nrst->name, current_child->no->nom);
+                    free(modifiable_path);
+                    return nrst;
+                }
+                tmp = current_child->no;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            if (strtok(NULL, "/") == NULL)
+            {
+                nrst->parent = tmp;
+                strcpy(nrst->name, next_token);
+                free(modifiable_path);
+            }
+            return nrst;
+        }
+    }
+
+    if (tmp->est_dossier)
+    {
+        nrst->parent = tmp;
+        strcpy(nrst->name, tmp->nom);
+        free(modifiable_path);
+        return nrst;
+    }
+
+    nrst->parent = tmp->pere;
+    strcpy(nrst->name, tmp->nom);
+    free(modifiable_path);
+    return nrst;
 }
 
 noeud *get_test_tree_dir()
