@@ -4,6 +4,7 @@ touch a
 touch aa
 touch aaa
 mkdir C
+ls
 cd C
 touch d
 print
