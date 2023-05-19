@@ -1,7 +1,7 @@
 #!/bin/bash
 
 EXEC="program"
-OUTPUT="/dev/stdout"
+OUTPUT="stdout"
 VERBOSE=false
 COMPILE_ALL=false
 
@@ -9,6 +9,10 @@ COMPILED=false
 VALGRIND=false
 
 compile() {
+    if [ "$COMPILED" = true ]; then
+        return
+    fi
+
     echo "==================" > $OUTPUT
     echo -e "Compiling...\n" > $OUTPUT
 
@@ -30,7 +34,6 @@ compile() {
 }
 
 runTests() {
-    compile
 
     echo -e "\n==================" > $OUTPUT
     echo -e "Running tests...\n" > $OUTPUT
@@ -51,7 +54,6 @@ runTests() {
 }
 
 run() {
-    compile
 
     echo -e "\n==================" > $OUTPUT
     echo -e "Running...\n" > $OUTPUT
@@ -69,15 +71,16 @@ run() {
 
     # Run the main program
     if [ "$VERBOSE" = true ]; then
-        ./program -v "$1" -o $OUTPUT
+        ./program -v -o $OUTPUT "$1"
     else
-        ./program "$1" -o $OUTPUT
+        ./program -o $OUTPUT "$1"
     fi
 
     echo "==================" > $OUTPUT
 }
 
 runWithValgrind() {
+
     if [ "$VERBOSE" = true ]; then
         valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program -v "$1" -o $OUTPUT;
     else
@@ -107,23 +110,18 @@ done
 
 shift $((OPTIND - 1))
 
+compile
+
 for arg in "$@"; do
     case "$arg" in
-        "compile")
-            !"$COMPILED" && compile
-        ;;
         "test" | "tests")
             runTests
         ;;
         "valgrind" | "v" | "-v" | "--v")
-            !"$COMPILED" && compile
             VALGRIND=true
         ;;
-        "run" | "r")
-            run $arg
-        ;;
         *)
-            echo "Usage: run.sh [-vao] [compile | valgrind | test(s) | r(un) | files...]"
+            run $arg
             exit 1
     esac
 done
