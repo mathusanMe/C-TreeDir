@@ -1,16 +1,8 @@
 #include "mkdir.h"
 
-bool is_name_valid(char *name);
-bool is_length_valid(char *name, int min, int max);
-
 bool mkdir(noeud *current, char *name)
 {
-    if (current == NULL)
-    {
-        return false;
-    }
-
-    if (!is_name_valid(name))
+    if (current == NULL || !is_name_valid(name, "mkdir"))
     {
         return false;
     }
@@ -71,47 +63,6 @@ bool mkdir(noeud *current, char *name)
     {
         printf("mkdir: failed to create list node.\n");
         free(new_node);
-        return false;
-    }
-
-    return true;
-}
-
-bool is_name_valid(char *name)
-{
-    if (name == NULL)
-    {
-        printf("mkdir: the name is null.\n");
-        return false;
-    }
-
-    if (is_string_blank(name))
-    {
-        printf("mkdir: the name is blank.\n");
-        return false;
-    }
-
-    if (!(is_string_alnum(name)))
-    {
-        printf("mkdir: the name is not alphanumeric.\n");
-        return false;
-    }
-
-    if (!(is_length_valid(name, 1, 99)))
-    {
-        printf("mkdir: the name is longer than 99 characters.\n");
-        return false;
-    }
-
-    return true;
-}
-
-bool is_length_valid(char *name, int min, int max)
-{
-    int length = strlen(name);
-
-    if (length < min || length > max)
-    {
         return false;
     }
 

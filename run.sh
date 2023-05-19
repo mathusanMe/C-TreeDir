@@ -1,77 +1,102 @@
 #!/bin/bash
 
-compile() {
-    echo "Compiling..."
+EXEC="program"
+OUTPUT="/dev/null"
+COMPILE_ALL=false
 
-    # Check if 'main.c' exists
-    if [ ! -f "main.c" ]; then
-        echo "Error: main.c not found."
+compile() {
+    echo "==================" > $OUTPUT
+    echo -e "Compiling...\n" > $OUTPUT
+
+    # Check if the Makefile exists
+    if [ ! -f "Makefile" ]; then
+        echo "Error: Makefile not found."
         exit 1
     fi
 
-    # Compile the main program
-    gcc -Wall -o main.out main.c
+    if [ "$COMPILE_ALL" = true ]; then
+        make clean > $OUTPUT
+    fi
+    make all > $OUTPUT
 
-    echo "Done compiling."
-    exit 0
+    echo -e "\nDone compiling." > $OUTPUT
+    echo "====================" > $OUTPUT
+}
+
+runTests() {
+    compile
+
+    echo -e "\n==================" > $OUTPUT
+    echo -e "Running tests...\n" > $OUTPUT
+
+    # Check if 'program' exists
+    if [ ! -f "$EXEC" ]; then
+        echo "Error: $EXEC not found."
+        exit 1
+    fi
+
+    ./program test
+
+    echo -e "\n====================" > $OUTPUT
 }
 
 run() {
-    echo "Running..."
+    compile
 
-    # Check if 'main.out' exists
-    if [ ! -f "main.out" ]; then
-        echo "Error: main.out not found."
-        exit 1
-    fi
+    echo -e "\n==================" > $OUTPUT
+    echo -e "Running...\n" > $OUTPUT
 
-    # Check if 'input.txt' exists
-    if [ ! -f "input.txt" ]; then
-        echo "Error: input.txt not found."
+    # Check if 'EXEC' exists
+    if [ ! -f "$EXEC" ]; then
+        echo "Error: $EXEC not found."
         exit 1
     fi
 
     # Run the main program
-    ./main.out input.txt
+    ./program
 
-    echo "Done running."
-    exit 0
+    echo "==================" > $OUTPUT
 }
 
-runTests() {
-    echo "Running tests..."
-
-    # Check if 'main.out' exists
-    if [ ! -f "main.out" ]; then
-        echo "Error: main.out not found."
-        exit 1
+launchValgrind() {
+    if [ "$OUTPUT" = "/dev/stdout" ]; then
+        valgrind --leak-check=full --show-leak-kinds=all --verbose --error-exitcode=1  ./program tests;
+    else
+        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1  ./program tests;
     fi
-
-    # Check if 'tests' directory exists
-    if [ ! -d "tests" ]; then
-        echo "Error: tests directory not found."
-        exit 1
-    fi
-
-    totalTests=$(ls tests/ | grep -E "^input[0-9]+.txt" | wc -l)
-
-    for test in $(ls tests/ | grep -E "^input[0-9]+.txt"); do
-        echo "Running test: $test"
-        ./main.out $test
-    done
-
-    echo "Done running tests."
+    
 }
+
+while getopts ':av' OPTION; do
+    case "$OPTION" in
+        v)
+            OUTPUT="/dev/stdout"
+        ;;
+        a)
+            COMPILE_ALL=true
+        ;;
+        ?)
+            echo "Usage: run.sh [-v] [compile | test]"
+            exit 1
+        ;;
+    esac
+done
+
+shift $((OPTIND - 1))
 
 case "$1" in
     "compile")
         compile
     ;;
-    "runTests" | "test")
-        compileTests
+    "test" | "tests")
         runTests
     ;;
+    "valgrind")
+        compile
+        launchValgrind        
+    ;;
     *)
-        compile && run
+        run
     ;;
 esac
+exit 0
