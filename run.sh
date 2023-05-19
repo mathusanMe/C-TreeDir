@@ -1,7 +1,6 @@
 #!/bin/bash
 
 EXEC="program"
-OUTPUT="&1"
 VERBOSE=false
 COMPILE_ALL=false
 TO_TEST=false
@@ -73,12 +72,7 @@ run() {
         runWithValgrind $1
     else
 
-        # Run the main program
-        if [ "$VERBOSE" = true ]; then
-            ./program -v -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
-        else
-            ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
-        fi
+        runWithoutValgrind $1
     fi
 
     echo -e "\nDone running."
@@ -95,13 +89,32 @@ runWithValgrind() {
         fi
     else
         if [ "$NEW_OUTPUT" = true ]; then
-            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
         else
             valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
         fi
     fi
     
     return 0
+}
+
+runWithoutValgrind() {
+    
+        if [ "$VERBOSE" = true ]; then
+            if [ "$NEW_OUTPUT" = true ]; then
+                ./program -v -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+            else
+                ./program -v "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+            fi
+        else
+            if [ "$NEW_OUTPUT" = true ]; then
+                ./program -o "$OUTPUT" "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+            else
+                ./program "$1" && EXIT_STATUS=0 || EXIT_STATUS=1
+            fi
+        fi
+    
+        return 0
 }
 
 runTestsWithValgrind() {
@@ -113,7 +126,7 @@ runTestsWithValgrind() {
         fi
     else
         if [ "$NEW_OUTPUT" = true ]; then
-            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --verbose --error-exitcode=1  ./program -t -v -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
+            valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -t -o "$OUTPUT" && EXIT_STATUS=0 || EXIT_STATUS=1
         else
             valgrind --leak-check=full --xml=yes --xml-file=VALGRIND_LOGS.xml --show-leak-kinds=all --error-exitcode=1  ./program -t && EXIT_STATUS=0 || EXIT_STATUS=1
         fi
@@ -179,6 +192,7 @@ for arg in "$@"; do
     case "$arg" in
         *)
             run $arg
+            exit 1
     esac
 done
 
