@@ -8,8 +8,8 @@
 #include "../../utils/string.h"
 #include "../cd/cd.h"
 
-void cp(noeud *current, char *src, char *dest);
+void cp(noeud *current, char *src, char *dest, FILE *output, bool verbose);
 bool is_ancestor_to(noeud *nodeA, noeud *nodeB);
-noeud *deep_copy_node(noeud *node);
+noeud *deep_copy_node(noeud *node, FILE *output, bool verbose);
 
 #endif

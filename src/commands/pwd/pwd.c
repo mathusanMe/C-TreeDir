@@ -5,16 +5,19 @@
  * Then print newline
  * @param node current node
  */
-bool pwd(noeud *node)
+bool pwd(noeud *node, FILE *output, bool verbose)
 {
     if (node == NULL)
     {
-        printf("pwd: Current node is NULL\n");
+        if (verbose)
+        {
+            fprintf(output, "pwd: Current node is NULL\n");
+        }
         return false;
     }
 
-    bool is_valid = pwd_rec(node);
-    puts("");
+    bool is_valid = pwd_rec(node, output, verbose);
+    fputs("\n", output);
 
     return is_valid;
 }
@@ -23,7 +26,7 @@ bool pwd(noeud *node)
  * By walking back through the entire file tree,
  * from the root node, print the file's name then it's child's one
  */
-bool pwd_rec(noeud *node)
+bool pwd_rec(noeud *node, FILE *output, bool verbose)
 {
     if (node == NULL || node->pere == NULL)
     {
@@ -33,13 +36,13 @@ bool pwd_rec(noeud *node)
     // If current node is root
     if (node->racine == node)
     {
-        printf("/");
+        fprintf(output, "/");
         return true;
     }
 
-    if (node->pere == node->racine || pwd_rec(node->pere))
+    if (pwd_rec(node->pere, output, verbose))
     {
-        printf("/%s", node->nom);
+        fprintf(output, "%s/", node->nom);
         return true;
     }
     return false;

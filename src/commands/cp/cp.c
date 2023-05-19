@@ -1,7 +1,6 @@
 #include "cp.h"
-#include "../print/print.h"
 
-void cp(noeud *current, char *src, char *dest)
+void cp(noeud *current, char *src, char *dest, FILE *output, bool verbose)
 {
     nearest *nrst_src = get_nearest(current, src);
 
@@ -61,7 +60,7 @@ void cp(noeud *current, char *src, char *dest)
         exit(1);
     }
 
-    noeud *copy_src_node = deep_copy_node(src_node);
+    noeud *copy_src_node = deep_copy_node(src_node, output, verbose);
 
     if (copy_src_node == NULL)
     {
@@ -76,7 +75,7 @@ void cp(noeud *current, char *src, char *dest)
         strcpy(copy_src_node->nom, nrst_dest->name);
     }
 
-    add_child(dest_node, copy_src_node);
+    add_child(dest_node, copy_src_node, output, verbose);
 
     free(nrst_src);
     free(nrst_dest);
@@ -102,7 +101,7 @@ bool is_ancestor_to(noeud *nodeA, noeud *nodeB)
     return is_ancestor_to(nodeA, nodeB->pere);
 }
 
-noeud *deep_copy_node(noeud *node)
+noeud *deep_copy_node(noeud *node, FILE *output, bool verbose)
 {
     if (node == NULL)
     {
@@ -123,14 +122,14 @@ noeud *deep_copy_node(noeud *node)
 
     for (liste_noeud *tmp = node->fils; tmp != NULL; tmp = tmp->succ)
     {
-        noeud *copy_child = deep_copy_node(tmp->no);
+        noeud *copy_child = deep_copy_node(tmp->no, output, verbose);
 
         if (copy_child == NULL)
         {
             return NULL;
         }
 
-        add_child(copy_node, copy_child);
+        add_child(copy_node, copy_child, output, verbose);
     }
 
     return copy_node;

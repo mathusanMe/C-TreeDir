@@ -1,25 +1,25 @@
 #include "mv.h"
 
-bool mv(noeud *current, char *src, char *dest)
+bool mv(noeud *current, char *src, char *dest, FILE *output, bool verbose)
 {
-    nearest *src_nrst = get_nearest(current, src);
-    nearest *dest_nrst = get_nearest(current, dest);
+    nearest *nrst_src = get_nearest(current, src);
+    nearest *nrst_dest = get_nearest(current, dest);
 
-    if (src_nrst == NULL || dest_nrst == NULL)
+    if (nrst_src == NULL || nrst_dest == NULL)
     {
         exit_system("mv: cannot allocate memory.\n", 1);
     }
 
-    if (is_nearest_null(src_nrst) || is_nearest_null(dest_nrst))
+    if (is_nearest_null(nrst_src) || is_nearest_null(nrst_dest))
     {
         exit_system("mv: error while getting nearest dir. exit program.\n", 1);
     }
 
-    update_destination(dest_nrst, src_nrst->name);
+    update_destination(nrst_dest, nrst_src->name);
 
-    bool moved = move(current, src_nrst, dest_nrst);
-    free(src_nrst);
-    free(dest_nrst);
+    bool moved = move(current, nrst_src, nrst_dest, output, verbose);
+    free(nrst_src);
+    free(nrst_dest);
     return moved;
 }
 
@@ -45,9 +45,9 @@ void update_destination(nearest *nrst, char *name)
     }
 }
 
-bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
+bool move(noeud *current, nearest *nrst_src, nearest *nrst_dest, FILE *output, bool verbose)
 {
-    liste_noeud *children = src_nrst->parent->fils;
+    liste_noeud *children = nrst_src->parent->fils;
 
     if (children == NULL)
     {
@@ -55,27 +55,27 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
     }
 
     noeud *first_child = children->no;
-    if (strcmp(first_child->nom, src_nrst->name) == 0)
+    if (strcmp(first_child->nom, nrst_src->name) == 0)
     {
         if (is_file_a_parent(current, first_child))
         {
             exit_system("mv: cannot delete a parent folder. exit program.\n", 1);
         }
 
-        src_nrst->parent->fils = children->succ;
-        if (is_name_valid(dest_nrst->name, "mv"))
+        nrst_src->parent->fils = children->succ;
+        if (is_name_valid(nrst_dest->name, "mv", output, verbose))
         {
-            strncpy(first_child->nom, dest_nrst->name, strlen(dest_nrst->name) + 1);
+            strncpy(first_child->nom, nrst_dest->name, strlen(nrst_dest->name) + 1);
         }
-        add_child(dest_nrst->parent, first_child);
-        first_child->pere = dest_nrst->parent;
+        add_child(nrst_dest->parent, first_child, output, verbose);
+        first_child->pere = nrst_dest->parent;
         free(children);
         return true;
     }
 
     for (liste_noeud *child = children->succ; child != NULL; child = child->succ, children = children->succ)
     {
-        if ((strcmp(child->no->nom, src_nrst->name)) == 0)
+        if ((strcmp(child->no->nom, nrst_src->name)) == 0)
         {
             noeud *to_move = child->no;
 
@@ -85,12 +85,12 @@ bool move(noeud *current, nearest *src_nrst, nearest *dest_nrst)
             }
 
             children->succ = child->succ;
-            if (is_name_valid(dest_nrst->name, "mv"))
+            if (is_name_valid(nrst_dest->name, "mv", output, verbose))
             {
-                strncpy(to_move->nom, dest_nrst->name, strlen(dest_nrst->name) + 1);
+                strncpy(to_move->nom, nrst_dest->name, strlen(nrst_dest->name) + 1);
             }
-            add_child(dest_nrst->parent, to_move);
-            to_move->pere = dest_nrst->parent;
+            add_child(nrst_dest->parent, to_move, output, verbose);
+            to_move->pere = nrst_dest->parent;
             free(child);
             return true;
         }

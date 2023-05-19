@@ -1,6 +1,6 @@
 #include "cd.h"
 
-noeud *cd(noeud *current, char *path)
+noeud *cd(noeud *current, char *path, FILE *output, bool verbose)
 {
     if (current == NULL || path == NULL)
     {
@@ -9,7 +9,10 @@ noeud *cd(noeud *current, char *path)
 
     if (!current->est_dossier)
     {
-        printf("cd: Not a directory.\n");
+        if (verbose)
+        {
+            fprintf(output, "cd: Not a directory.\n");
+        }
         return NULL;
     }
 
@@ -28,7 +31,7 @@ noeud *cd(noeud *current, char *path)
 
     if (modifiable_path[0] == '/')
     {
-        noeud *result = cd(current->racine, modifiable_path + 1);
+        noeud *result = cd(current->racine, modifiable_path + 1, output, verbose);
         free(modifiable_path);
         return result;
     }
@@ -44,7 +47,10 @@ noeud *cd(noeud *current, char *path)
         {
             if (current->pere == NULL)
             {
-                printf("cd: Can't move to parent directory, node not declared.\n");
+                if (verbose)
+                {
+                    fprintf(output, "cd: Can't move to parent directory, node not declared.\n");
+                }
                 free(modifiable_path);
                 return NULL;
             }
@@ -56,7 +62,10 @@ noeud *cd(noeud *current, char *path)
 
         if (children == NULL)
         {
-            printf("cd: %s: No such directory.\n", next_token);
+            if (verbose)
+            {
+                fprintf(output, "cd: %s: No such directory.\n", next_token);
+            }
             free(modifiable_path);
             return NULL;
         }
@@ -69,14 +78,20 @@ noeud *cd(noeud *current, char *path)
 
         if (child == NULL)
         {
-            printf("cd: %s: No such directory.\n", next_token);
+            if (verbose)
+            {
+                fprintf(output, "cd: %s: No such directory.\n", next_token);
+            }
             free(modifiable_path);
             return NULL;
         }
 
         if (!child->no->est_dossier)
         {
-            printf("cd: %s: Not a directory.\n", next_token);
+            if (verbose)
+            {
+                fprintf(output, "cd: %s: Not a directory.\n", next_token);
+            }
             free(modifiable_path);
             return NULL;
         }

@@ -1,19 +1,16 @@
 #ifndef TEST_MV_H
 #define TEST_MV_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
+#include "../../../src/utils/nodes.h"
 #include "../../utils/display_test.h"
 #include "../../../src/commands/mv/mv.h"
 
-bool mv_test_file();
-bool mv_test_dir();
-bool mv_test_file_into_dir();
-bool mv_test_dir_into_dir();
-bool mv_test_file_into_newfile();
-bool mv_test_dir_into_newdir();
-bool run_tests_mv();
+bool mv_test_file(FILE *output, bool verbose);
+bool mv_test_dir(FILE *output, bool verbose);
+bool mv_test_file_into_dir(FILE *output, bool verbose);
+bool mv_test_dir_into_dir(FILE *output, bool verbose);
+bool mv_test_file_into_newfile(FILE *output, bool verbose);
+bool mv_test_dir_into_newdir(FILE *output, bool verbose);
+bool run_tests_mv(FILE *output, bool verbose);
 
 #endif

@@ -29,7 +29,6 @@ bool contains_newline(char *str)
 {
     while (*str != '\0')
     {
-        // printf("%s\n", *str == '\n' ? "true" : "false");
         if (*str == '\n')
         {
             return true;
@@ -76,29 +75,41 @@ bool is_length_valid(char *name, int min, int max)
     return true;
 }
 
-bool is_name_valid(char *name, char *funcion_name)
+bool is_name_valid(char *name, char *function_name, FILE *output, bool verbose)
 {
     if (name == NULL)
     {
-        printf("%s: the name is null.\n", funcion_name);
+        if (verbose)
+        {
+            fprintf(output, "%s: the name is null.\n", function_name);
+        }
         return false;
     }
 
     if (is_string_blank(name))
     {
-        printf("%s: the name is blank.\n", funcion_name);
+        if (verbose)
+        {
+            fprintf(output, "%s: the name is blank.\n", function_name);
+        }
         return false;
     }
 
     if (!(is_string_alnum(name)))
     {
-        printf("%s: the name is not alphanumeric.\n", funcion_name);
+        if (verbose)
+        {
+            fprintf(output, "%s: the name is not alphanumeric.\n", function_name);
+        }
         return false;
     }
 
     if (!(is_length_valid(name, 1, 99)))
     {
-        printf("%s: the name is longer than 99 characters.\n", funcion_name);
+        if (verbose)
+        {
+            fprintf(output, "%s: the name is longer than 99 characters.\n", function_name);
+        }
         return false;
     }
 

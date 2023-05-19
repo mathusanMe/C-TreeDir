@@ -1,17 +1,15 @@
 #include "ls.h"
 
-bool ls(noeud *current, char *path)
+bool ls(noeud *current, char *path, FILE *output, bool verbose)
 {
-    noeud *node_from_path = get_noeud(current, path);
+    noeud *node_from_path = cd(current, path, output, false);
 
-    if (node_from_path == NULL)
+    if (node_from_path == NULL || !node_from_path->est_dossier)
     {
-        return false;
-    }
-
-    if (!node_from_path->est_dossier)
-    {
-        printf("ls: %s: Not a directory.\n", node_from_path->nom);
+        if (verbose)
+        {
+            fprintf(output, "ls: Cannot acces to %s: Not a directory.\n", node_from_path == NULL ? "node" : node_from_path->nom);
+        }
         return false;
     }
 
@@ -22,21 +20,8 @@ bool ls(noeud *current, char *path)
 
     for (liste_noeud *liste = node_from_path->fils; liste != NULL; liste = liste->succ)
     {
-        printf("%s\n", liste->no->nom);
+        fprintf(output, "%s\n", liste->no->nom);
     }
 
     return true;
-}
-
-noeud *get_noeud(noeud *current, char *path)
-{
-    noeud *node_from_path = cd(current, path);
-
-    if (node_from_path == NULL)
-    {
-        printf("ls: cannot access '%s': No such directory.\n", path);
-        return NULL;
-    }
-
-    return node_from_path;
 }

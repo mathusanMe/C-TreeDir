@@ -1,6 +1,6 @@
 #include "rm.h"
 
-bool rm(noeud *current, char *path)
+bool rm(noeud *current, char *path, FILE *output, bool verbose)
 {
     nearest *nrst = get_nearest(current, path);
 
@@ -9,12 +9,12 @@ bool rm(noeud *current, char *path)
         exit_system("rm: error while getting nearest dir. exit program.\n", 1);
     }
 
-    bool deleted = remove_child(current, nrst->parent, nrst->name);
+    bool deleted = remove_child(current, nrst->parent, nrst->name, output, verbose);
     free(nrst);
     return deleted;
 }
 
-bool remove_child(noeud *current, noeud *to_delete_parent, char *name)
+bool remove_child(noeud *current, noeud *to_delete_parent, char *name, FILE *output, bool verbose)
 {
     if (to_delete_parent == NULL || name == NULL)
     {

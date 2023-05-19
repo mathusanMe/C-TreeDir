@@ -13,6 +13,6 @@ bool contains_newline(char *str);
 bool is_string_alnum(char *str);
 char *strdup(const char *s);
 bool is_length_valid(char *name, int min, int max);
-bool is_name_valid(char *name, char *function_name);
+bool is_name_valid(char *name, char *function_name, FILE *output, bool verbose);
 
 #endif

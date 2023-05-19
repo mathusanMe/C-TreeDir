@@ -1,0 +1,18 @@
+Rep1
+Rep2
+Rep3
+/Rep1/Rep12
+file121
+file122
+file111
+[]
+ ├─ [Rep1]
+ │   ├─ [Rep11]
+ │   │   └─ file111
+ │   └─ [Rep12]
+ │       ├─ file121
+ │       └─ file122
+ ├─ [Rep2]
+ │   ├─ file21
+ │   └─ file22
+ └─ [Rep3]

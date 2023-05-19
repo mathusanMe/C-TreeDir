@@ -16,10 +16,6 @@
 
 #define MAX_ARGUMENTS 2
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 #include "../utils/nodes.h"
 #include "../utils/string.h"
 #include "../commands/ls/ls.h"
@@ -32,9 +28,9 @@
 #include "../commands/mv/mv.h"
 #include "../commands/print/print.h"
 
-bool parse_file(char *file_path);
-noeud *parse_line(noeud *current, char *line);
-bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments);
+bool parse_file(char *file_path, FILE *output, bool verbose);
+noeud *parse_line(noeud *current, char *line, FILE *output, bool verbose);
+bool parse_arguments(char *strToken, char *command, size_t total_arguments, char **arguments, bool could_have_no_arguments, FILE *output, bool verbose);
 void free_arguments(char **args, size_t size);
 
 #endif
