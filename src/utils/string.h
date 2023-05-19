@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <string.h>
-#include "../main.h"
 
 bool contains(char **string_array, size_t size, char *word);
 bool is_string_blank(char *str);

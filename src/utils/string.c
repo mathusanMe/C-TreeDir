@@ -58,7 +58,8 @@ char *strdup(const char *s)
     {
         return NULL;
     }
-    strcpy(d, s);
+    strncpy(d, s, strlen(s));
+    d[strlen(s)] = '\0';
     return d;
 }
 
@@ -74,13 +75,13 @@ bool is_length_valid(char *name, int min, int max)
     return true;
 }
 
-bool is_name_valid(char *name, char *funcion_name, FILE *output, bool verbose)
+bool is_name_valid(char *name, char *function_name, FILE *output, bool verbose)
 {
     if (name == NULL)
     {
         if (verbose)
         {
-            fprintf(output, "%s: the name is null.\n", funcion_name);
+            fprintf(output, "%s: the name is null.\n", function_name);
         }
         return false;
     }
@@ -89,7 +90,7 @@ bool is_name_valid(char *name, char *funcion_name, FILE *output, bool verbose)
     {
         if (verbose)
         {
-            fprintf(output, "%s: the name is blank.\n", funcion_name);
+            fprintf(output, "%s: the name is blank.\n", function_name);
         }
         return false;
     }
@@ -98,7 +99,7 @@ bool is_name_valid(char *name, char *funcion_name, FILE *output, bool verbose)
     {
         if (verbose)
         {
-            fprintf(output, "%s: the name is not alphanumeric.\n", funcion_name);
+            fprintf(output, "%s: the name is not alphanumeric.\n", function_name);
         }
         return false;
     }
@@ -107,7 +108,7 @@ bool is_name_valid(char *name, char *funcion_name, FILE *output, bool verbose)
     {
         if (verbose)
         {
-            fprintf(output, "%s: the name is longer than 99 characters.\n", funcion_name);
+            fprintf(output, "%s: the name is longer than 99 characters.\n", function_name);
         }
         return false;
     }

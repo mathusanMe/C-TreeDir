@@ -128,7 +128,9 @@ noeud *parse_line(noeud *current, char *line, FILE *output, bool verbose)
         arguments = malloc(NB_RM_ARGUMENTS * sizeof(char *));
 
         parse_arguments(strToken, "rm", NB_RM_ARGUMENTS, arguments, false, output, verbose);
-        // TODO: Send toward rm command with one arguments
+        {
+            rm(current, arguments[0], output, verbose);
+        }
 
         free_arguments(arguments, NB_RM_ARGUMENTS);
     }
@@ -138,7 +140,9 @@ noeud *parse_line(noeud *current, char *line, FILE *output, bool verbose)
         arguments = malloc(NB_CP_ARGUMENTS * sizeof(char *));
 
         parse_arguments(strToken, "cp", NB_CP_ARGUMENTS, arguments, false, output, verbose);
-        // TODO: Send toward cp command with two arguments
+        {
+            cp(current, arguments[0], arguments[1], output, verbose);
+        }
 
         free_arguments(arguments, NB_CP_ARGUMENTS);
     }
@@ -148,7 +152,9 @@ noeud *parse_line(noeud *current, char *line, FILE *output, bool verbose)
         arguments = malloc(NB_MV_ARGUMENTS * sizeof(char *));
 
         parse_arguments(strToken, "mv", NB_MV_ARGUMENTS, arguments, false, output, verbose);
-        // TODO: Send toward mv command with two arguments
+        {
+            mv(current, arguments[0], arguments[1], output, verbose);
+        }
 
         free_arguments(arguments, NB_MV_ARGUMENTS);
     }

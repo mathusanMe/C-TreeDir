@@ -6,10 +6,6 @@
 #define END_FILE " └─ "
 #define NO_SPACE "    "
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
 #include "../../utils/nodes.h"
 
 void print(noeud *node, FILE *output);

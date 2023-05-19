@@ -77,5 +77,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    free(output);
+
     exit(EXIT_SUCCESS);
 }

@@ -1,8 +1,7 @@
 #ifndef TEST_PWD_H
 #define TEST_PWD_H
 
-#include <stdlib.h>
-#include <stdbool.h>
+#include "../../../src/utils/nodes.h"
 #include "../../utils/display_test.h"
 #include "../../../src/commands/pwd/pwd.h"
 #include "../../../src/commands/cd/cd.h"

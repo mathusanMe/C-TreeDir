@@ -1,7 +1,7 @@
 #ifndef TEST_PRINT_H
 #define TEST_PRINT_H
 
-#include <stdbool.h>
+#include "../../../src/utils/nodes.h"
 #include "../../utils/display_test.h"
 #include "../../../src/commands/print/print.h"
 
