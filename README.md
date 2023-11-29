@@ -1,20 +1,26 @@
 # TREEDIR - C Language Project
+This project was made in 5 weeks during the 2nd year of my Bachelor's degree in Computer Science.
+
 ## Table of Contents
 - [Project Description](#project-description)
+- [Gained Experience](#gained-experience)
+- [Screenshots](#screenshots)
 - [Project Structure](#project-structure)
 - [Usage Guide](#usage-guide)
     - [1. For run.sh to Compile](#1-for-runsh-to-compile)
     - [2. For ./program with a Text File](#2-for-program-with-a-text-file)
 
 ## Project Description
-This project involved creating a C program that simulates a file system's tree structure. It manages folders and files using a tree stored in memory, operating on instructions from an input file. Key commands implemented include ls, cd, mkdir, touch, rm, cp, mv, and print, each with specific functionalities. The emphasis is on robust error handling and dynamic memory management. The project offered practical experience in system-level programming in C.
+This project involved creating a C program that simulates a file system's tree structure. It manages folders and files using a tree stored in memory, operating on instructions from an input file. Key commands implemented include `ls`, `cd`, `mkdir`, `touch`, `rm`, `cp`, `mv`, and `print`, each with specific functionalities. **The emphasis is on robust error handling and dynamic memory management. The project offered practical experience in system-level programming in C.**
 
-<p>
-  <strong>The project was completed in collaboration with 
-  <a href="https://github.com/YanisLcn">Yanis</a> in approximately 5 weeks.</strong>
-</p>
+The project was completed in collaboration with [Yanis](https://github.com/YanisLcn) in approximately 5 weeks.
 
-### Screenshots
+## Gained Experience
+This project marked my initial foray into programming in C. Although it presented some initial challenges, it served as a valuable learning experience, particularly in the realms of memory management, pointer manipulation, and the significance of effective error handling. Furthermore, I acquired proficiency in employing Valgrind for memory leak detection. Given the time constraints, I did find myself working under pressure, but I take pride in the final outcome.
+
+Working in a team of two was a new experience for me, and I found it to be a positive one. We were able to divide the work effectively, and we were able to learn from each other's strengths. I was able to gain a better understanding of the importance of communication and collaboration in a team setting.
+
+## Screenshots
 <p align="center">
   <img src="images/running_tests.png" alt="Running Tests">
   <br>
