@@ -1,4 +1,6 @@
 # TREEDIR - C Language Project
+[![C-Project Workflow](https://github.com/mathusanMe/C-TreeDir/actions/workflows/workflow.yaml/badge.svg)](https://github.com/mathusanMe/C-TreeDir/actions/workflows/workflow.yaml)
+
 This project was made in 5 weeks during the 2nd year of my Bachelor's degree in Computer Science.
 
 ## Table of Contents
