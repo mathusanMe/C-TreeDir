@@ -9,7 +9,7 @@
 ## Project Description
 This project involved creating a C program that simulates a file system's tree structure. It manages folders and files using a tree stored in memory, operating on instructions from an input file. Key commands implemented include ls, cd, mkdir, touch, rm, cp, mv, and print, each with specific functionalities. The emphasis is on robust error handling and dynamic memory management. The project offered practical experience in system-level programming in C.
 
-<p style="color: #FF6666;">
+<p>
   <strong>The project was completed in collaboration with 
   <a href="https://github.com/YanisLcn">Yanis</a> in approximately 5 weeks.</strong>
 </p>
@@ -18,7 +18,7 @@ This project involved creating a C program that simulates a file system's tree s
 <p align="center">
   <img src="images/running_tests.png" alt="Running Tests">
   <br>
-  <small style="color: gray;">Running Tests</small>
+  <sub>Running Tests</sub>
 </p>
 
 <br>
@@ -26,7 +26,7 @@ This project involved creating a C program that simulates a file system's tree s
 <p align="center">
   <img src="images/valid_commands.png" alt="Valid Commands">
   <br>
-  <small style="color: gray;">Valid Commands</small>
+  <sub>Valid Commands</sub>
 </p>
 
 <br>
@@ -34,7 +34,7 @@ This project involved creating a C program that simulates a file system's tree s
 <p align="center">
   <img src="images/invalid_commands.png" alt="Invalid Commands">
   <br>
-  <small style="color: gray;">Invalid Commands</small>
+  <sub>Invalid Commands</sub>
 </p>
 
 ## Project Structure
