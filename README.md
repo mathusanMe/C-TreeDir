@@ -2,25 +2,25 @@
 This project was made in 5 weeks during the 2nd year of my Bachelor's degree in Computer Science.
 
 ## Table of Contents
-- [Project Description](#project-description)
-- [Gained Experience](#gained-experience)
-- [Screenshots](#screenshots)
-- [Project Structure](#project-structure)
-- [Usage Guide](#usage-guide)
-    - [1. For run.sh to Compile](#1-for-runsh-to-compile)
-    - [2. For ./program with a Text File](#2-for-program-with-a-text-file)
+- [1. Project Description](#1-project-description)
+- [2. Gained Experience](#2-gained-experience)
+- [3. Screenshots](#3-screenshots)
+- [4. Project Structure](#4-project-structure)
+- [5. Usage Guide](#5-usage-guide)
+    - [a. For run.sh to Compile](#a-for-runsh-to-compile)
+    - [b. For ./program with a Text File](#b-for-program-with-a-text-file)
 
-## Project Description
+## 1. Project Description
 This project involved creating a C program that simulates a file system's tree structure. It manages folders and files using a tree stored in memory, operating on instructions from an input file. Key commands implemented include `ls`, `cd`, `mkdir`, `touch`, `rm`, `cp`, `mv`, and `print`, each with specific functionalities. **The emphasis is on robust error handling and dynamic memory management. The project offered practical experience in system-level programming in C.**
 
 The project was completed in collaboration with [Yanis](https://github.com/YanisLcn) in approximately 5 weeks.
 
-## Gained Experience
+## 2. Gained Experience
 This project marked my initial foray into programming in C. Although it presented some initial challenges, it served as a valuable learning experience, particularly in the realms of memory management, pointer manipulation, and the significance of effective error handling. Furthermore, I acquired proficiency in employing Valgrind for memory leak detection. Given the time constraints, I did find myself working under pressure, but I take pride in the final outcome.
 
 Working in a team of two was a new experience for me, and I found it to be a positive one. We were able to divide the work effectively, and we were able to learn from each other's strengths. I was able to gain a better understanding of the importance of communication and collaboration in a team setting.
 
-## Screenshots
+## 3. Screenshots
 <p align="center">
   <img src="images/running_tests.png" alt="Running Tests">
   <br>
@@ -43,7 +43,7 @@ Working in a team of two was a new experience for me, and I found it to be a pos
   <sub>Invalid Commands</sub>
 </p>
 
-## Project Structure
+## 4. Project Structure
 ```
 .
 ├── src
@@ -65,9 +65,9 @@ Working in a team of two was a new experience for me, and I found it to be a pos
 ```
 _inputs: Contains the text files used for testing (provided by instructors)._
 
-## Usage Guide
+## 5. Usage Guide
 
-### 1. For run.sh to Compile
+### a. For run.sh to Compile
 This `run.sh` script allows you to compile, test, and execute the program.
 
 The options you can use with this script are:
@@ -102,7 +102,7 @@ Here are some examples of how to use this script:
 
 Don't forget to give execution permissions to the script with `chmod +x run.sh` if it's not already executable.
 
-### 2. For ./program with a Text File
+### b. For ./program with a Text File
 
 Compiling with run.sh produces an executable program that can be used to run the program. It accepts several options, which you can combine as you see fit:
 
