@@ -1,74 +1,135 @@
-# TREEDIR - Projet de Langage C
-## 1. Guide d'utilisation pour run.sh afin de compiler
-Ce script `run.sh` vous permet de compiler, tester et exécuter le programme.
+# TREEDIR - C Language Project
+## Table of Contents
+- [Project Description](#project-description)
+- [Project Structure](#project-structure)
+- [Usage Guide](#usage-guide)
+    - [1. For run.sh to Compile](#1-for-runsh-to-compile)
+    - [2. For ./program with a Text File](#2-for-program-with-a-text-file)
 
-Les options que vous pouvez utiliser avec ce script sont :
+## Project Description
+This project involved creating a C program that simulates a file system's tree structure. It manages folders and files using a tree stored in memory, operating on instructions from an input file. Key commands implemented include ls, cd, mkdir, touch, rm, cp, mv, and print, each with specific functionalities. The emphasis is on robust error handling and dynamic memory management. The project offered practical experience in system-level programming in C.
 
-* a : Force une recompilation complète du programme en exécutant make clean avant make all.
-* b : Active le mode verbeux. Par défaut, toutes les sorties seront envoyées à la sortie standard.
-* t : Effectue les tests après la compilation du programme.
-* v : Exécute le programme avec Valgrind pour vérifier les fuites de mémoire.
-* o : Redirige la sortie vers un fichier. Par exemple, -o output.txt enverra la sortie vers le fichier output.txt.
+<p style="color: #FF6666;">
+  <strong>The project was completed in collaboration with 
+  <a href="https://github.com/YanisLcn">Yanis</a> in approximately 5 weeks.</strong>
+</p>
 
-### Exemple d'utilisation
-Voici quelques exemples sur comment utiliser ce script :
+### Screenshots
+<p align="center">
+  <img src="images/running_tests.png" alt="Running Tests">
+  <br>
+  <small style="color: gray;">Running Tests</small>
+</p>
 
-- Recompiler dans son entièreté le programme :
+<br>
+
+<p align="center">
+  <img src="images/valid_commands.png" alt="Valid Commands">
+  <br>
+  <small style="color: gray;">Valid Commands</small>
+</p>
+
+<br>
+
+<p align="center">
+  <img src="images/invalid_commands.png" alt="Invalid Commands">
+  <br>
+  <small style="color: gray;">Invalid Commands</small>
+</p>
+
+## Project Structure
+```
+.
+├── src
+│   ├── commands
+│   │   ├── cd
+│   │   ├── cp
+│   │   ├── ls
+│   │   ├── mkdir
+│   │   ├── mv
+│   │   ├── pwd
+│   │   ├── rm
+│   │   └── touch
+│   ├── parser
+│   └── utils
+├── tests
+├── inputs
+├── run.sh
+└── Makefile
+```
+_inputs: Contains the text files used for testing (provided by instructors)._
+
+## Usage Guide
+
+### 1. For run.sh to Compile
+This `run.sh` script allows you to compile, test, and execute the program.
+
+The options you can use with this script are:
+
+* a: Forces a complete recompilation of the program by executing make clean before make all.
+* b: Activates verbose mode. By default, all outputs will be sent to standard output.
+* t: Performs tests after compiling the program.
+* v: Runs the program with Valgrind to check for memory leaks.
+* o: Redirects output to a file. For example, -o output.txt will send the output to the output.txt file.
+
+#### Examples
+Here are some examples of how to use this script:
+
+- To completely recompile the program:
     ```bash
     ./run.sh -a
     ```
 
-- Compiler le programme et effectuer les tests :
+- To compile the program and perform tests:
     ```bash
     ./run.sh -a -t
     ```
-- Compiler et exécuter le programme avec sortie plus détaillée :
+- To compile and run the program with more detailed output:
     ```bash
     ./run.sh -b
     ```
 
-- Compiler et exécuter le programme avec Valgrind :
+- To compile and run the program with Valgrind:
     ```bash
     ./run.sh -v
     ```
 
-N'oubliez pas de donner les permissions d'exécution au script avec chmod +x run.sh s'il n'est pas déjà exécutable.
-N'oubliez pas de donner les permissions d'exécution au script avec `chmod +x run.sh` s'il n'est pas déjà exécutable.
+Don't forget to give execution permissions to the script with `chmod +x run.sh` if it's not already executable.
 
-## 2. Guide d'utilisation de ./program avec un fichier texte
+### 2. For ./program with a Text File
 
-La compilation avec run.sh produit un exécutable program qui peut être utilisé pour exécuter le programme. Il accepte un certain nombre d'options, que vous pouvez combiner à votre convenance :
+Compiling with run.sh produces an executable program that can be used to run the program. It accepts several options, which you can combine as you see fit:
 
--v : Active le mode verbeux.
--t : Exécute les tests intégrés.
--o : Redirige la sortie vers un fichier. Par exemple, -o output.txt enverra la sortie vers le fichier output.txt.
+-v: Activates verbose mode.
+-t: Executes built-in tests.
+-o: Redirects output to a file. For example, -o output.txt will send the output to the output.txt file.
 
-### Exemples
-- Pour exécuter le programme avec un fichier texte en mode verbeux :
+#### Examples
+- To run the program with a text file in verbose mode:
     ```bash
-    ./program -v <fichier texte>
+    ./program -v <text file>
     ```
 
-- Pour exécuter les tests intégrés en mode verbeux :
+- To run the built-in tests in verbose mode:
     ```bash
     ./program -v -t
     ```
 
-- Pour exécuter le programme avec un fichier texte et rediriger la sortie vers un fichier :
+- To run the program with a text file and redirect output to a file:
     ```bash
-    ./program -o output.txt <fichier texte>
+    ./program -o output.txt <text file>
     ```
 
-- Pour exécuter les tests intégrés et rediriger la sortie vers un fichier :
+- To run the built-in tests and redirect output to a file:
     ```bash
     ./program -t -o output.txt
     ```
 
-- Pour lancer Valgrind lors de l'exécution du programme avec un fichier texte, utilisez la commande suivante :
+- To launch Valgrind during the execution of the program with a text file, use the following command:
     ```bash
-    valgrind ./program <fichier texte>
+    valgrind ./program <text file>
     ```
-- Une version plus détaillée de Valgrind peut être obtenue en utilisant la commande suivante :
+- A more detailed version of Valgrind can be obtained using the following command:
     ```bash
-    valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./program <fichier texte>
+    valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./program <text file>
     ```
